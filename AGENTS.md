@@ -1,3 +1,9 @@
+# Orientação prioritária para o Codex — 12/10/2026
+
+Leia **[docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md)** antes de começar. O PR #1 foi **mesclado** na `main`; referências antigas abaixo a PR pendente ou a testes ainda não executados são históricas e estão desatualizadas. Priorize Windows e preserve a experiência quarto → corredor → jardim. Não implemente novas mecânicas ou lore sem tarefa específica aprovada. Sugestões futuras ficam em [docs/IDEAS_BACKLOG.md](docs/IDEAS_BACKLOG.md).
+
+---
+
 > **DECISÃO ATUAL — Windows primeiro (12/10/2026).** O criador testou a movimentação e informou que o protótipo funciona. O Codex publicou validações da Godot 4.7.2 no [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1), ainda pendente de merge. **Desenvolver, executar, testar e distribuir inicialmente apenas para Windows**. Android continua como plataforma futura, mas **não executar tarefas Android, SDK, APK, touchscreen ou adaptação de UI mobile** nesta fase, salvo ordem expressa do criador. Não expandir mecânicas sem novo escopo aprovado. O resultado do PR está na branch `codex/m1-playable-movement`; documentos da main podem estar desatualizados até merge.
 
 ---
