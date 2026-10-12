@@ -3,7 +3,7 @@ extends SceneTree
 ## godot --headless --path . --script res://tests/smoke.gd
 
 const MAIN_SCENE: PackedScene = preload("res://scenes/main.tscn")
-const CATALOG_SCRIPT := preload("res://scripts/world/room_catalog.gd")
+const CATALOG_SCRIPT = preload("res://scripts/world/room_catalog.gd")
 
 var failures: Array[String] = []
 
