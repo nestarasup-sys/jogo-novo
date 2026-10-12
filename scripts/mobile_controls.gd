@@ -61,7 +61,7 @@ func _layout() -> void:
         "move_left": Vector2(82, size.y - 135),
         "move_right": Vector2(262, size.y - 135),
         "move_up": Vector2(172, size.y - 225),
-        "move_down": Vector2(172, size.y - 45),
+        "move_down": Vector2(172, size.y - 68),
         "interact": Vector2(size.x - 130, size.y - 112)
     }
     for action_name in buttons.keys():
