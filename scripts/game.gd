@@ -1,10 +1,10 @@
 extends Node2D
 ## Coordenação de jogo: não contém decoração, colisão nem lógica de objeto.
 
-const ROOM_CATALOG := preload("res://scripts/world/room_catalog.gd")
-const PLAYER_SCRIPT := preload("res://scripts/player.gd")
-const CAMERA_SCRIPT := preload("res://scripts/world/world_camera.gd")
-const HUD_SCRIPT := preload("res://scripts/prototype_hud.gd")
+const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
+const PLAYER_SCRIPT = preload("res://scripts/player.gd")
+const CAMERA_SCRIPT = preload("res://scripts/world/world_camera.gd")
+const HUD_SCRIPT = preload("res://scripts/prototype_hud.gd")
 
 @export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
 
