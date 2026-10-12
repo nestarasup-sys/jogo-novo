@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "lia_intro",
+  "prototype_only": true,
+  "start_node": "start",
+  "nodes": {
+    "start": {
+      "speaker": "lia",
+      "text": "Eu gosto de vir aqui para pensar.",
+      "choices": [
+        {
+          "id": "stay",
+          "text": "Posso ficar com você?",
+          "effects": [
+            {
+              "type": "adjust_stat",
+              "character": "lia",
+              "stat": "affinity",
+              "delta": 5
+            },
+            {
+              "type": "set_flag",
+              "flag": "lia_met",
+              "value": true
+            }
+          ],
+          "next": "end"
+        },
+        {
+          "id": "leave",
+          "text": "Talvez em outro momento.",
+          "effects": [
+            {
+              "type": "set_flag",
+              "flag": "lia_met",
+              "value": true
+            }
+          ],
+          "next": "end"
+        }
+      ]
+    },
+    "end": {
+      "speaker": "lia",
+      "text": "Até mais.",
+      "end": true
+    }
+  }
+}
