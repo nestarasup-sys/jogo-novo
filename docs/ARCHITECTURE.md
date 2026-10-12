@@ -1,4 +1,4 @@
-# Arquitetura v2 — fundação modular implementada em branch de revisão
+# Arquitetura v2 — fundação modular integrada à main
 
 ## Por que mudou
 O protótipo inicial criava tudo num `prototype_map.gd`, incluindo pisos, objetos, paredes, colisões e rotas. Esse design não escala. A nova base é orientada a **cenas reutilizáveis com componentes independentes**.
