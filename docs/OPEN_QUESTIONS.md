@@ -19,6 +19,6 @@
 14. Controle e tamanho mínimo de textos para toque/portrait não suportado.
 
 ## Lore — deixado deliberadamente para depois
-Nome e história do império, princesa, família, títulos, política, elenco final, romances oficiais, capítulos verdadeiros, finais e classificação indicativa. **Não preencher esses campos pelo Codex.**
+Nome e história do império, nome/idade/passado da princesa, família, títulos, política, elenco final, romances oficiais, capítulos verdadeiros, finais e classificação indicativa. **Não preencher esses campos pelo Codex.**
 
 Consultar `DECISIONS.md` antes de transformar proposta em decisão.
