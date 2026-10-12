@@ -5,12 +5,21 @@ extends Node2D
 
 const SIZE := Vector2(1280, 720)
 const WALL := 34.0
+const BEDROOM_WALL_HEIGHT: float = 260.0
+# Assets opcionais até o Codex publicar o pacote binário; sem arquivos, usa placeholders.
+const BEDROOM_FLOOR_PATH: String = "res://assets/environments/bedroom/floor_wood.jpg"
+const BEDROOM_WALL_PATH: String = "res://assets/environments/bedroom/wallpaper.jpg"
+var bedroom_floor_texture: Texture2D
+var bedroom_wall_texture: Texture2D
 var props: Array[Dictionary] = []
 var interactions: Array[Dictionary] = []
 var floor_color: Color = Color("#eadcc9")
 var border_color: Color = Color("#b7a18d")
 
 func _ready() -> void:
+    texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+    if map_id == "bedroom":
+        _load_bedroom_textures()
     _create_boundary()
     match map_id:
         "bedroom": _create_bedroom()
@@ -18,6 +27,16 @@ func _ready() -> void:
         "garden": _create_garden()
         _: push_error("Unknown map_id: " + map_id)
     queue_redraw()
+
+func _load_bedroom_textures() -> void:
+    if ResourceLoader.exists(BEDROOM_FLOOR_PATH, "Texture2D"):
+        bedroom_floor_texture = load(BEDROOM_FLOOR_PATH) as Texture2D
+    else:
+        push_warning("Textura de chão ausente; usando placeholder: " + BEDROOM_FLOOR_PATH)
+    if ResourceLoader.exists(BEDROOM_WALL_PATH, "Texture2D"):
+        bedroom_wall_texture = load(BEDROOM_WALL_PATH) as Texture2D
+    else:
+        push_warning("Textura de parede ausente; usando placeholder: " + BEDROOM_WALL_PATH)
 
 func _add_wall(rect: Rect2) -> void:
     var body := StaticBody2D.new()
@@ -95,9 +114,20 @@ func _draw() -> void:
     elif map_id == "corridor":
         draw_rect(Rect2(515, 36, 250, 648), Color(Color("#a75e67"), 0.62))
         draw_rect(Rect2(538, 36, 204, 648), Color(Color("#d8b07e"), 0.35))
-    else:
-        for x in range(60, 1240, 90):
-            draw_line(Vector2(x, 35), Vector2(x, 685), Color(Color("#b49a86"), 0.22), 2.0)
+    elif map_id == "bedroom":
+        # Parede e piso como fundos separados, antes dos móveis e portas.
+        # Texturas são repetidas horizontalmente sem ampliar colisões ou spawns.
+        var wall_rect := Rect2(0.0, 0.0, SIZE.x, BEDROOM_WALL_HEIGHT)
+        var floor_rect := Rect2(0.0, BEDROOM_WALL_HEIGHT, SIZE.x, SIZE.y - BEDROOM_WALL_HEIGHT)
+        draw_rect(wall_rect, Color("#d2c3dc"))
+        draw_rect(floor_rect, Color("#544c5e"))
+        if bedroom_wall_texture != null:
+            draw_texture_rect(bedroom_wall_texture, wall_rect, true)
+        if bedroom_floor_texture != null:
+            draw_texture_rect(bedroom_floor_texture, floor_rect, true)
+        # Friso de separação, discreto e legível mesmo antes dos móveis reais.
+        draw_rect(Rect2(0.0, BEDROOM_WALL_HEIGHT - 9.0, SIZE.x, 12.0), Color("#544451"))
+        draw_line(Vector2(0, BEDROOM_WALL_HEIGHT + 3.0), Vector2(SIZE.x, BEDROOM_WALL_HEIGHT + 3.0), Color("#be9e85"), 3.0)
     for p in props:
         var rect: Rect2 = p["rect"]
         draw_rect(rect, p["color"])
