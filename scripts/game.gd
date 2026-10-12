@@ -1,6 +1,9 @@
 extends Node2D
 ## GameRoot mínimo: somente quarto, corredor e jardim.
 
+## Ampliar TODO o mundo (jogador, móveis e ambientes) sem mudar colisões/velocidade.
+const WORLD_CAMERA_ZOOM: float = 1.30
+
 const MAP_SCENES := {
     "bedroom": preload("res://scenes/maps/bedroom.tscn"),
     "corridor": preload("res://scenes/maps/corridor.tscn"),
@@ -11,17 +14,33 @@ var player
 var hud
 var controls
 var current_map_id: String = "bedroom"
+var world_camera: Camera2D
 
 func _ready() -> void:
     _setup_input()
     player = preload("res://scripts/player.gd").new()
     player.name = "PrincessPlaceholder"
     add_child(player)
+    _setup_world_camera()
     hud = preload("res://scripts/prototype_hud.gd").new()
     add_child(hud)
     controls = preload("res://scripts/mobile_controls.gd").new()
     add_child(controls)
     _enter_map("bedroom", Vector2(640, 420))
+
+func _setup_world_camera() -> void:
+    # A câmera segue o jogador e mantém a área visível dentro do mapa 1280x720.
+    # CanvasLayers da HUD permanecem com tamanho normal.
+    world_camera = Camera2D.new()
+    world_camera.name = "WorldCamera"
+    world_camera.zoom = Vector2.ONE * WORLD_CAMERA_ZOOM
+    world_camera.limit_left = 0
+    world_camera.limit_top = 0
+    world_camera.limit_right = 1280
+    world_camera.limit_bottom = 720
+    world_camera.position_smoothing_enabled = false
+    player.add_child(world_camera)
+    world_camera.make_current()
 
 func _setup_input() -> void:
     _add_keys("move_left", [KEY_A, KEY_LEFT])
