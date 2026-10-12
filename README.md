@@ -1,3 +1,13 @@
+# Estado atual — protótipo de controles
+
+**Escopo prioritário aprovado:** quarto da princesa → mini corredor → jardim. A porta inferior do corredor leva ao jardim e a superior retorna ao quarto. A localização é provisória, sem lore.
+
+O código já foi adicionado ao repositório: `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd`, `tests/smoke.gd`. Movimento 8 direções, colisão, interação, portas, HUD e botões touch. **Não testado em Godot/Android ainda.**
+
+Leia primeiro [docs/M1_PLAYABLE.md](docs/M1_PLAYABLE.md), [docs/PALACE_WORLD.md](docs/PALACE_WORLD.md) e [AGENTS.md](AGENTS.md). Abaixo há planejamento anterior, que **não autoriza implementar romance, NPCs, calendário ou história agora**.
+
+---
+
 # Jogo Novo — RPG social de fantasia imperial (pré-produção)
 
 > **Estado:** planejamento de gameplay + bootstrap técnico. Ainda **não existe demo jogável**. Nome provisório; história/lore **não definidos**.
