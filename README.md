@@ -2,7 +2,7 @@
 
 > **Estado:** planejamento de gameplay + bootstrap técnico. Ainda **não existe demo jogável**. Nome provisório; história/lore **não definidos**.
 
-Jogo 2D top-down para **Windows e Android horizontal**. A protagonista é uma **princesa imperial adulta**, vivendo no palácio de uma ambientação de fantasia aristocrática inspirada no *gênero* de manhwas de romance. O jogo mistura exploração/rotina social com diálogos, escolhas e romances complexos. Referências: *Stardew Valley* (exploração/rotina) e *Amor Doce* (narrativa/romances). **Não reproduzir personagens, roteiro nem assets** dessas obras.
+Jogo 2D top-down para **Windows e Android horizontal**. A protagonista é uma **princesa imperial**, vivendo no palácio de uma ambientação de fantasia aristocrática inspirada no *gênero* de manhwas de romance. O jogo mistura exploração/rotina social com diálogos, escolhas e romances complexos. Referências: *Stardew Valley* (exploração/rotina) e *Amor Doce* (narrativa/romances). **Não reproduzir personagens, roteiro nem assets** dessas obras.
 
 ## O que foi decidido
 - Protagonista: princesa imperial; a **história, biografias, mundo e lore serão criados depois pelo diretor criativo**.
