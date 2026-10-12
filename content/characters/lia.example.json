@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "lia",
+  "display_name": "Lia",
+  "prototype_only": true,
+  "initial_stats": {
+    "affinity": 0,
+    "trust": 0,
+    "romance": 0,
+    "conflict": 0
+  },
+  "relationship_state": "friends"
+}
