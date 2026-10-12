@@ -13,8 +13,8 @@ room_title = "Corredor do palácio"
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
 wall_height = 105.0
-floor_color = Color("#e4d7c9")
-wall_color = Color("#b8a99f")
+floor_color = Color(0.894118, 0.843137, 0.788235, 1)
+wall_color = Color(0.721569, 0.662745, 0.623529, 1)
 
 [node name="Furniture" type="Node2D" parent="."]
 
@@ -23,28 +23,28 @@ position = Vector2(192, 118)
 script = ExtResource("3_furniture")
 display_name = "QUADRO"
 footprint_size = Vector2(195, 64)
-placeholder_color = Color("#9c7b67")
+placeholder_color = Color(0.611765, 0.482353, 0.403922, 1)
 
 [node name="RightPainting" type="StaticBody2D" parent="Furniture"]
 position = Vector2(1087, 118)
 script = ExtResource("3_furniture")
 display_name = "QUADRO"
 footprint_size = Vector2(195, 64)
-placeholder_color = Color("#9c7b67")
+placeholder_color = Color(0.611765, 0.482353, 0.403922, 1)
 
 [node name="LeftBench" type="StaticBody2D" parent="Furniture"]
 position = Vector2(197, 388)
 script = ExtResource("3_furniture")
 display_name = "BANCO"
 footprint_size = Vector2(178, 86)
-placeholder_color = Color("#88765a")
+placeholder_color = Color(0.533333, 0.462745, 0.352941, 1)
 
 [node name="RightBench" type="StaticBody2D" parent="Furniture"]
 position = Vector2(1083, 388)
 script = ExtResource("3_furniture")
 display_name = "BANCO"
 footprint_size = Vector2(178, 86)
-placeholder_color = Color("#88765a")
+placeholder_color = Color(0.533333, 0.462745, 0.352941, 1)
 
 [node name="Interactions" type="Node2D" parent="."]
 

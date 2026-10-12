@@ -52,10 +52,10 @@ func nearest_interaction(at: Vector2) -> Dictionary:
     for child in group.get_children():
         if not (child is Marker2D) or not child.has_method("get_interaction"):
             continue
-        if not child.enabled:
+        if not bool(child.get("enabled")):
             continue
         var distance: float = at.distance_to(child.global_position)
-        if distance <= child.interaction_radius and distance < best_distance:
-            winner = child.get_interaction()
+        if distance <= float(child.get("interaction_radius")) and distance < best_distance:
+            winner = child.call("get_interaction")
             best_distance = distance
     return winner

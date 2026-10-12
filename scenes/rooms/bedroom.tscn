@@ -13,8 +13,8 @@ room_title = "Quarto da princesa"
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
 wall_height = 260.0
-floor_color = Color("#e8d8d5")
-wall_color = Color("#d3c6dc")
+floor_color = Color(0.909804, 0.847059, 0.835294, 1)
+wall_color = Color(0.827451, 0.776471, 0.862745, 1)
 
 [node name="Furniture" type="Node2D" parent="."]
 
@@ -23,28 +23,28 @@ position = Vector2(282, 277)
 script = ExtResource("3_furniture")
 display_name = "CAMA"
 footprint_size = Vector2(225, 165)
-placeholder_color = Color("#a879a2")
+placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
 
 [node name="WritingDesk" type="StaticBody2D" parent="Furniture"]
 position = Vector2(927, 249)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
-placeholder_color = Color("#a47e5f")
+placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
 
 [node name="Wardrobe" type="StaticBody2D" parent="Furniture"]
 position = Vector2(186, 544)
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
-placeholder_color = Color("#9b796c")
+placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
 
 [node name="Armchair" type="StaticBody2D" parent="Furniture"]
 position = Vector2(1092, 535)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
-placeholder_color = Color("#b18b71")
+placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
 
 [node name="Interactions" type="Node2D" parent="."]
 

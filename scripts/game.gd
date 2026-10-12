@@ -9,10 +9,10 @@ const HUD_SCRIPT := preload("res://scripts/prototype_hud.gd")
 @export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
 
 var catalog
-var player: CharacterBody2D
-var camera: Camera2D
-var hud: CanvasLayer
-var current_room: Node2D
+var player
+var camera
+var hud
+var current_room
 var current_map_id: String = ""
 var _room_changing: bool = false
 
@@ -22,14 +22,14 @@ func _ready() -> void:
     if not catalog.load_catalog():
         push_error("Não foi possível iniciar: catálogo inválido.")
         return
-    player = PLAYER_SCRIPT.new() as CharacterBody2D
+    player = PLAYER_SCRIPT.new()
     player.name = "Princess"
     add_child(player)
-    camera = CAMERA_SCRIPT.new() as Camera2D
+    camera = CAMERA_SCRIPT.new()
     camera.name = "WorldCamera"
     camera.world_zoom = world_zoom
     player.add_child(camera)
-    hud = HUD_SCRIPT.new() as CanvasLayer
+    hud = HUD_SCRIPT.new()
     add_child(hud)
     _enter_room(catalog.start_room, catalog.start_spawn)
 
@@ -58,7 +58,7 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
     if scene == null:
         _room_changing = false
         return false
-    var room: Node2D = scene.instantiate() as Node2D
+    var room = scene.instantiate()
     if room == null or str(room.get("room_id")) != room_id:
         push_error("room_id inconsistente: " + room_id)
         if room != null:
