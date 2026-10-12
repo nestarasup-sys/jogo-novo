@@ -13,7 +13,7 @@ func _run() -> void:
 	_test_scene_graph()
 	await _test_playable_prototype()
 	if failures.is_empty():
-		print("PASS: cena inicial, 8 direções, colisões, proximidade, janelas, portas e multitouch")
+		print("PASS: personagem animada, movimento, colisões, interações, portas e multitouch")
 		quit(0)
 	else:
 		push_error("FAIL: %d verificações" % failures.size())
@@ -54,6 +54,60 @@ func _test_scene_graph() -> void:
 		_expect(outgoing == intended, "grafo de portas correto em " + map_id)
 		map.free()
 
+func _test_player_animations(player: CharacterBody2D, sprite: AnimatedSprite2D) -> void:
+	var frames := sprite.sprite_frames
+	_expect(frames != null, "SpriteFrames está atribuído")
+	if frames == null:
+		return
+	_expect(sprite.animation == "idle", "protagonista inicia em IDLE")
+	_expect_animation_frames(frames, "idle", PackedStringArray(["idle.png"]))
+	_expect_animation_frames(frames, "blink", PackedStringArray(["idle.png", "blink.png", "idle.png"]))
+	_expect_animation_frames(frames, "look_back", PackedStringArray(["idle.png", "look_back.png", "idle.png"]))
+	_expect_animation_frames(frames, "walk", PackedStringArray(["walk_01.png", "walk_02.png", "walk_03.png", "walk_02.png"]))
+	_expect(frames.get_animation_loop("idle"), "IDLE permanece em loop")
+	_expect(not frames.get_animation_loop("blink") and not frames.get_animation_loop("look_back"), "expressões são animações de passagem única")
+	_expect(frames.get_animation_loop("walk") and is_equal_approx(frames.get_animation_speed("walk"), 7.0), "WALK repete a 7 FPS")
+	_expect(sprite.texture_filter == CanvasItem.TEXTURE_FILTER_LINEAR, "arte usa filtragem linear")
+	var idle_texture := frames.get_frame_texture("idle", 0)
+	if idle_texture != null:
+		_expect(absf(idle_texture.get_height() * sprite.scale.y - 150.0) < 0.5, "quadro da protagonista mede aproximadamente 150 px")
+		_expect(absf(sprite.position.y + idle_texture.get_height() * sprite.scale.y * 0.5) < 0.1, "base do sprite fica alinhada à origem dos pés")
+	var collision := player.get_node_or_null("FootCollisionShape") as CollisionShape2D
+	var circle := collision.shape as CircleShape2D if collision != null else null
+	_expect(circle != null and is_equal_approx(circle.radius, 16.0), "colisão continua circular e concentrada nos pés")
+	var timer := player.get_node_or_null("ExpressionTimer") as Timer
+	_expect(timer != null and timer.one_shot, "expressões usam temporizador de uma passagem")
+	if timer != null:
+		var delay: float = float(player.get("_next_expression_delay"))
+		_expect(delay >= 3.0 and delay <= 6.0, "intervalo de expressão fica entre 3 e 6 segundos")
+		timer.stop()
+	sprite.play("blink")
+	await sprite.animation_finished
+	_expect(sprite.animation == "idle", "BLINK retorna a IDLE")
+	if timer != null:
+		timer.stop()
+	sprite.play("look_back")
+	await sprite.animation_finished
+	_expect(sprite.animation == "idle", "LOOK_BACK retorna a IDLE")
+	if timer != null:
+		timer.stop()
+	player.call("_on_expression_timeout")
+	_expect(sprite.animation == "blink" or sprite.animation == "look_back", "temporizador inicia uma expressão ocasional")
+	await sprite.animation_finished
+	_expect(sprite.animation == "idle", "expressão ocasional não trava o estado IDLE")
+	if timer != null:
+		timer.stop()
+
+func _expect_animation_frames(frames: SpriteFrames, animation_name: StringName, expected_files: PackedStringArray) -> void:
+	_expect(frames.has_animation(animation_name), "SpriteFrames contém " + str(animation_name))
+	if not frames.has_animation(animation_name):
+		return
+	var frame_count: int = frames.get_frame_count(animation_name)
+	_expect(frame_count == expected_files.size(), str(animation_name) + " tem a quantidade de quadros esperada")
+	for frame_index in range(mini(frame_count, expected_files.size())):
+		var texture := frames.get_frame_texture(animation_name, frame_index)
+		_expect(texture != null and texture.resource_path.ends_with(expected_files[frame_index]), str(animation_name) + " quadro " + str(frame_index + 1) + " usa " + expected_files[frame_index])
+
 func _test_playable_prototype() -> void:
 	root.size = Vector2i(1280, 720)
 	var game: Node2D = MAIN_SCENE.instantiate()
@@ -63,15 +117,33 @@ func _test_playable_prototype() -> void:
 	_expect(game.current_map_id == "bedroom", "inicia no quarto")
 	_expect(game.player.global_position.distance_to(Vector2(640, 420)) < 1.0, "spawn inicial acessível")
 	_expect(InputMap.has_action("move_right") and InputMap.has_action("interact"), "ações de teclado registradas")
+	var animated_sprite := game.player.get_node_or_null("PrincessAnimatedSprite") as AnimatedSprite2D
+	_expect(animated_sprite != null, "protagonista usa AnimatedSprite2D")
+	if animated_sprite != null:
+		await _test_player_animations(game.player, animated_sprite)
 
 	# Movimento em eixo e diagonal mantém a mesma velocidade resultante.
 	game.player.global_position = Vector2(600, 360)
 	await _release_all_inputs()
 	Input.action_press("move_right")
 	await _physics_frames(MOVE_FRAMES)
+	if animated_sprite != null:
+		_expect(animated_sprite.animation == "walk" and animated_sprite.is_playing(), "movimento inicia a animação WALK")
+		_expect(not animated_sprite.flip_h, "movimento para a direita usa o sprite sem espelhamento")
 	Input.action_release("move_right")
+	await physics_frame
+	if animated_sprite != null:
+		_expect(animated_sprite.animation == "idle", "soltar as teclas volta imediatamente para IDLE")
 	var axis_distance: float = game.player.global_position.distance_to(Vector2(600, 360))
 	_expect(axis_distance > 25.0 and axis_distance < 60.0, "movimento horizontal responde ao input")
+	game.player.global_position = Vector2(600, 360)
+	await _release_all_inputs()
+	Input.action_press("move_left")
+	await _physics_frames(2)
+	if animated_sprite != null:
+		_expect(animated_sprite.animation == "walk" and animated_sprite.flip_h, "movimento para a esquerda espelha WALK horizontalmente")
+	Input.action_release("move_left")
+	await physics_frame
 
 	game.player.global_position = Vector2(600, 360)
 	await _release_all_inputs()
@@ -83,6 +155,8 @@ func _test_playable_prototype() -> void:
 	var diagonal_delta: Vector2 = game.player.global_position - Vector2(600, 360)
 	_expect(absf(diagonal_delta.x - diagonal_delta.y) < 3.0, "diagonal tem componentes equilibradas")
 	_expect(absf(diagonal_delta.length() - axis_distance) < 5.0, "diagonal não fica mais rápida que movimento em eixo")
+	if animated_sprite != null:
+		_expect(animated_sprite.animation == "walk", "diagonal também mantém WALK")
 
 	# A escrivaninha é um obstáculo sólido; o jogador deve parar antes de atravessá-la.
 	game.player.global_position = Vector2(790, 250)
