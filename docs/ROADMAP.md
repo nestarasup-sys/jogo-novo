@@ -6,8 +6,8 @@
 - [x] Escrever catálogo externo, móveis e interações reutilizáveis.
 - [x] Escrever câmera uniforme 1.30 com limites e Y-sort.
 - [x] Reescrever teste smoke para a nova arquitetura (código, **não executado**).
-- [ ] Godot Windows: importação e parser sem erros.
-- [ ] Godot Windows: smoke passa com assets da princesa.
+- [x] Godot Windows: importação e parser sem erros, comprovados no Actions.
+- [x] Godot Windows: smoke ampliado passa com assets, movimento, colisões, câmera e portas ([execução](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346)).
 - [ ] Godot Windows: abrir janela e percorrer todos os ambientes com controle.
 - [ ] Revisar + corrigir regressões e mesclar branch na `main`.
 
