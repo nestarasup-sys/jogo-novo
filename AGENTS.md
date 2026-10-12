@@ -6,7 +6,7 @@ Antes de escrever código, ler `README.md`, `docs/DECISIONS.md`, `docs/GAMEPLAY_
 O usuário é o diretor criativo. **Não inventar lore canônica**, famílias, sucessão, segredos, biografias, romances oficiais, nomes definitivos nem roteiro principal sem autorização explícita. Ideias anteriores do assistente (como decreto falso, Lia, príncipe herdeiro, história da sucessão) **não são canonizadas**. Use conteúdo neutro marcado como `example` em testes/protótipos.
 
 ## Decisões firmes
-- RPG social de fantasia imperial, protagonista princesa imperial adulta.
+- RPG social de fantasia imperial, protagonista princesa imperial (idade e biografia não definidas).
 - Godot 4.x, GDScript; multiplataforma Windows + Android horizontal.
 - Top-down explorável, rotina de NPCs, diálogos/romances com consequências.
 - Dias livres independentes de capítulos por condições; sem travar progressão por perder evento opcional.
