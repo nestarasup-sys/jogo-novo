@@ -7,7 +7,7 @@ Este documento impede que sugestões sejam tratadas como fatos canônicos. **DEC
 |---|---|
 | Gênero | Jogo social de exploração com romances profundos, escolhas e consequências |
 | Referência estética | Fantasia imperial/aristocrática do gênero manhwa de romance |
-| Protagonista | Princesa imperial (adulta, para orientar o projeto); história pessoal a definir |
+| Protagonista | Princesa imperial; idade e história pessoal a definir |
 | Mundo | Interiores do palácio, incluindo quarto/aposentos da protagonista |
 | Ritmo | Dias livres + capítulos narrativos condicionais |
 | Romance | Conflitos, ramificações e múltiplos finais |
