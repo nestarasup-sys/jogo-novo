@@ -1,3 +1,5 @@
+> **HISTÓRICO DO PROTÓTIPO M1:** este documento registra resultados antigos com o `prototype_map.gd` original. A arquitetura atual usa `scenes/rooms/` e `scripts/world/`. Para a versão atual, consulte [CURRENT_STATUS.md](CURRENT_STATUS.md), [ARCHITECTURE.md](ARCHITECTURE.md) e [TEST_PLAN.md](TEST_PLAN.md). O teste de M1 não substitui validação da refatoração.
+
 # Primeiro protótipo de controles — validação local concluída; Android físico pendente
 
 ## Layout pedido pelo criador

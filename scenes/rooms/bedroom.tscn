@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
+[ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
+[ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
+
+[node name="Bedroom" type="Node2D"]
+script = ExtResource("1_room")
+room_id = "bedroom"
+room_title = "Quarto da princesa"
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+wall_height = 260.0
+floor_color = Color(0.909804, 0.847059, 0.835294, 1)
+wall_color = Color(0.827451, 0.776471, 0.862745, 1)
+
+[node name="WorldSpace" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Furniture" type="Node2D" parent="WorldSpace"]
+y_sort_enabled = true
+
+[node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(282, 277)
+script = ExtResource("3_furniture")
+display_name = "CAMA"
+footprint_size = Vector2(225, 165)
+placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
+
+[node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(927, 249)
+script = ExtResource("3_furniture")
+display_name = "ESCRIVANINHA"
+footprint_size = Vector2(225, 122)
+placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
+
+[node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(186, 544)
+script = ExtResource("3_furniture")
+display_name = "ARMÁRIO"
+footprint_size = Vector2(162, 128)
+placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
+
+[node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1092, 535)
+script = ExtResource("3_furniture")
+display_name = "POLTRONA"
+footprint_size = Vector2(125, 150)
+placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
+
+[node name="Interactions" type="Node2D" parent="."]
+
+[node name="BedInspect" type="Marker2D" parent="Interactions"]
+position = Vector2(445, 281)
+script = ExtResource("4_interaction")
+interaction_type = "inspect"
+action_label = "Examinar cama"
+message = "Uma cama confortável. O descanso será implementado depois."
+
+[node name="WritingDeskInspect" type="Marker2D" parent="Interactions"]
+position = Vector2(764, 269)
+script = ExtResource("4_interaction")
+interaction_type = "inspect"
+action_label = "Examinar escrivaninha"
+message = "Uma escrivaninha provisória para testar interações."
+
+[node name="DoorToCorridor" type="Marker2D" parent="Interactions"]
+position = Vector2(640, 624)
+script = ExtResource("4_interaction")
+interaction_type = "door"
+action_label = "Sair para o corredor"
+destination_room = "corridor"
+destination_spawn = "from_bedroom"
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="start" type="Marker2D" parent="Spawns"]
+position = Vector2(640, 420)
+
+[node name="from_corridor" type="Marker2D" parent="Spawns"]
+position = Vector2(640, 558)

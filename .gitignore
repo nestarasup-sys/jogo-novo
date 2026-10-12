@@ -20,3 +20,8 @@ dist/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Godot regenerates texture import metadata per workspace.
+*.png.import
+*.jpg.import
+*.jpeg.import

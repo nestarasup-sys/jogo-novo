@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
+[ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
+[ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
+
+[node name="Garden" type="Node2D"]
+script = ExtResource("1_room")
+room_id = "garden"
+room_title = "Jardim"
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+wall_height = 0.0
+floor_color = Color(0.643137, 0.768627, 0.611765, 1)
+wall_color = Color(0.643137, 0.768627, 0.611765, 1)
+
+[node name="WorldSpace" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Furniture" type="Node2D" parent="WorldSpace"]
+y_sort_enabled = true
+
+[node name="Fountain" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(640, 363)
+script = ExtResource("3_furniture")
+display_name = "FONTE"
+footprint_size = Vector2(180, 134)
+placeholder_color = Color(0.549020, 0.741176, 0.768627, 1)
+
+[node name="Hedge1" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(135, 180)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge2" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(310, 180)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge3" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(955, 180)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge4" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1130, 180)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge5" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(135, 535)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge6" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(310, 535)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge7" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(955, 535)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Hedge8" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1130, 535)
+script = ExtResource("3_furniture")
+display_name = ""
+footprint_size = Vector2(70, 72)
+placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Interactions" type="Node2D" parent="."]
+
+[node name="DoorToCorridor" type="Marker2D" parent="Interactions"]
+position = Vector2(640, 112)
+script = ExtResource("4_interaction")
+interaction_type = "door"
+action_label = "Voltar ao corredor"
+destination_room = "corridor"
+destination_spawn = "from_garden"
+
+[node name="FountainInspect" type="Marker2D" parent="Interactions"]
+position = Vector2(640, 475)
+script = ExtResource("4_interaction")
+interaction_type = "inspect"
+action_label = "Examinar fonte"
+message = "A água da fonte corre suavemente. Um objeto reutilizável para teste."
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="from_corridor" type="Marker2D" parent="Spawns"]
+position = Vector2(640, 158)

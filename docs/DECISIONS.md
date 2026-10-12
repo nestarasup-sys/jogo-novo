@@ -1,47 +1,20 @@
-> **DECISÃO CONFIRMADA — 12/10/2026:** foco de desenvolvimento e testes será **Windows**. Android, embora objetivo futuro, será trabalhado **somente na fase final**. O usuário testou o protótipo inicial e confirmou que funciona. Codex publicou o [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1) numa branch para revisão/merge. A implementação atual segue restrita a quarto, corredor e jardim, movimento, colisão e interação. Lore permanece adiada.
+# Registro de decisões em vigor
 
----
+## Confirmado pelo criador
+- Gênero futuro: exploração social e romance de fantasia imperial, protagonista princesa imperial.
+- Lore, história, famílias e personagens ainda **serão criados depois**.
+- Windows primeiro; Android na última fase.
+- Protagonista oficial já animada permanece como referência de tamanho/movimento.
+- Começar pelos três ambientes quarto, mini corredor e jardim.
+- Prioridade agora: arquitetura modular e reutilizável para **qualquer área ou objeto**, não polir as texturas provisórias.
+- Programação do projeto por assistente/agentes autorizados; o criador não precisa aprender programação para solicitar mudanças.
 
-> **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
+## Implementação provisória (sujeita a validação)
+- Mapas como cenas editáveis, objetos e pontos de interação desacoplados.
+- Catálogo de cenas JSON; IDs fixos `bedroom`, `corridor`, `garden`.
+- Câmera 1.30× para ampliar o mundo, sem tocar em colisões.
+- YSort e footprints de colisão por móvel.
+- Chão e parede substituíveis por propriedade `Texture2D` no componente de ambiente.
 
----
-
-# Registro de decisões — 2026-10-12
-
-Este documento impede que sugestões sejam tratadas como fatos canônicos. **DECIDIDO** = afirmado pelo criador; **PROPOSTO** = sugestão de design ainda ajustável; **ADIADO** = deliberadamente não definir agora.
-
-## DECISÃO MAIS RECENTE: primeiro quarto + mini corredor + jardim, controles e interação (sem lore).\n\n## DECIDIDO
-| Tema | Decisão |
-|---|---|
-| Gênero | Jogo social de exploração com romances profundos, escolhas e consequências |
-| Referência estética | Fantasia imperial/aristocrática do gênero manhwa de romance |
-| Protagonista | Princesa imperial; idade e história pessoal a definir |
-| Mundo | Interiores do palácio, incluindo quarto/aposentos da protagonista |
-| Ritmo | Dias livres + capítulos narrativos condicionais |
-| Romance | Conflitos, ramificações e múltiplos finais |
-| Plataformas | Windows e Android em orientação horizontal |
-| Processo | Criador decide gameplay/lore; ChatGPT + Codex auxiliam na arquitetura e programação |
-| Prioridade atual | **Discutir e projetar mecânicas/gameplay**; escrita de lore depois |
-
-## PROPOSTO (não canônico / não automaticamente aprovado para implementação)
-| Tema | Hipótese de design |
-|---|---|
-| Recorte de mundo V0.1 | Três áreas do palácio: ala privada, ala social, jardins |
-| Relógio MVP | Manhã/tarde/noite, sem contagem contínua de minutos |
-| Sistema social | Afinidade, confiança, romance e conflito; estado de relação |
-| Corte | Reputação pública e rumores independentes dos relacionamentos |
-| Correspondências | Cartas, convites e respostas pela escrivaninha do quarto |
-| Guarda-roupa | Trajes como expressão/etiqueta com eventos, sem monetização |
-| Acesso | Salas abertas/bloqueadas por regras sociais e marcos narrativos |
-| Conteúdo de teste | NPCs anônimos e eventos genéricos, sem história oficial |
-| Stack | Godot 4.x/GDScript, Compatibility, resolução de design 1280x720 |
-| Save | Progresso local, schema versionado, slots a definir |
-
-## ADIADO
-Nome oficial, império e história, origem de conflitos, família imperial, aliados, interesses românticos, elenco, roteiro e finais específicos, arte final (pixel art vs ilustrada), classificação indicativa e mapa completo do reino.
-
-## REVOGADO como história proposta
-O roteiro "A Segunda Coroa" e a personagem Lia eram apenas **exemplos improvisados**; não servem de base canônica e não entram no protótipo atual.
-
-## Regra de atualização
-Nova decisão só vira **DECIDIDO** quando o criador disser que aprovou. Sugestões e exemplos permanecem em **PROPOSTO**.
+## Não definido / não implementar
+Nomes oficiais, lore, NPCs definitivos, capítulos, calendários detalhados, romance, cidade, combate, agricultura, saves, Android. Móveis e texturas enviados são referências substituíveis, não conteúdo canônico.

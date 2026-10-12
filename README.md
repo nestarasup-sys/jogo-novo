@@ -1,63 +1,76 @@
-# Visão atual do projeto
+# Jogo Novo — Fundação modular Godot 4.7.2
 
-**Leia primeiro [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md).** O [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1) já foi **mesclado** na `main` em 12/10/2026; qualquer referência abaixo dizendo que continua aberto está desatualizada. O foco atual é o protótipo funcional para **Windows** (quarto da princesa → corredor → jardim). Android horizontal e o RPG social/narrativo são objetivos futuros. Ideias adicionais estão em [docs/IDEAS_BACKLOG.md](docs/IDEAS_BACKLOG.md); ainda não são autorização para implementar.
+**Situação:** arquitetura modular em revisão numa branch. A `main` contém o protótipo antigo validado; a nova arquitetura precisa passar por Godot Windows antes do merge. A arte/animação da princesa foi preservada.
 
----
+## Conceito (sem lore oficial)
+RPG social 2D de fantasia imperial, protagonista princesa imperial. Primeiro desenvolvemos para **Windows**. Android fica para uma etapa final. A história e os personagens serão definidos pelo diretor criativo posteriormente.
 
-# Estado atual — protótipo inicial validado localmente
+## Experiência mínima atual
+Três lugares conectados: quarto → mini corredor → jardim → retorno, com movimentação, colisões e interações. O foco agora é um **núcleo extensível** para futuras áreas, cenários, móveis e mecânicas, não um quarto decorado ou um sistema de romances prematuro.
 
-> **Central atualizada de decisões e trabalho:** [Central do projeto](docs/PROJECT_HUB.md) · [Fluxo ChatGPT + Codex](docs/CODEX_WORKFLOW.md). Priorizar as decisões atuais e o escopo M1 antes de implementar novos sistemas.
+## Onde mexer na estrutura
+| Preciso mudar... | Local |
+|---|---|
+| Inserir uma nova área | `scenes/rooms/<id>.tscn` + `data/room_catalog.json` |
+| Posicionar móveis | `WorldSpace/Furniture` na cena da área |
+| Trocar a arte de um móvel | `art_texture` no componente `scripts/world/furniture.gd` |
+| Trocar chão/parede | `Visual` com `scripts/world/room_surface.gd` |
+| Adicionar porta ou examinável | `Interactions` com `scripts/world/interaction_point.gd` |
+| Posicionar entrada de uma área | `Spawns` na cena da área |
+| Zoom visual de todo o mundo | `world_zoom` em `scripts/game.gd` |
+| Animações/colisão da princesa | `scripts/player.gd` (preservado) |
+| Painel e dicas | `scripts/prototype_hud.gd` |
 
-**Escopo prioritário aprovado:** quarto da princesa → mini corredor → jardim. A porta inferior do corredor leva ao jardim e a superior retorna ao quarto. A localização é provisória, sem lore.
+**Todos os móveis, portas, entradas e superfícies devem existir como nós/componentes em cenas, não como coordenadas de uma função gigante.**
 
-O protótipo está implementado em `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd` e `tests/smoke.gd`. Em 12/10/2026, importação, abertura headless e smoke foram validados com Godot 4.7.2; o percurso, colisões, janelas e toques simultâneos estão cobertos pelo teste. **Android ainda precisa de exportação e teste em aparelho físico.** Veja [o relatório M1](docs/M1_PLAYABLE.md).
+## Estrutura
+```text
+scenes/
+  main.tscn
+  rooms/
+    bedroom.tscn
+    corridor.tscn
+    garden.tscn
+scripts/
+  game.gd                 # instancia salas, personagem, câmera e HUD
+  player.gd               # protagonista oficial, animação preservada
+  prototype_hud.gd        # interface atual
+  world/
+    room_catalog.gd       # carrega catálogo externo
+    room.gd               # limites, spawns e detecção de interação
+    room_surface.gd       # piso/parede independentes de colisão
+    furniture.gd          # móvel independente com arte e footprint
+    interaction_point.gd  # inspeções/portas independentes
+    world_camera.gd       # escala visual de mundo
+data/
+  room_catalog.json
+assets/
+  characters/princess/    # PNGs oficiais, não substituir
+tests/
+  smoke.gd
+docs/
+  ARCHITECTURE.md
+  HOW_TO_EXTEND.md
+  CURRENT_STATUS.md
+```
 
-A protagonista agora usa os sprites oficiais em `assets/characters/princess/`: parada, caminhada, piscada e olhar lateral. A animação de caminhada mantém os oito sentidos do controle, com espelhamento horizontal temporário; o smoke também verifica as sequências, o alinhamento dos pés e a colisão compacta.
+## Execução e verificação (Windows)
+Abra `project.godot` na Godot 4.7.2 e rode a cena principal. Alternativamente, use a instalação Godot configurada no `Jogar.bat`.
 
-**Para jogar no Windows:** dê duplo clique em `Jogar.lnk` para abrir a cena inicial diretamente no Godot 4.7.2, sem janela de CMD. `Jogar.bat` também inicia o jogo; o CMD fecha depois de encaminhar a execução ao Godot.
+```powershell
+godot --headless --path . --import
+godot --headless --path . --script res://tests/smoke.gd
+godot --path .
+```
 
-Leia primeiro [docs/M1_PLAYABLE.md](docs/M1_PLAYABLE.md), [docs/PALACE_WORLD.md](docs/PALACE_WORLD.md) e [AGENTS.md](AGENTS.md). Abaixo há planejamento anterior, que **não autoriza implementar romance, NPCs, calendário ou história agora**.
+**Validação automática concluída:** Godot 4.7.2 no GitHub Actions Windows — importação e smoke (movimentação física, diagonais, colisões, animação, cenas/portas e zoom) passaram. [Resultado da execução](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346). **Ainda falta inspeção visual e teclado real no PC do criador.**
 
----
+## Ordem de leitura para agentes
+1. [AGENTS.md](AGENTS.md)
+2. [Arquitetura atual](docs/ARCHITECTURE.md)
+3. [Como ampliar sem retrabalho](docs/HOW_TO_EXTEND.md)
+4. [Estado real](docs/CURRENT_STATUS.md)
+5. [Decisões](docs/DECISIONS.md)
+6. [Roadmap](docs/ROADMAP.md)
 
-# Jogo Novo — RPG social de fantasia imperial (pré-produção)
-
-> **Estado:** planejamento de gameplay + protótipo mecânico inicial. Há uma pequena experiência de movimentação e interação funcional; ainda **não existe demo narrativa**. Nome provisório; história/lore **não definidos**.
-
-Jogo 2D top-down para **Windows e Android horizontal**. A protagonista é uma **princesa imperial**, vivendo no palácio de uma ambientação de fantasia aristocrática inspirada no *gênero* de manhwas de romance. O jogo mistura exploração/rotina social com diálogos, escolhas e romances complexos. Referências: *Stardew Valley* (exploração/rotina) e *Amor Doce* (narrativa/romances). **Não reproduzir personagens, roteiro nem assets** dessas obras.
-
-## O que foi decidido
-- Protagonista: princesa imperial; a **história, biografias, mundo e lore serão criados depois pelo diretor criativo**.
-- Mundo 2D explorável, NPCs com rotina, ações/interações e diálogos com escolhas.
-- Dias livres **separados** de capítulos narrativos condicionais.
-- Relações com consequências, conflitos e finais alternativos.
-- Windows + Android em paisagem; controles teclado e toque.
-- Godot 4.x/GDScript; versão exata a fixar quando começar implementação/testes; resolução de design 1280×720 como base proposta.
-- Codex implementará a programação; as decisões criativas são do criador.
-
-## Proposta de recorte jogável (sujeita a ajustes)
-Uma primeira experiência **inteiramente dentro do palácio**, dividida em três áreas de navegação:
-1. **Ala privada:** quarto da princesa, gabinete/closet (esboços de cômodos).
-2. **Ala social:** corredores e salas de convivência.
-3. **Jardins imperiais:** encontros e exploração ao ar livre.
-
-Os três nomes acima são **organização provisória do protótipo**, não mapa definitivo. A capital, academia e outras regiões ficam para avaliação futura. O protótipo deve demonstrar exploração, mudança de período, três NPCs provisórios, conversa com escolhas, um evento ramificado neutro e save/load, **sem exigir lore ou personagens canônicos**.
-
-## Documentos
-- [Decisões com status](docs/DECISIONS.md)
-- [Visão de design](docs/GAME_DESIGN.md)
-- [Mecânicas e loop de gameplay](docs/GAMEPLAY_SYSTEMS.md)
-- [Organização proposta do palácio](docs/PALACE_WORLD.md)
-- [Escopo da versão 0.1](docs/PROTOTYPE_01.md)
-- [Arquitetura](docs/ARCHITECTURE.md)
-- [Dados narrativos](docs/CONTENT_SCHEMA.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Dúvidas em aberto](docs/OPEN_QUESTIONS.md)
-- [Plano de testes](docs/TEST_PLAN.md)
-- [Orientações ao Codex](AGENTS.md)
-
-## Estado técnico
-O projeto, as três cenas, movimento, colisões, interação e portas foram validados em execução headless no Godot 4.7.2. Arte final, conteúdo narrativo e demais sistemas seguem fora deste protótipo. Não há validação de APK ou aparelho Android. Arquivos em `content/` são **exemplos fictícios de schema, não lore**.
-
-## Procedimento
-Discussão criativa → classificar em **decidido / proposta / adiado** → atualizar docs → tarefa isolada no Codex → testes → validar com o diretor criativo. Não confundir inspiração de outros jogos com reprodução de material protegido.
+Arte de parede/chão e sheets de móveis são **substituíveis**; não ditam o modelo de jogo. Sem implementar lore, NPCs, romance, calendário, saves ou Android nesta etapa.

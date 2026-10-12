@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "start_room": "bedroom",
+  "start_spawn": "start",
+  "rooms": {
+    "bedroom": "res://scenes/rooms/bedroom.tscn",
+    "corridor": "res://scenes/rooms/corridor.tscn",
+    "garden": "res://scenes/rooms/garden.tscn"
+  }
+}

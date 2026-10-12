@@ -1,27 +1,37 @@
 extends Node2D
-## GameRoot mínimo: somente quarto, corredor e jardim.
+## Coordenação de jogo: não contém decoração, colisão nem lógica de objeto.
 
-const MAP_SCENES := {
-    "bedroom": preload("res://scenes/maps/bedroom.tscn"),
-    "corridor": preload("res://scenes/maps/corridor.tscn"),
-    "garden": preload("res://scenes/maps/garden.tscn")
-}
-var current_map
+const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
+const PLAYER_SCRIPT = preload("res://scripts/player.gd")
+const CAMERA_SCRIPT = preload("res://scripts/world/world_camera.gd")
+const HUD_SCRIPT = preload("res://scripts/prototype_hud.gd")
+
+@export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
+
+var catalog
 var player
+var camera
 var hud
-var controls
-var current_map_id: String = "bedroom"
+var current_room
+var current_map_id: String = ""
+var _room_changing: bool = false
 
 func _ready() -> void:
     _setup_input()
-    player = preload("res://scripts/player.gd").new()
-    player.name = "PrincessPlaceholder"
+    catalog = ROOM_CATALOG.new()
+    if not catalog.load_catalog():
+        push_error("Não foi possível iniciar: catálogo inválido.")
+        return
+    player = PLAYER_SCRIPT.new()
+    player.name = "Princess"
     add_child(player)
-    hud = preload("res://scripts/prototype_hud.gd").new()
+    camera = CAMERA_SCRIPT.new()
+    camera.name = "WorldCamera"
+    camera.world_zoom = world_zoom
+    player.add_child(camera)
+    hud = HUD_SCRIPT.new()
     add_child(hud)
-    controls = preload("res://scripts/mobile_controls.gd").new()
-    add_child(controls)
-    _enter_map("bedroom", Vector2(640, 420))
+    _enter_room(catalog.start_room, catalog.start_spawn)
 
 func _setup_input() -> void:
     _add_keys("move_left", [KEY_A, KEY_LEFT])
@@ -37,41 +47,69 @@ func _add_keys(action: String, keys: Array) -> void:
     for key in keys:
         var event := InputEventKey.new()
         event.physical_keycode = key
-        InputMap.action_add_event(action, event)
+        if not InputMap.action_has_event(action, event):
+            InputMap.action_add_event(action, event)
 
-func _enter_map(map_id: String, spawn: Vector2) -> void:
-    if not MAP_SCENES.has(map_id):
-        push_error("Map not found: " + map_id)
-        return
-    if is_instance_valid(current_map):
-        remove_child(current_map)
-        current_map.queue_free()
-    current_map = MAP_SCENES[map_id].instantiate()
-    current_map_id = map_id
-    add_child(current_map)
-    move_child(current_map, 0)
+func _enter_room(room_id: String, spawn_id: String) -> bool:
+    if _room_changing:
+        return false
+    _room_changing = true
+    var scene: PackedScene = catalog.get_scene(room_id)
+    if scene == null:
+        _room_changing = false
+        return false
+    var room = scene.instantiate()
+    if room == null or str(room.get("room_id")) != room_id:
+        push_error("room_id inconsistente: " + room_id)
+        if room != null:
+            room.free()
+        _room_changing = false
+        return false
+    var spawn: Vector2 = room.get_spawn(spawn_id)
+    var bounds: Vector2 = room.get("room_size")
+    if spawn.x < 50.0 or spawn.y < 50.0 or spawn.x > bounds.x - 50.0 or spawn.y > bounds.y - 50.0:
+        push_error("Spawn inválido: " + room_id + "/" + spawn_id)
+        room.free()
+        _room_changing = false
+        return false
+    # Instalar o ambiente antes de reparentar o ator compartilhado.
+    # Móveis e personagem pertencem ao mesmo YSort (WorldSpace).
+    var previous_room = current_room
+    current_room = room
+    current_map_id = room_id
+    add_child(current_room)
+    move_child(current_room, 0)
+    player.reparent(current_room.get_node("WorldSpace"))
     player.global_position = spawn
+    if is_instance_valid(previous_room):
+        remove_child(previous_room)
+        previous_room.queue_free()
     player.velocity = Vector2.ZERO
-    hud.set_location({"bedroom": "Quarto da princesa", "corridor": "Corredor do palácio", "garden": "Jardim"}[map_id])
+    camera.set_room_size(bounds)
+    hud.set_location(str(room.get("room_title")))
     hud.set_prompt("")
+    _room_changing = false
+    return true
 
 func _process(_delta: float) -> void:
+    if not is_instance_valid(player) or not is_instance_valid(current_room):
+        return
     if hud.is_message_open():
         player.movement_enabled = false
         if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("close_message"):
             hud.close_message()
         return
     player.movement_enabled = true
-    var near: Dictionary = current_map.nearest_interaction(player.global_position)
-    hud.set_prompt("E / AÇÃO — " + str(near["label"]) if not near.is_empty() else "")
-    if Input.is_action_just_pressed("interact") and not near.is_empty():
-        _activate(near)
+    var nearby: Dictionary = current_room.nearest_interaction(player.global_position)
+    hud.set_prompt("E — " + str(nearby.get("label", "")) if not nearby.is_empty() else "")
+    if Input.is_action_just_pressed("interact") and not nearby.is_empty():
+        _activate_interaction(nearby)
 
-func _activate(item: Dictionary) -> void:
-    match item["kind"]:
+func _activate_interaction(action: Dictionary) -> void:
+    match str(action.get("kind", "")):
         "door":
-            _enter_map(item["target"], item["spawn"])
-        "message":
-            hud.show_message(item["label"], item["text"])
+            _enter_room(str(action.get("target", "")), str(action.get("spawn_id", "")))
+        "inspect":
+            hud.show_message(str(action.get("label", "")), str(action.get("message", "")))
         _:
-            push_warning("Unknown interaction type: " + str(item["kind"]))
+            push_warning("Tipo de interação desconhecido: " + str(action.get("kind", "")))
