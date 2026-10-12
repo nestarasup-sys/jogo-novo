@@ -6,6 +6,8 @@
 
 # Estado atual — protótipo inicial validado localmente
 
+> **Central atualizada de decisões e trabalho:** [Central do projeto](docs/PROJECT_HUB.md) · [Fluxo ChatGPT + Codex](docs/CODEX_WORKFLOW.md). Priorizar as decisões atuais e o escopo M1 antes de implementar novos sistemas.
+
 **Escopo prioritário aprovado:** quarto da princesa → mini corredor → jardim. A porta inferior do corredor leva ao jardim e a superior retorna ao quarto. A localização é provisória, sem lore.
 
 O protótipo está implementado em `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd` e `tests/smoke.gd`. Em 12/10/2026, importação, abertura headless e smoke foram validados com Godot 4.7.2; o percurso, colisões, janelas e toques simultâneos estão cobertos pelo teste. **Android ainda precisa de exportação e teste em aparelho físico.** Veja [o relatório M1](docs/M1_PLAYABLE.md).
