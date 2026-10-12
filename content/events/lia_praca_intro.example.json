@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "lia_praca_intro",
+  "prototype_only": true,
+  "chapter": "chapter_01",
+  "location": "square",
+  "priority": 100,
+  "conditions": {
+    "all": [
+      {
+        "type": "period_equals",
+        "value": "afternoon"
+      },
+      {
+        "type": "flag_equals",
+        "flag": "lia_met",
+        "value": false
+      }
+    ]
+  },
+  "dialogue_id": "lia_intro"
+}
