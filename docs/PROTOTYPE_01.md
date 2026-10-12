@@ -1,35 +1,43 @@
-# Especificação: Protótipo 0.1 (vertical slice)
+# Protótipo 0.1 — Palace Social Slice
 
-## Objetivo
-Provar que **exploração livre + capítulos condicionais + romance com consequências** funcionam numa experiência curta e persistente. Não é a versão final.
+**Status:** escopo mecânico proposto para validação pelo criador. Sem lore canônica ou personagens finais.
 
-## Conteúdo
-- 3 mapas: casa, praça e escola, com colisão e passagens.
-- 1 protagonista com nome escolhido.
-- 3 NPCs, sendo Lia a rota demonstrativa; outros dois com diálogos/rotinas simples.
-- Dia e períodos manhã, tarde e noite; avanço controlado por interação/descanso.
-- 1 capítulo com apresentação, conflito e duas resoluções alternativas.
-- Menu Novo Jogo/Continuar/Sair.
-- Diálogo com retrato provisório, escolha e efeitos de afinidade/confiança/romance/conflito.
-- Persistência e load com posição, flags, escolhas e progresso.
-- Input teclado e touch paisagem, UI legível em diferentes proporções.
+## Hipótese a testar
+É divertido explorar um palácio, seguir rotinas de NPCs, escolher respostas e lidar com consequências **sem depender de cenas roteirizadas lineares o tempo todo**?
 
-## História demonstrativa (rascunho)
-Lia frequenta a praça e lida com uma situação pessoal. Jogador a conhece, pode ganhar confiança, descobre um segredo e escolhe como agir num confronto. Resoluções alternativas: confiança reconstruída ou distanciamento. **Não é roteiro final.**
+## Recorte
+- **3 cenas/macroáreas provisórias:** `private_wing` (começando no quarto da princesa), `social_wing`, `imperial_gardens`; conectadas, com colisões.
+- **Protagonista princesa imperial:** identificação narrativa genérica, nome editável se aprovado; **não definir biografia, família ou trama**.
+- **3 NPCs de teste anônimos:** aparências provisórias, cronograma simples e diálogos neutros; não são elenco.
+- **Dias livres:** manhã/tarde/noite, avançados pelo jogador e pelo descanso.
+- **Diálogos:** retrato temporário, falas, escolhas e variáveis persistentes.
+- **Uma cena de teste ramificada:** por exemplo, um pedido de ajuda rotineiro em um dos jardins; duas escolhas e dois resultados diferentes, **sem implicações de lore**.
+- **Relações:** protótipo de afinidade/confiança/romance/conflito com pelo menos duas variáveis realmente usadas em condições.
+- **Capítulos:** fase/capítulo de teste que só avança após flag, nunca automaticamente por dias.
+- **Save/load:** dia, período, mapa, posição, flags, capítulo, eventos concluídos e relações.
+- **UI:** HUD dia/período, interação, diálogo, menu; teclado e layout landscape/touch previstos.
+
+## Experiência demonstrada
+1. Protagonista aparece nos aposentos.
+2. Anda até a ala social e encontra NPC.
+3. Avança período e vê rotina de NPC mudar.
+4. Chega aos jardins e encontra evento com duas escolhas.
+5. Cada escolha altera estado e uma conversa seguinte reage.
+6. Dorme, passa outro dia, sem pular capítulo arbitrariamente.
+7. Salva, fecha, carrega e mantém tudo.
 
 ## Critérios de aceite
-- Novo Jogo inicia sem erro; 3 mapas conectados; paredes respeitadas.
-- Cada NPC troca de localização nos períodos configurados.
-- Ler diálogo pausa movimento/tempo, mas não trava UI.
-- Duas escolhas com consequências persistentes levam a resoluções distintas.
-- Capítulo não avança apenas ao dormir nem bloqueia permanentemente caso encontro opcional passe.
-- Mesmo efeito não aplica duas vezes após fechar/reabrir.
-- Save/load reconstitui progresso e posição.
-- Build Windows abre e é testado; APK Android horizontal abre e é testado em aparelho real (exigir validação humana).
-- Relatório explícito dos testes executados e pendências.
+- Zero transições para coordenadas inválidas; 3 áreas acessíveis de ida/volta.
+- Pelo menos um NPC muda de local por período; ausência não deixa interação invisível.
+- Sem diálogo permitir mover jogador ou avançar período.
+- Alterações de stats e flags aplicadas uma vez por choice instance/event.
+- Duas resoluções distintas alcançáveis a partir de um mesmo save-base.
+- Eventos obrigatórios recuperáveis caso uma janela temporal tenha passado.
+- Save/load round-trip válido e corrupção tratada com erro legível.
+- Testes automatizados do domínio; builds testadas em Windows e Android por etapas, sem afirmar que foram executadas antes disso.
 
 ## Não escopo
-Simulação detalhada em minutos, estações, multiplayer, combate, agricultura, pesca e comércio complexo.
+História oficial, rota romântica completa, monarquia/família, capital, escolas, agricultura, combate, dinheiro, roupas complexas, reputação sistêmica e correio completo.
 
-## Marcos
-M1 estrutura e movimento; M2 mapas e interações; M3 relógio e rotinas; M4 diálogos e eventos; M5 relacionamentos e capítulos; M6 saves; M7 interface mobile/exportação; M8 testes e polimento.
+## Ordem
+M1 base+movimento; M2 mapa+interação; M3 período+NPC; M4 diálogo+conteúdo; M5 relações+evento/capítulo neutro; M6 save; M7 toque/export; M8 QA. Ver `ROADMAP.md`.
