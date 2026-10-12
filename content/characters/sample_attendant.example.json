@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "sample_attendant",
+  "prototype_only": true,
+  "display_name": "Pessoa de teste",
+  "initial_stats": {
+    "affinity": 0,
+    "trust": 0,
+    "romance": 0,
+    "conflict": 0
+  },
+  "relationship_state": "acquaintances"
+}
