@@ -1,38 +1,41 @@
-# Jogo Novo — RPG social narrativo
+# Jogo Novo — RPG social de fantasia imperial (pré-produção)
 
-> Projeto em pré-produção. Nome temporário: **Jogo Novo**. Ainda não é uma demo jogável.
+> **Estado:** planejamento de gameplay + bootstrap técnico. Ainda **não existe demo jogável**. Nome provisório; história/lore **não definidos**.
 
-Jogo 2D top-down para **Windows e Android (horizontal)**, combinando exploração e rotinas sociais inspiradas em *Stardew Valley* com narrativas, escolhas e romances ramificados inspirados em *Amor Doce*. Referências são de **mecânicas/gênero**, não autorização para copiar arte, personagens ou conteúdo de terceiros.
+Jogo 2D top-down para **Windows e Android horizontal**. A protagonista é uma **princesa imperial adulta**, vivendo no palácio de uma ambientação de fantasia aristocrática inspirada no *gênero* de manhwas de romance. O jogo mistura exploração/rotina social com diálogos, escolhas e romances complexos. Referências: *Stardew Valley* (exploração/rotina) e *Amor Doce* (narrativa/romances). **Não reproduzir personagens, roteiro nem assets** dessas obras.
 
-## Visão
-- Explore casa, praça, escola e futuramente uma cidade maior.
-- Viva dias livres com períodos de manhã, tarde e noite.
-- Avance capítulos conforme **condições narrativas**, nunca apenas pela passagem de dias.
-- Construa relações com afinidade, confiança, romance, conflito, estados de relacionamento e escolhas persistentes.
-- Experimente rotas e desfechos diferentes.
-- Jogue com teclado no Windows e controles de toque no Android horizontal.
+## O que foi decidido
+- Protagonista: princesa imperial; a **história, biografias, mundo e lore serão criados depois pelo diretor criativo**.
+- Mundo 2D explorável, NPCs com rotina, ações/interações e diálogos com escolhas.
+- Dias livres **separados** de capítulos narrativos condicionais.
+- Relações com consequências, conflitos e finais alternativos.
+- Windows + Android em paisagem; controles teclado e toque.
+- Godot 4.x/GDScript; versão exata a fixar quando começar implementação/testes; resolução de design 1280×720 como base proposta.
+- Codex implementará a programação; as decisões criativas são do criador.
 
-## Decisões
-- Engine: **Godot 4.x estável**, versão exata a fixar antes de implementar e testar; GDScript.
-- 2D top-down; resolução de design 1280×720; renderizador Compatibility como ponto de partida.
-- História e definições de NPC/eventos em JSON UTF-8; dados validados, IDs estáveis.
-- Save local versionado em `user://`; comunicação preferencialmente por sinais.
-- Programação feita com ChatGPT/Codex, com o criador liderando direção criativa, avaliação e testes.
-- **V0.1 = vertical slice**, não um Stardew completo.
+## Proposta de recorte jogável (sujeita a ajustes)
+Uma primeira experiência **inteiramente dentro do palácio**, dividida em três áreas de navegação:
+1. **Ala privada:** quarto da princesa, gabinete/closet (esboços de cômodos).
+2. **Ala social:** corredores e salas de convivência.
+3. **Jardins imperiais:** encontros e exploração ao ar livre.
 
-## Estado atual
-Este repositório contém documentos, estrutura básica do projeto e **exemplos de dados**. Não há garantias de jogabilidade, build Android/Windows ou sistema narrativo implementado ainda.
+Os três nomes acima são **organização provisória do protótipo**, não mapa definitivo. A capital, academia e outras regiões ficam para avaliação futura. O protótipo deve demonstrar exploração, mudança de período, três NPCs provisórios, conversa com escolhas, um evento ramificado neutro e save/load, **sem exigir lore ou personagens canônicos**.
 
-## Comece aqui
-1. [Visão e decisões](docs/GAME_DESIGN.md)
-2. [Arquitetura](docs/ARCHITECTURE.md)
-3. [Escopo e critérios da V0.1](docs/PROTOTYPE_01.md)
-4. [Formato dos dados](docs/CONTENT_SCHEMA.md)
-5. [Roadmap](docs/ROADMAP.md)
-6. [Instruções do Codex](AGENTS.md)
+## Documentos
+- [Decisões com status](docs/DECISIONS.md)
+- [Visão de design](docs/GAME_DESIGN.md)
+- [Mecânicas e loop de gameplay](docs/GAMEPLAY_SYSTEMS.md)
+- [Organização proposta do palácio](docs/PALACE_WORLD.md)
+- [Escopo da versão 0.1](docs/PROTOTYPE_01.md)
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [Dados narrativos](docs/CONTENT_SCHEMA.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Dúvidas em aberto](docs/OPEN_QUESTIONS.md)
+- [Plano de testes](docs/TEST_PLAN.md)
+- [Orientações ao Codex](AGENTS.md)
 
-## Para abrir
-Instale a versão estável da Godot 4.x escolhida pelo projeto e abra `project.godot`. A cena atual é somente uma tela provisória de identificação. Comandos headless e exports serão configurados e validados durante a implementação.
+## Estado técnico
+Há `project.godot` e uma cena inicial estática de pré-produção. Sistemas, movimento, mapas, diálogos e builds **ainda precisam ser feitos/testados**. Arquivos em `content/` são **exemplos fictícios de schema, não lore**.
 
-## Processo
-Criar uma branch por tarefa, PR revisável e teste antes do merge. Não anunciar funcionalidades como prontas sem validação. Dúvidas de design vão para `docs/OPEN_QUESTIONS.md`.
+## Procedimento
+Discussão criativa → classificar em **decidido / proposta / adiado** → atualizar docs → tarefa isolada no Codex → testes → validar com o diretor criativo. Não confundir inspiração de outros jogos com reprodução de material protegido.
