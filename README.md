@@ -1,3 +1,9 @@
+# Visão atual do projeto
+
+**Leia primeiro [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md).** O [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1) já foi **mesclado** na `main` em 12/10/2026; qualquer referência abaixo dizendo que continua aberto está desatualizada. O foco atual é o protótipo funcional para **Windows** (quarto da princesa → corredor → jardim). Android horizontal e o RPG social/narrativo são objetivos futuros. Ideias adicionais estão em [docs/IDEAS_BACKLOG.md](docs/IDEAS_BACKLOG.md); ainda não são autorização para implementar.
+
+---
+
 # Estado atual — protótipo inicial validado localmente
 
 **Escopo prioritário aprovado:** quarto da princesa → mini corredor → jardim. A porta inferior do corredor leva ao jardim e a superior retorna ao quarto. A localização é provisória, sem lore.
