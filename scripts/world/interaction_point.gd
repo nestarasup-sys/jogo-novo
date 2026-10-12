@@ -20,7 +20,13 @@ func get_interaction() -> Dictionary:
     }
 
 func _draw() -> void:
-    if not Engine.is_editor_hint():
-        return
-    draw_circle(Vector2.ZERO, 7.0, Color("#f5d598"))
-    draw_arc(Vector2.ZERO, interaction_radius, 0.0, TAU, 64, Color(0.94, 0.75, 0.26, 0.35), 1.5)
+    if interaction_type == "door":
+        # Entrada provisória visível até receber arte própria.
+        var outline := Rect2(-55.0, -13.0, 110.0, 26.0)
+        draw_rect(outline, Color("#8c6055"))
+        draw_rect(outline, Color("#f0d0a1"), false, 3.0)
+        draw_circle(Vector2.ZERO, 5.0, Color("#ffdea5"))
+    elif Engine.is_editor_hint():
+        draw_circle(Vector2.ZERO, 7.0, Color("#f5d598"))
+    if Engine.is_editor_hint():
+        draw_arc(Vector2.ZERO, interaction_radius, 0.0, TAU, 64, Color(0.94, 0.75, 0.26, 0.35), 1.5)

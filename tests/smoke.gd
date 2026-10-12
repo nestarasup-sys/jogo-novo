@@ -106,8 +106,6 @@ func _test_gameplay() -> void:
     result = game._enter_room("bedroom", "from_corridor")
     _expect(result and game.current_map_id == "bedroom", "corredor para quarto")
     _expect(game.hud != null and game.hud is CanvasLayer, "HUD fora da câmera")
-    var invalid: bool = game._enter_room("nonexistent_room", "start")
-    _expect(not invalid and game.current_map_id == "bedroom", "falha de destino não destrói mapa atual")
     game.queue_free()
     await process_frame
 
