@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "sample_garden_meeting",
+  "prototype_only": true,
+  "chapter": "chapter_test",
+  "location": "imperial_gardens",
+  "priority": 100,
+  "conditions": {
+    "all": [
+      {
+        "type": "period_equals",
+        "value": "afternoon"
+      },
+      {
+        "type": "flag_equals",
+        "flag": "sample_meeting_done",
+        "value": false
+      }
+    ]
+  },
+  "dialogue_id": "sample_garden_dialogue"
+}
