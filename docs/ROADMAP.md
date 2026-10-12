@@ -1,3 +1,7 @@
+> **ESTADO MAIS RECENTE — 12/10/2026:** o protótipo quarto → corredor → jardim foi **testado pelo criador**. Codex concluiu validações headless na Godot 4.7.2 segundo o [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1), ainda **aberto e não mesclado**. Próxima ação administrativa: revisar e integrar PR #1. **Prioridade de plataforma: Windows apenas**; Android/SDK/APK/joysticks touch/QA mobile ficam na fase final. Próximas mecânicas serão definidas e aprovadas individualmente, sem começar NPCs, romance, calendário ou lore por conta própria.
+
+---
+
 > **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
 
 ---
