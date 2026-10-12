@@ -1,3 +1,7 @@
+# Questões futuras (não implementar agora)
+
+A prioridade atual é validar movimento/interação nos três ambientes: quarto, mini corredor e jardim. Toda discussão de romance, mundo e rotina está pausada para a fase seguinte. Ver [M1_PLAYABLE.md](M1_PLAYABLE.md).
+
 # Questões abertas — design de gameplay e direção criativa
 
 ## Gameplay prioritário para conversar
