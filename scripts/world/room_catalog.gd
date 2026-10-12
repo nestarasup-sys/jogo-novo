@@ -1,7 +1,7 @@
 extends RefCounted
 ## Registro de cenas: adicionar uma área exige só um arquivo .tscn e uma entrada JSON.
 
-const CATALOG_PATH := "res://data/room_catalog.json"
+const CATALOG_PATH = "res://data/room_catalog.json"
 var room_paths: Dictionary = {}
 var start_room: String = ""
 var start_spawn: String = ""
