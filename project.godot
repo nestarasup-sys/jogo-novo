@@ -1,18 +1,18 @@
-; Projeto inicial de documentação e bootstrap — não é demo jogável.
+; Protótipo mecânico 2D — Godot 4.7.2
 config_version=5
 
 [application]
-config/name="Jogo Novo (pré-produção)"
+config/name="Jogo Novo — Protótipo Palácio"
 run/main_scene="res://scenes/main.tscn"
-
-[rendering]
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
-textures/default_filters/use_nearest_mipmap_filter=false
+config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/handheld/orientation=1
+window/handheld/orientation=0
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
