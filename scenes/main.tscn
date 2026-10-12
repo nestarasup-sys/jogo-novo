@@ -21,5 +21,5 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Center"]
 layout_mode = 2
-text = "Jogo Novo — base de pré-produção\nPróxima etapa: implementar movimento e mundo."
+text = "RPG social de fantasia imperial\nPré-produção de gameplay: palácio da princesa\nAinda não é um protótipo jogável."
 horizontal_alignment = 1
