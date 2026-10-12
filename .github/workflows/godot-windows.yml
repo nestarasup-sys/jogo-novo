@@ -1,0 +1,44 @@
+name: Godot Windows smoke
+
+on:
+  pull_request:
+    paths:
+      - "**/*.gd"
+      - "**/*.tscn"
+      - "**/*.tres"
+      - "data/**"
+      - "assets/**"
+      - ".github/workflows/godot-windows.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  godot-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.7.2
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $url = "https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_win64.exe.zip"
+          $zip = Join-Path $env:RUNNER_TEMP "godot.zip"
+          Invoke-WebRequest -Uri $url -OutFile $zip
+          $dir = Join-Path $env:RUNNER_TEMP "godot"
+          Expand-Archive -Path $zip -DestinationPath $dir
+          $exe = Get-ChildItem -Path $dir -Recurse -Filter "*_win64.exe" | Select-Object -First 1
+          if (-not $exe) { throw "Godot executable not found in downloaded archive" }
+          "GODOT_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Import assets and parse scenes
+        shell: pwsh
+        run: |
+          & $env:GODOT_EXE --headless --path . --import
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run modular-world smoke tests
+        shell: pwsh
+        run: |
+          & $env:GODOT_EXE --headless --path . --script res://tests/smoke.gd
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
