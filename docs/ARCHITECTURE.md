@@ -42,7 +42,7 @@ O GameRoot valida cena e spawn antes de substituir a sala, adiciona a nova sala,
 Sistema de diálogo ramificado, save/load, horários, NPCs, reputação, combate, quests ou Android. Módulos futuros só serão escritos quando houver regra aprovada e um teste jogável. Evitar "arquitetura completa" de classes sem função.
 
 ## Testabilidade
-`tests/smoke.gd` deve assegurar catálogo, cenas e spawns, transições, continuidade da protagonista, animação, interação e câmera. A importação e a inspeção em Godot 4.7.2 Windows são **obrigatórias antes de mesclar**. O repositório não possui teste de engine executado por este assistente nesta refatoração.
+`tests/smoke.gd` deve assegurar catálogo, cenas e spawns, transições, continuidade da protagonista, animação, interação e câmera. A importação e a inspeção em Godot 4.7.2 Windows são **obrigatórias antes de mesclar**. O [workflow Windows](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346) executou importação e smoke Godot 4.7.2 com sucesso. Ainda não substitui inspeção visual/manual no PC do criador.
 
 ## Decisão de migração
 `scenes/maps/*.tscn` e `scripts/prototype_map.gd` eram protótipos, substituídos por `scenes/rooms/*.tscn` e componentes. Não depender do formato antigo em novo código. O histórico do Git permite restauração.
