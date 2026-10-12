@@ -1,34 +1,28 @@
-> **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
+# Plano de testes — arquitetura modular (pendente execução)
 
----
+## Automático
+- Catálogo JSON presente, schema v1 e todas cenas carregáveis.
+- room_id da cena concorda com o catálogo.
+- Visual, WorldSpace/Furniture, Interactions e Spawns presentes.
+- Todas as portas apontam para ambientes e spawn existentes.
+- Quarto inicial e volta jardim→corredor→quarto preservados.
+- Prince AnimatedSprite2D com idle, walk, blink e look_back.
+- Colisão da princesa existe; objetos têm footprint.
+- Câmera 1.30×, limites 1280×720 e HUD CanvasLayer separado.
+- Mensagem de inspeção abre e fecha; destino inválido não destrói a cena.
 
-# Plano de validação — Protótipo de palácio
+## Manual Windows
+- No quarto, testar oito direções, colisão com cama/mesa, alcance do objeto e saída.
+- No corredor, passar sem prender na porta, entrar e sair.
+- No jardim, fonte e passagem de volta.
+- Verificar que objeto/pessoa troca de profundidade conforme Y (YSort).
+- Mudar temporariamente zoom para 1.0 e 1.3 no editor: confirmar o mundo e o HUD.
+- Inserir móveis/texture dummy (sem Git) e verificar que o componente aceita troca.
 
-**Estado:** plano, ainda não testes executados.
-
-## Automáticos (a criar)
-- Godot importa/abre projeto headless sem falhas.
-- Interações não selecionam NPC atrás de parede nem múltiplos alvos ao mesmo tempo.
-- Transições de `private_wing` ↔ `social_wing` ↔ `imperial_gardens` usam spawn válido.
-- Agenda troca NPCs corretamente nos períodos.
-- Tempo não avança durante diálogo e capítulo não avança só por dormir.
-- JSON: IDs/referências/operadores inválidos causam erro detectável.
-- Condições, efeitos e estatísticas são determinísticos e limitados.
-- Escolha repetida não duplica efeito, inclusive após reabrir save.
-- Saves corrompidos falham sem apagar cópias válidas.
-- Testar variantes A/B do evento genérico e restaurar a variante correta.
-
-## Manuais Windows
-Novo jogo, movimento, colisão, portas, conversa, escolha, avanço de tempo, save/load, interface de diálogos e menu.
-
-## Manuais Android em aparelho real
-APK landscape, joystick touch e botão, legibilidade, layouts >16:9, safe areas, transições, save/load, performance sem engasgos excessivos.
-
-## Trilha de teste
-1. Importação/execução headless quando houver Godot.
-2. Domínio usando runner de testes quando implementado.
-3. Jogo manual no PC.
-4. Build Android e teste físico.
-5. Relatório de ambiente, versões, comandos, falhas e gravação/prints se útil.
-
-Não afirmar execução de testes ainda indisponíveis.
+## Execução exigida
+```powershell
+godot --headless --path . --import
+godot --headless --path . --script res://tests/smoke.gd
+godot --path .
+```
+**Nenhum teste desta refatoração foi executado em Godot pelo assistente.** O histórico de teste do PR #1/#2 não valida mudanças novas.
