@@ -1,8 +1,12 @@
+> **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
+
+---
+
 # Registro de decisões — 2026-10-12
 
 Este documento impede que sugestões sejam tratadas como fatos canônicos. **DECIDIDO** = afirmado pelo criador; **PROPOSTO** = sugestão de design ainda ajustável; **ADIADO** = deliberadamente não definir agora.
 
-## DECIDIDO
+## DECISÃO MAIS RECENTE: primeiro quarto + mini corredor + jardim, controles e interação (sem lore).\n\n## DECIDIDO
 | Tema | Decisão |
 |---|---|
 | Gênero | Jogo social de exploração com romances profundos, escolhas e consequências |
