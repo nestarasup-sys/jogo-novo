@@ -1,8 +1,12 @@
+> **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
+
+---
+
 # Palácio — mapa lógico de gameplay (proposta)
 
 **Status:** arquitetura espacial sugerida, **não aprovada como planta definitiva**. A origem da protagonista como princesa imperial e seu quarto no palácio estão definidos.
 
-## Três macroáreas para o protótipo
+## Três macroáreas antigas (adiadas; não implementar)
 | Zona / map_id | Propósito | Microambientes potenciais |
 |---|---|---|
 | `private_wing` | Base segura da protagonista, descanso e objetos pessoais | quarto, corredor, gabinete, closet |
@@ -15,7 +19,7 @@
 ```text
 [Ala privada / quarto] <-> [Ala social / corredor] <-> [Jardins imperiais]
 ```
-As conexões devem funcionar nos dois sentidos, ter spawns definidos e não teletransportar o jogador para parede.
+Nas versões futuras, as conexões devem funcionar nos dois sentidos, ter spawns definidos e não teletransportar o jogador para parede.
 
 ## Experiência de cada área
 - Ala privada: início/fim do dia e objeto pessoal interativo de teste (futura escrivaninha/correspondência).
