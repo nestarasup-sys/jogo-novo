@@ -1,6 +1,6 @@
 # Jogo Novo — Fundação modular Godot 4.7.2
 
-**Situação:** arquitetura modular em revisão numa branch. A `main` contém o protótipo antigo validado; a nova arquitetura precisa passar por Godot Windows antes do merge. A arte/animação da princesa foi preservada.
+**Situação:** arquitetura modular integrada à `main` pelo [PR #4](https://github.com/nestarasup-sys/jogo-novo/pull/4). Importação e testes automáticos Godot 4.7.2 em Windows passaram; ainda falta teste visual/manual no PC do criador. A arte/animação da princesa foi preservada.
 
 ## Conceito (sem lore oficial)
 RPG social 2D de fantasia imperial, protagonista princesa imperial. Primeiro desenvolvemos para **Windows**. Android fica para uma etapa final. A história e os personagens serão definidos pelo diretor criativo posteriormente.
