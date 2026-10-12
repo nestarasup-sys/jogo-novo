@@ -29,16 +29,20 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile $zip
           $dir = Join-Path $env:RUNNER_TEMP "godot"
           Expand-Archive -Path $zip -DestinationPath $dir
-          $exe = Get-ChildItem -Path $dir -Recurse -Filter "*_win64.exe" | Select-Object -First 1
+          $exe = Get-ChildItem -Path $dir -Recurse -Filter "*_win64_console.exe" | Select-Object -First 1
           if (-not $exe) { throw "Godot executable not found in downloaded archive" }
           "GODOT_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
       - name: Import assets and parse scenes
         shell: pwsh
         run: |
-          & $env:GODOT_EXE --headless --path . --import
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $output = & $env:GODOT_EXE --headless --path . --editor --import 2>&1 | Out-String
+          Write-Output $output
+          if ($LASTEXITCODE -ne 0 -or $output -match 'ERROR:|SCRIPT ERROR:') { throw "Godot import failed" }
       - name: Run modular-world smoke tests
         shell: pwsh
         run: |
-          & $env:GODOT_EXE --headless --path . --script res://tests/smoke.gd
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $output = & $env:GODOT_EXE --headless --path . --script res://tests/smoke.gd 2>&1 | Out-String
+          Write-Output $output
+          if ($LASTEXITCODE -ne 0 -or $output -match 'ERROR:|SCRIPT ERROR:|FAIL:' -or $output -notmatch 'PASS: catálogo') {
+            throw "Godot smoke failed (see engine log)"
+          }
