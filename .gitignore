@@ -1,0 +1,21 @@
+# Godot cache and local state
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+# Generated builds
+build/
+dist/
+*.apk
+*.aab
+*.exe
+# Secrets / Android signing
+*.keystore
+*.jks
+.env
+.env.*
+!.env.example
+# Editor/OS
+.DS_Store
+Thumbs.db
+.vscode/
