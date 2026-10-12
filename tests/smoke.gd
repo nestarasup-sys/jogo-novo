@@ -115,6 +115,8 @@ func _test_playable_prototype() -> void:
 	await process_frame
 	await physics_frame
 	_expect(game.current_map_id == "bedroom", "inicia no quarto")
+	_expect(game.current_map.bedroom_floor_texture != null, "textura JPG real do chão foi carregada")
+	_expect(game.current_map.bedroom_wall_texture != null, "textura JPG real da parede foi carregada")
 	# Zoom de mundo não deve exigir aumentar escala do sprite ou colisões.
 	var camera: Camera2D = game.player.get_node_or_null("WorldCamera") as Camera2D
 	_expect(camera != null, "câmera de mundo existe")
@@ -123,6 +125,8 @@ func _test_playable_prototype() -> void:
 			"mundo ampliado uniformemente em 30%")
 		_expect(camera.limit_left == 0 and camera.limit_top == 0 and camera.limit_right == 1280 and camera.limit_bottom == 720,
 			"limites de câmera correspondem ao mapa")
+		_expect(camera.global_position.distance_to(game.player.global_position) < 0.1,
+			"câmera acompanha a posição da protagonista")
 
 	_expect(game.player.global_position.distance_to(Vector2(640, 420)) < 1.0, "spawn inicial acessível")
 	_expect(InputMap.has_action("move_right") and InputMap.has_action("interact"), "ações de teclado registradas")
