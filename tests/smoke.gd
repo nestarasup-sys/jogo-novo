@@ -62,6 +62,10 @@ func _test_catalog_and_rooms() -> void:
         var wanted: Array = expected[room_id].duplicate()
         wanted.sort()
         _expect(destinations == wanted, "grafo de portas: " + room_id)
+        _expect(room.get_node("WorldSpace").y_sort_enabled, "Y-sort por ambiente: " + room_id)
+        for furniture in room.get_node("WorldSpace/Furniture").get_children():
+            if furniture.is_solid:
+                _expect(furniture.get_node_or_null("Footprint") != null, "móvel com footprint: " + room_id + "/" + furniture.name)
         _expect(room.get_child_count() >= 5, "ambiente tem estrutura e limites: " + room_id)
         room.free()
 
@@ -89,6 +93,7 @@ func _test_gameplay() -> void:
         _expect(is_equal_approx(cam.zoom.x, 1.30) and is_equal_approx(cam.zoom.y, 1.30), "zoom uniforme 130%")
         _expect(cam.limit_right == 1280 and cam.limit_bottom == 720, "limites de câmera")
     _expect(game.current_room.get_node("WorldSpace/Furniture").get_child_count() == 4, "móveis do quarto isolados")
+    await _test_player_movement(game)
     game.player.global_position = Vector2(445, 281)
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
     _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
@@ -107,6 +112,53 @@ func _test_gameplay() -> void:
     _expect(result and game.current_map_id == "bedroom", "corredor para quarto")
     _expect(game.hud != null and game.hud is CanvasLayer, "HUD fora da câmera")
     game.queue_free()
+    await process_frame
+
+func _test_player_movement(game) -> void:
+    # Checa o movimento efetivo no motor físico (não só a presença de scripts).
+    await _release_inputs()
+    game.player.global_position = Vector2(600, 400)
+    game.player.velocity = Vector2.ZERO
+    Input.action_press("move_right")
+    for _i in range(12):
+        await physics_frame
+    Input.action_release("move_right")
+    var axis_distance: float = game.player.global_position.distance_to(Vector2(600, 400))
+    _expect(axis_distance > 25.0 and axis_distance < 65.0, "andar para a direita altera a posição")
+    await _release_inputs()
+    game.player.global_position = Vector2(600, 400)
+    game.player.velocity = Vector2.ZERO
+    Input.action_press("move_right")
+    Input.action_press("move_down")
+    for _i in range(12):
+        await physics_frame
+    Input.action_release("move_right")
+    Input.action_release("move_down")
+    var delta: Vector2 = game.player.global_position - Vector2(600, 400)
+    _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
+    _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
+    await _release_inputs()
+    # A mesa tem footprint no intervalo x 815..1040, y 188..310.
+    game.player.global_position = Vector2(790, 250)
+    game.player.velocity = Vector2.ZERO
+    Input.action_press("move_right")
+    for _i in range(35):
+        await physics_frame
+    Input.action_release("move_right")
+    _expect(game.player.global_position.x < 801.0, "a princesa não atravessa a escrivaninha")
+    await _release_inputs()
+    game.player.global_position = Vector2(60, 400)
+    game.player.velocity = Vector2.ZERO
+    Input.action_press("move_left")
+    for _i in range(30):
+        await physics_frame
+    Input.action_release("move_left")
+    _expect(game.player.global_position.x >= 49.0, "limite esquerdo bloqueia a princesa")
+    await _release_inputs()
+
+func _release_inputs() -> void:
+    for action in ["move_left", "move_right", "move_up", "move_down", "interact"]:
+        Input.action_release(action)
     await process_frame
 
 func _expect(condition: bool, label: String) -> void:
