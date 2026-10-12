@@ -1,15 +1,24 @@
-# Decisões pendentes e ideias para avaliar
+# Questões abertas — design de gameplay e direção criativa
 
-Estas questões NÃO bloqueiam a fundação técnica:
-1. Nome definitivo, premissa e ambientação (escola, universidade, cidade adulta etc.).
-2. Visual: pixel art versus arte 2D ilustrada e como combinar retratos com mapas.
-3. Número final de NPCs/rotas, identidade de cada personagem e opções de romance.
-4. Tom e classificação indicativa, limites dos temas sensíveis e público-alvo.
-5. Sistema de tempo depois da demo: horários exatos, calendário anual, eventos perdíveis e proteção contra softlock.
-6. Inventário e atividades cotidianas da versão completa.
-7. Múltiplos slots e opções de acessibilidade/localização.
-8. Versão exata de patch Godot 4.7 a fixar, após testar ambiente local.
-9. Resolução real dos sprites e estratégia de câmera/escala.
-10. Política de licenças de assets e créditos.
+## Gameplay prioritário para conversar
+1. **Mapa:** prefere salas separadas com transição na porta, mapas grandes contínuos ou mistura?
+2. **Relógio:** períodos acionados manualmente ou atividades consomem tempo? Quanto de liberdade por período?
+3. **Interação:** botão contextual + proximidade, toque no objeto/NPC, ou dois modos?
+4. **Romance:** mostrar números de afinidade ou manter feedback por diálogos, reações e diário?
+5. **Reputação da corte:** deseja atributo sistêmico público e rumores, ou só consequências via flags?
+6. **Correspondências:** caixa de cartas e convites deve ser mecânica central ou detalhe narrativo?
+7. **Vestidos/etiqueta:** cosmético, condição de evento, ou ambos?
+8. **Rotina dos NPCs:** localização previsível por período ou agenda surpresa com pistas?
 
-Ideias exploratórias em `GAME_DESIGN.md` não viram escopo sem aprovação.
+## Técnica/produção
+9. Pixel art no mundo + retratos ilustrados, ou 2D ilustrado integral?
+10. Escala de personagens e interiores; câmera fixa ou com zoom controlado?
+11. Um save ou múltiplos slots? Autosave no descanso e saves manuais?
+12. Como limitar projeto para Android de diferentes faixas de potência?
+13. Fixar versão de manutenção da Godot após verificar ambiente real.
+14. Controle e tamanho mínimo de textos para toque/portrait não suportado.
+
+## Lore — deixado deliberadamente para depois
+Nome e história do império, princesa, família, títulos, política, elenco final, romances oficiais, capítulos verdadeiros, finais e classificação indicativa. **Não preencher esses campos pelo Codex.**
+
+Consultar `DECISIONS.md` antes de transformar proposta em decisão.
