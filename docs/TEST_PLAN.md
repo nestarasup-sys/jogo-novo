@@ -1,23 +1,30 @@
-# Plano de testes
+# Plano de validação — Protótipo de palácio
+
+**Estado:** plano, ainda não testes executados.
 
 ## Automáticos (a criar)
-- Importação headless do projeto sem erro.
-- Dados JSON válidos; IDs/referências duplicadas ou inexistentes rejeitados.
-- Condições `all`/`any` e operadores whitelist avaliados corretamente.
-- Evento repetido não duplica ajuste de stat ou progresso.
-- Capítulo não avança só pela passagem de dias.
-- Mudanças de relacionamento respeitam limites [0,100].
-- Save/load round-trip com posições, períodos, relações, flags e capítulo.
-- Saves corrompidos retornam erro controlado sem perder backup.
+- Godot importa/abre projeto headless sem falhas.
+- Interações não selecionam NPC atrás de parede nem múltiplos alvos ao mesmo tempo.
+- Transições de `private_wing` ↔ `social_wing` ↔ `imperial_gardens` usam spawn válido.
+- Agenda troca NPCs corretamente nos períodos.
+- Tempo não avança durante diálogo e capítulo não avança só por dormir.
+- JSON: IDs/referências/operadores inválidos causam erro detectável.
+- Condições, efeitos e estatísticas são determinísticos e limitados.
+- Escolha repetida não duplica efeito, inclusive após reabrir save.
+- Saves corrompidos falham sem apagar cópias válidas.
+- Testar variantes A/B do evento genérico e restaurar a variante correta.
 
-## Manuais
-- Windows: Novo Jogo, movimentação, três mapas, conversa, conflito, save/load.
-- Android físico: APK abre em landscape, diferentes proporções, toque e safe areas.
-- Diálogo: texto legível, menu/cancel, avanço seguro sem clicar duas opções.
-- Desfechos: pelo menos dois percursos documentados geram finais diferentes.
+## Manuais Windows
+Novo jogo, movimento, colisão, portas, conversa, escolha, avanço de tempo, save/load, interface de diálogos e menu.
 
-## Execução futura
-Após o Codex criar o runner, documentar os comandos exatos. Não afirmar que testes foram executados antes da existência do runner e do ambiente Godot/SDK.
+## Manuais Android em aparelho real
+APK landscape, joystick touch e botão, legibilidade, layouts >16:9, safe areas, transições, save/load, performance sem engasgos excessivos.
 
-## Relato obrigatório
-Ambiente, versão Godot, comandos, dispositivo, resultado, falhas reproduzíveis e limitações.
+## Trilha de teste
+1. Importação/execução headless quando houver Godot.
+2. Domínio usando runner de testes quando implementado.
+3. Jogo manual no PC.
+4. Build Android e teste físico.
+5. Relatório de ambiente, versões, comandos, falhas e gravação/prints se útil.
+
+Não afirmar execução de testes ainda indisponíveis.
