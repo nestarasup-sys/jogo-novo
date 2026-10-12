@@ -12,6 +12,8 @@
 
 O protótipo está implementado em `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd` e `tests/smoke.gd`. Em 12/10/2026, importação, abertura headless e smoke foram validados com Godot 4.7.2; o percurso, colisões, janelas e toques simultâneos estão cobertos pelo teste. **Android ainda precisa de exportação e teste em aparelho físico.** Veja [o relatório M1](docs/M1_PLAYABLE.md).
 
+A protagonista agora usa os sprites oficiais em `assets/characters/princess/`: parada, caminhada, piscada e olhar lateral. A animação de caminhada mantém os oito sentidos do controle, com espelhamento horizontal temporário; o smoke também verifica as sequências, o alinhamento dos pés e a colisão compacta.
+
 **Para jogar no Windows:** dê duplo clique em `Jogar.lnk` para abrir a cena inicial diretamente no Godot 4.7.2, sem janela de CMD. `Jogar.bat` também inicia o jogo; o CMD fecha depois de encaminhar a execução ao Godot.
 
 Leia primeiro [docs/M1_PLAYABLE.md](docs/M1_PLAYABLE.md), [docs/PALACE_WORLD.md](docs/PALACE_WORLD.md) e [AGENTS.md](AGENTS.md). Abaixo há planejamento anterior, que **não autoriza implementar romance, NPCs, calendário ou história agora**.
