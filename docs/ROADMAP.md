@@ -8,8 +8,8 @@
 - [x] Reescrever teste smoke para a nova arquitetura (código, **não executado**).
 - [x] Godot Windows: importação e parser sem erros, comprovados no Actions.
 - [x] Godot Windows: smoke ampliado passa com assets, movimento, colisões, câmera e portas ([execução](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346)).
-- [ ] Godot Windows: abrir janela e percorrer todos os ambientes com controle.
-- [ ] Revisar + corrigir regressões e mesclar branch na `main`.
+- [ ] Godot Windows: inspeção visual/manual no PC do criador, percorrendo todos os ambientes com controles.
+- [x] Revisar e integrar a estrutura à `main` (PR #4, após smoke Windows).
 
 ## Próximas etapas, uma por vez (não autorizadas automaticamente)
 1. Afinar escala, câmera e movimento após teste visual.
