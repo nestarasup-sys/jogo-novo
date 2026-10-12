@@ -1,3 +1,7 @@
+> **DECISÃO ATUAL — Windows primeiro (12/10/2026).** O criador testou a movimentação e informou que o protótipo funciona. O Codex publicou validações da Godot 4.7.2 no [PR #1](https://github.com/nestarasup-sys/jogo-novo/pull/1), ainda pendente de merge. **Desenvolver, executar, testar e distribuir inicialmente apenas para Windows**. Android continua como plataforma futura, mas **não executar tarefas Android, SDK, APK, touchscreen ou adaptação de UI mobile** nesta fase, salvo ordem expressa do criador. Não expandir mecânicas sem novo escopo aprovado. O resultado do PR está na branch `codex/m1-playable-movement`; documentos da main podem estar desatualizados até merge.
+
+---
+
 > **ATUALIZAÇÃO DE ESCOPO (12/10/2026):** a etapa atualmente autorizada é SOMENTE testar e corrigir os controles de **quarto → mini corredor → jardim**. A porta inferior do corredor conduz ao jardim. A cena inicial é o quarto da princesa. Código inicial em `scenes/maps/`, `scripts/game.gd`, `player.gd`, `prototype_map.gd`, `prototype_hud.gd`, `mobile_controls.gd`, e teste `tests/smoke.gd`. **Ainda não foi executado na Godot**. O Codex deve importar, validar, testar e consertar, sem adicionar NPC, história, capítulos, tempo ou romances. Consultar [M1_PLAYABLE.md](docs/M1_PLAYABLE.md). Todas as ideias abaixo são backlog de longo prazo, não tarefas desta rodada.
 
 ---
