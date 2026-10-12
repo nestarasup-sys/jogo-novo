@@ -2,7 +2,7 @@
 
 **Fonte atual para novas alterações:** `README.md`, `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/HOW_TO_EXTEND.md`, `docs/DECISIONS.md` e `docs/CURRENT_STATUS.md`.
 
-A branch de refatoração organiza o mundo como cenas independentes e componentes compartilhados. O código do jogador e sprites da princesa são preservados. A branch ainda depende de validação Godot Windows.
+O [PR #4](https://github.com/nestarasup-sys/jogo-novo/pull/4) integrou a fundação modular na `main`. O código da princesa e seus sprites foram preservados. Importação/smoke passaram no Godot Windows via CI; a inspeção visual/manual permanece pendente.
 
 Documentos antigos de protótipos e sugestões narrativas são **histórico e backlog**, não substituem o registro de decisões atual. A prioridade é arquitetura reutilizável, não implementação de lore.
 
