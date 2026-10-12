@@ -1,8 +1,8 @@
-# Estado atual — protótipo de controles
+# Estado atual — protótipo inicial validado localmente
 
 **Escopo prioritário aprovado:** quarto da princesa → mini corredor → jardim. A porta inferior do corredor leva ao jardim e a superior retorna ao quarto. A localização é provisória, sem lore.
 
-O código já foi adicionado ao repositório: `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd`, `tests/smoke.gd`. Movimento 8 direções, colisão, interação, portas, HUD e botões touch. **Não testado em Godot/Android ainda.**
+O protótipo está implementado em `scenes/maps/{bedroom,corridor,garden}.tscn`, `scripts/{game,player,prototype_map,prototype_hud,mobile_controls}.gd` e `tests/smoke.gd`. Em 12/10/2026, importação, abertura headless e smoke foram validados com Godot 4.7.2; o percurso, colisões, janelas e toques simultâneos estão cobertos pelo teste. **Android ainda precisa de exportação e teste em aparelho físico.** Veja [o relatório M1](docs/M1_PLAYABLE.md).
 
 Leia primeiro [docs/M1_PLAYABLE.md](docs/M1_PLAYABLE.md), [docs/PALACE_WORLD.md](docs/PALACE_WORLD.md) e [AGENTS.md](AGENTS.md). Abaixo há planejamento anterior, que **não autoriza implementar romance, NPCs, calendário ou história agora**.
 
@@ -10,7 +10,7 @@ Leia primeiro [docs/M1_PLAYABLE.md](docs/M1_PLAYABLE.md), [docs/PALACE_WORLD.md]
 
 # Jogo Novo — RPG social de fantasia imperial (pré-produção)
 
-> **Estado:** planejamento de gameplay + bootstrap técnico. Ainda **não existe demo jogável**. Nome provisório; história/lore **não definidos**.
+> **Estado:** planejamento de gameplay + protótipo mecânico inicial. Há uma pequena experiência de movimentação e interação funcional; ainda **não existe demo narrativa**. Nome provisório; história/lore **não definidos**.
 
 Jogo 2D top-down para **Windows e Android horizontal**. A protagonista é uma **princesa imperial**, vivendo no palácio de uma ambientação de fantasia aristocrática inspirada no *gênero* de manhwas de romance. O jogo mistura exploração/rotina social com diálogos, escolhas e romances complexos. Referências: *Stardew Valley* (exploração/rotina) e *Amor Doce* (narrativa/romances). **Não reproduzir personagens, roteiro nem assets** dessas obras.
 
@@ -45,7 +45,7 @@ Os três nomes acima são **organização provisória do protótipo**, não mapa
 - [Orientações ao Codex](AGENTS.md)
 
 ## Estado técnico
-Há `project.godot` e uma cena inicial estática de pré-produção. Sistemas, movimento, mapas, diálogos e builds **ainda precisam ser feitos/testados**. Arquivos em `content/` são **exemplos fictícios de schema, não lore**.
+O projeto, as três cenas, movimento, colisões, interação e portas foram validados em execução headless no Godot 4.7.2. Arte final, conteúdo narrativo e demais sistemas seguem fora deste protótipo. Não há validação de APK ou aparelho Android. Arquivos em `content/` são **exemplos fictícios de schema, não lore**.
 
 ## Procedimento
 Discussão criativa → classificar em **decidido / proposta / adiado** → atualizar docs → tarefa isolada no Codex → testes → validar com o diretor criativo. Não confundir inspiração de outros jogos com reprodução de material protegido.
