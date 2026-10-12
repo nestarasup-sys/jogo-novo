@@ -63,7 +63,7 @@ godot --headless --path . --script res://tests/smoke.gd
 godot --path .
 ```
 
-**Os testes da arquitetura nova ainda não foram executados em uma instalação de Godot nesta mudança.** O fato de testes antigos terem passado não prova que a refatoração passou.
+**Validação automática concluída:** Godot 4.7.2 no GitHub Actions Windows — importação e smoke (movimentação física, diagonais, colisões, animação, cenas/portas e zoom) passaram. [Resultado da execução](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346). **Ainda falta inspeção visual e teclado real no PC do criador.**
 
 ## Ordem de leitura para agentes
 1. [AGENTS.md](AGENTS.md)
