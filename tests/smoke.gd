@@ -115,6 +115,15 @@ func _test_playable_prototype() -> void:
 	await process_frame
 	await physics_frame
 	_expect(game.current_map_id == "bedroom", "inicia no quarto")
+	# Zoom de mundo não deve exigir aumentar escala do sprite ou colisões.
+	var camera: Camera2D = game.player.get_node_or_null("WorldCamera") as Camera2D
+	_expect(camera != null, "câmera de mundo existe")
+	if camera != null:
+		_expect(is_equal_approx(camera.zoom.x, 1.30) and is_equal_approx(camera.zoom.y, 1.30),
+			"mundo ampliado uniformemente em 30%")
+		_expect(camera.limit_left == 0 and camera.limit_top == 0 and camera.limit_right == 1280 and camera.limit_bottom == 720,
+			"limites de câmera correspondem ao mapa")
+
 	_expect(game.player.global_position.distance_to(Vector2(640, 420)) < 1.0, "spawn inicial acessível")
 	_expect(InputMap.has_action("move_right") and InputMap.has_action("interact"), "ações de teclado registradas")
 	var animated_sprite := game.player.get_node_or_null("PrincessAnimatedSprite") as AnimatedSprite2D
