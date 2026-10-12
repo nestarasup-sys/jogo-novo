@@ -1,31 +1,37 @@
-# Regras para Codex e outros agentes
+# AGENTS.md — Contrato de trabalho com Codex
 
-Leia `README.md`, `docs/GAME_DESIGN.md`, `docs/ARCHITECTURE.md`, `docs/PROTOTYPE_01.md` e `docs/CONTENT_SCHEMA.md` antes de alterar código.
+Antes de escrever código, ler `README.md`, `docs/DECISIONS.md`, `docs/GAMEPLAY_SYSTEMS.md`, `docs/PALACE_WORLD.md`, `docs/PROTOTYPE_01.md`, `docs/ARCHITECTURE.md` e `docs/CONTENT_SCHEMA.md`.
 
-## Regras inegociáveis
-1. Não confunda **proposta/documentação** com implementação concluída.
-2. Trabalhe em entregas pequenas; não implemente todo o jogo numa única mudança.
-3. Priorize Godot 4.x/GDScript tipado, código legível e arquitetura de baixa dependência.
-4. No estágio inicial, somente `GameState` e `GameEvents` podem ser Autoloads; outros sistemas devem ter ciclo de vida explícito.
-5. Evite dependências circulares, scripts monolíticos e lógica de capítulo hardcoded em mapas.
-6. JSON de conteúdo é **dado**, nunca código; não usar `eval` nem execução dinâmica; validar tipos, IDs e referências.
-7. Uma escolha não pode aplicar efeitos duas vezes; eventos precisam de IDs e ordem determinística.
-8. O calendário não faz capítulos avançarem automaticamente. Eventos opcionais não podem causar softlocks.
-9. Saves devem ser versionados, validados e compatíveis com futuras migrações; escrever com segurança.
-10. Todo sistema novo precisa de teste reproduzível e documentação atualizada.
-11. Testar Windows e Android separadamente. Não alegar testes no Android físico sem dispositivo real.
-12. Nunca adicionar imagens, fontes, áudios ou dependências sem licença conhecida; não copiar assets de jogos de referência.
-13. Preservar decisões aprovadas pelo criador e registrar mudanças de escopo em documentos.
-14. Priorizar acessibilidade: legibilidade, navegação touch/teclado, áreas seguras Android.
+## Autoridade de design
+O usuário é o diretor criativo. **Não inventar lore canônica**, famílias, sucessão, segredos, biografias, romances oficiais, nomes definitivos nem roteiro principal sem autorização explícita. Ideias anteriores do assistente (como decreto falso, Lia, príncipe herdeiro, história da sucessão) **não são canonizadas**. Use conteúdo neutro marcado como `example` em testes/protótipos.
 
-## Conclusão de cada tarefa
-Informar resumo, arquivos alterados, comandos executados, testes aprovados/falhos, limitações e próximo passo. Se Godot/Android SDK não estiverem disponíveis, declarar que os testes relevantes **não foram executados**.
+## Decisões firmes
+- RPG social de fantasia imperial, protagonista princesa imperial adulta.
+- Godot 4.x, GDScript; multiplataforma Windows + Android horizontal.
+- Top-down explorável, rotina de NPCs, diálogos/romances com consequências.
+- Dias livres independentes de capítulos por condições; sem travar progressão por perder evento opcional.
+- Três zonas do palácio são **proposta provisória** para vertical slice, não mapa final.
 
-## Ordem recomendada
-Fundação e movimento → mapas/transições → relógio/rotina → diálogos/JSON → relacionamentos e eventos → capítulos → save/load → UI touch → exports e testes reais. Ver `docs/ROADMAP.md`.
+## Implementação
+1. Desenvolva de modo incremental; uma milestone por vez (ver `docs/ROADMAP.md`).
+2. Separe UI, mundo, domínio e dados; priorize scripts tipados e serviços testáveis.
+3. No início, somente `GameState` e `GameEvents` como Autoloads; mais globais exigem justificativa técnica.
+4. Identificadores em snake_case estáveis; JSON declarativo com validação e whitelist. **Nunca executar código a partir de JSON**.
+5. Eventos/efeitos precisam ser determinísticos e idempotentes, inclusive após carregar saves.
+6. Registre escolhas, flags, capítulo, horário/período, mapa, posição e relações em save versionado.
+7. Projete teclado e toque em conjunto; diálogo pausa movimento e tempo, mas não bloqueia UI.
+8. Não adicione agricultura, combate, economia complexa, geografia extra, correspondência/reputação/guarda-roupa completos sem aprovação de escopo.
+9. Referências a obras são inspirações de gênero. Não copiar personagens, cenários ou arte. Verificar licença de assets e plugins.
+10. Não adicionar tokens, credenciais, chaves de assinatura Android ou outputs de build ao Git.
 
-## Padrões
-- Código, IDs e caminhos: inglês consistente (snake_case em dados/arquivos; classes conforme padrões Godot).
-- Textos voltados ao jogador e docs: português do Brasil.
-- Novos eventos/rotas adicionados via dados usando o schema documentado.
-- Nunca inserir segredos, tokens, keystores ou credenciais no Git.
+## Entregas
+Para cada tarefa: mudanças, testes realmente executados, ambiente, limitações, riscos e próximos passos. Se não houver Godot/Android SDK, declarar o que **não** foi testado. Nunca reportar build validada em dispositivo físico sem testes reais.
+
+## Processo
+- Documentar novas ideias em `OPEN_QUESTIONS.md` ou `GAMEPLAY_SYSTEMS.md` como propostas.
+- Modificar `DECISIONS.md` para "decidido" **somente após aprovação explícita do criador**.
+- Usar branches/PRs por funcionalidade quando houver código significativo; evitar mudanças não relacionadas na mesma entrega.
+- Código/IDs em inglês; interface e documentação em português brasileiro.
+
+## Próxima implementação (quando autorizada)
+M1: projeto Godot validado, GameRoot mínimo, cena e movimento top-down/colisões, input teclado e scaffolding touch, teste headless. **Não começar novas etapas só porque há documentação delas.**
