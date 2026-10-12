@@ -16,30 +16,34 @@ wall_height = 260.0
 floor_color = Color(0.909804, 0.847059, 0.835294, 1)
 wall_color = Color(0.827451, 0.776471, 0.862745, 1)
 
-[node name="Furniture" type="Node2D" parent="."]
+[node name="WorldSpace" type="Node2D" parent="."]
+y_sort_enabled = true
 
-[node name="Bed" type="StaticBody2D" parent="Furniture"]
+[node name="Furniture" type="Node2D" parent="WorldSpace"]
+y_sort_enabled = true
+
+[node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(282, 277)
 script = ExtResource("3_furniture")
 display_name = "CAMA"
 footprint_size = Vector2(225, 165)
 placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
 
-[node name="WritingDesk" type="StaticBody2D" parent="Furniture"]
+[node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(927, 249)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
 placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
 
-[node name="Wardrobe" type="StaticBody2D" parent="Furniture"]
+[node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(186, 544)
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
 placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
 
-[node name="Armchair" type="StaticBody2D" parent="Furniture"]
+[node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1092, 535)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"

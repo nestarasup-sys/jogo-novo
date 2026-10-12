@@ -42,7 +42,7 @@ func _test_catalog_and_rooms() -> void:
         root.add_child(room)
         _expect(room.room_id == room_id, "room_id confere: " + room_id)
         _expect(room.get_node_or_null("Visual") != null, "visual por ambiente: " + room_id)
-        _expect(room.get_node_or_null("Furniture") != null, "móveis independentes: " + room_id)
+        _expect(room.get_node_or_null("WorldSpace/Furniture") != null, "móveis independentes: " + room_id)
         _expect(room.get_node_or_null("Interactions") != null, "interações independentes: " + room_id)
         _expect(room.get_node_or_null("Spawns") != null, "spawns independentes: " + room_id)
         var destinations: Array[String] = []
@@ -71,6 +71,7 @@ func _test_gameplay() -> void:
     await process_frame
     await physics_frame
     _expect(game.current_map_id == "bedroom", "começa no quarto")
+    _expect(game.player.get_parent() == game.current_room.get_node("WorldSpace"), "protagonista participa do YSort do cenário")
     _expect(game.player.global_position.distance_to(Vector2(640, 420)) < 0.5, "spawn inicial preservado")
     _expect(InputMap.has_action("move_right") and InputMap.has_action("interact"), "inputs registrados")
     var sprite: AnimatedSprite2D = game.player.get_node_or_null("PrincessAnimatedSprite") as AnimatedSprite2D
@@ -87,7 +88,7 @@ func _test_gameplay() -> void:
     if cam != null:
         _expect(is_equal_approx(cam.zoom.x, 1.30) and is_equal_approx(cam.zoom.y, 1.30), "zoom uniforme 130%")
         _expect(cam.limit_right == 1280 and cam.limit_bottom == 720, "limites de câmera")
-    _expect(game.current_room.get_node("Furniture").get_child_count() == 4, "móveis do quarto isolados")
+    _expect(game.current_room.get_node("WorldSpace/Furniture").get_child_count() == 4, "móveis do quarto isolados")
     game.player.global_position = Vector2(445, 281)
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
     _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
@@ -99,6 +100,7 @@ func _test_gameplay() -> void:
     _expect(result and game.current_map_id == "corridor", "quarto para corredor")
     result = game._enter_room("garden", "from_corridor")
     _expect(result and game.current_map_id == "garden", "corredor para jardim")
+    _expect(game.player.get_parent() == game.current_room.get_node("WorldSpace"), "YSort preservado em transição")
     result = game._enter_room("corridor", "from_garden")
     _expect(result and game.current_map_id == "corridor", "jardim para corredor")
     result = game._enter_room("bedroom", "from_corridor")

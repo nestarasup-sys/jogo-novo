@@ -72,15 +72,18 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
         room.free()
         _room_changing = false
         return false
-    # Só descarregar o ambiente anterior depois que o novo tiver sido validado.
-    if is_instance_valid(current_room):
-        remove_child(current_room)
-        current_room.queue_free()
+    # Instalar o ambiente antes de reparentar o ator compartilhado.
+    # Móveis e personagem pertencem ao mesmo YSort (WorldSpace).
+    var previous_room = current_room
     current_room = room
     current_map_id = room_id
     add_child(current_room)
     move_child(current_room, 0)
+    player.reparent(current_room.get_node("WorldSpace"))
     player.global_position = spawn
+    if is_instance_valid(previous_room):
+        remove_child(previous_room)
+        previous_room.queue_free()
     player.velocity = Vector2.ZERO
     camera.set_room_size(bounds)
     hud.set_location(str(room.get("room_title")))
