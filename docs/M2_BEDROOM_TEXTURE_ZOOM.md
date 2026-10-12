@@ -15,7 +15,7 @@
 ## Assets preparados FORA do repositório nesta fase
 O pacote `bedroom_textures_codex.zip`, fornecido junto do pedido ao Codex, inclui:
 - `assets/environments/bedroom/floor_wood.jpg` (640 × 640): versão otimizada do chão fornecido pelo criador.
-- `assets/environments/bedroom/wallpaper.jpg` (640 × 220): faixa superior recortada e otimizada da parede fornecida pelo criador.
+- `assets/environments/bedroom/wallpaper.jpg` (640 × 260): faixa superior recortada e otimizada da parede fornecida pelo criador.
 
 **ATENÇÃO:** o Codex deve importar esses dois arquivos binários no Git. Eles ainda não foram publicados pelo assistente: conectores de conteúdo do GitHub não oferecem envio direto dos arquivos binários deste chat. `scripts/prototype_map.gd` verifica sua presença por `ResourceLoader.exists` e usa cores provisórias com aviso até a inclusão, para não quebrar o protótipo.
 
