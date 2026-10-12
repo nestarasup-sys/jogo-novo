@@ -1,71 +1,75 @@
-# Contratos preliminares de conteúdo
+# Schema provisório de conteúdo (v1, ainda não implementado)
 
-**Status: proposta de v1, a implementar pelo Codex.** Todos os arquivos UTF-8; IDs únicos e estáveis em snake_case. Alterar schema exige versão/migração.
+Todos os arquivos são dados JSON UTF-8; IDs em snake_case imutáveis quando usados em saves. Exemplo genérico **não representa lore nem NPC definitivo**.
 
-## Convenção
-- `characters/*.json`: ID, nome, stats iniciais, metadados visuais.
-- `dialogues/*.json`: conjunto de nós e escolhas.
-- `events/*.json`: localização, prioridade, condições, referência a diálogo.
-- `schedules/*.json`: NPC, período, local e spawn.
-- `chapters/*.json`: marcos e critérios de conclusão.
+## Pastas previstas
+- `content/characters/*.json`: NPCs e stats iniciais.
+- `content/dialogues/*.json`: textos, nós e choices.
+- `content/events/*.json`: gatilhos, prioridades e condições.
+- Futuras: `content/schedules/`, `content/chapters/`, `content/locations/`, `content/letters/` **somente se implementadas**.
 
-### Exemplo de evento
+## Referência simples de personagem
 ```json
 {
   "schema_version": 1,
-  "id": "lia_praca_intro",
-  "chapter": "chapter_01",
-  "location": "square",
-  "priority": 100,
-  "conditions": {
-    "all": [
-      {"type": "period_equals", "value": "afternoon"},
-      {"type": "flag_equals", "flag": "lia_met", "value": false}
-    ]
-  },
-  "dialogue_id": "lia_intro"
+  "id": "sample_attendant",
+  "prototype_only": true,
+  "display_name": "Pessoa de teste",
+  "initial_stats": {"affinity": 0, "trust": 0, "romance": 0, "conflict": 0},
+  "relationship_state": "acquaintances"
 }
 ```
 
-### Exemplo de diálogo
+## Referência de evento
 ```json
 {
   "schema_version": 1,
-  "id": "lia_intro",
+  "id": "sample_garden_meeting",
+  "prototype_only": true,
+  "chapter": "chapter_test",
+  "location": "imperial_gardens",
+  "priority": 100,
+  "conditions": {"all": [
+    {"type": "period_equals", "value": "afternoon"},
+    {"type": "flag_equals", "flag": "sample_meeting_done", "value": false}
+  ]},
+  "dialogue_id": "sample_garden_dialogue"
+}
+```
+
+## Referência de diálogo
+```json
+{
+  "schema_version": 1,
+  "id": "sample_garden_dialogue",
+  "prototype_only": true,
   "start_node": "start",
   "nodes": {
     "start": {
-      "speaker": "lia",
-      "text": "Eu gosto de vir aqui para pensar.",
+      "speaker": "sample_attendant",
+      "text": "Poderia me ajudar com uma tarefa?",
       "choices": [
-        {
-          "id": "stay",
-          "text": "Posso ficar com você?",
-          "effects": [
-            {"type": "adjust_stat", "character": "lia", "stat": "affinity", "delta": 5},
-            {"type": "set_flag", "flag": "lia_met", "value": true}
-          ],
-          "next": "end"
-        },
-        {
-          "id": "leave",
-          "text": "Talvez em outro momento.",
-          "effects": [{"type": "set_flag", "flag": "lia_met", "value": true}],
-          "next": "end"
-        }
+        {"id": "help", "text": "Posso ajudar.", "effects": [
+          {"type": "adjust_stat", "character": "sample_attendant", "stat": "trust", "delta": 5},
+          {"type": "set_flag", "flag": "sample_meeting_done", "value": true}
+        ], "next": "end"},
+        {"id": "decline", "text": "Agora não posso.", "effects": [
+          {"type": "set_flag", "flag": "sample_meeting_done", "value": true}
+        ], "next": "end"}
       ]
     },
-    "end": {"speaker": "lia", "text": "Até mais.", "end": true}
+    "end": {"speaker": "sample_attendant", "text": "Entendido.", "end": true}
   }
 }
 ```
 
-## Regras do interpretador
-- Comparações explícitas; operadores desconhecidos são erro de validação.
-- Estatísticas limitadas a [0,100]; estados relacionais são enums explícitos.
-- `choice_id` é único dentro do diálogo; efeitos aplicados uma vez por instância narrativa registrada.
-- Erros de referência (personagem, diálogo, evento, capítulo, node) identificados antes de rodar.
-- IDs não são texto mostrado ao jogador; tradução futura deverá referenciar chaves estáveis.
-- Dados de exemplo NÃO garantem que o runtime já os processe.
+## Contratos/validações que o Codex implementará
+- `schema_version` explícito; IDs não duplicados e todas referências resolvidas.
+- Opções possuem `id` único no diálogo; choices geram instância com chave idempotente.
+- Stats limitadas a 0–100; valores fora do limite são clamp ou erro com teste documentado.
+- Whitelist de condições e efeitos (ver `ARCHITECTURE.md`); não aceitar `eval`/código arbitrário.
+- Erro de referência faltante encerra carregamento do evento em modo de desenvolvimento.
+- Texto de UI em pt-BR, IDs técnicos inglês.
+- Extensões como reputação, cartas/vestidos são propostas e não entram no schema v1 automaticamente.
 
-Ver exemplos em `content/`.
+**Importante:** estes documentos e arquivos `.example.json` são exemplos de design; o jogo ainda não tem parser/validador de JSON funcional.
