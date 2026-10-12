@@ -24,7 +24,7 @@
 13. Não começar sistema de NPCs, economia, cartas, roupas, diálogos completos, romantização ou Android sem escopo explícito.
 
 ## Trabalho atual
-A branch `refactor/modular-world-foundation` substitui o protótipo monolítico. O PR anterior das texturas (#3) foi fechado sem merge porque precisa ser redesenhado. **Não volte a ele e não sobreponha a nova arquitetura com `prototype_map.gd`.**
+O [PR #4](https://github.com/nestarasup-sys/jogo-novo/pull/4) integrou a arquitetura modular à `main`. O PR anterior das texturas (#3) foi fechado sem merge. **Não restaure `prototype_map.gd` nem reconstrua objetos em funções monolíticas.**
 
 ## Como entregar
 Informe arquivos mudados, motivos, testes executados e falhas, regressões, limitações e recomendação de merge. Um teste headless não equivale a jogabilidade inspecionada na janela Windows.
