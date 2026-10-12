@@ -2,7 +2,8 @@
 .godot/
 .import/
 export.cfg
-export_presets.cfg
+# Commitar apenas presets de exportação SEM senhas/keystores.
+# Arquivos de credenciais e chaves continuam ignorados abaixo.
 # Generated builds
 build/
 dist/
