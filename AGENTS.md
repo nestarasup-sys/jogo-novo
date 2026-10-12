@@ -1,4 +1,4 @@
-# Orientação prioritária para o Codex — 12/10/2026
+> **NOVO ESCOPO TÉCNICO AUTORIZADO — 2026-10-12:** integrar apenas `floor_wood.jpg` + `wallpaper.jpg` do quarto fornecidos no pacote `bedroom_textures_codex.zip` e validar câmera `zoom = 1.30`. A princesa animada está integrada à main (PR #2 mesclado). **Código-base do novo recurso está na branch `feat/bedroom-textures-camera-130`**. Leia `docs/M2_BEDROOM_TEXTURE_ZOOM.md`. Não alterar móveis da sheet, outros cenários, história ou Android. Apenas Windows; validar visualmente e manter scripts funcionais.\n\n---\n\n# Orientação prioritária para o Codex — 12/10/2026
 
 Leia **[docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md)** antes de começar. O PR #1 foi **mesclado** na `main`; referências antigas abaixo a PR pendente ou a testes ainda não executados são históricas e estão desatualizadas. Priorize Windows e preserve a experiência quarto → corredor → jardim. Não implemente novas mecânicas ou lore sem tarefa específica aprovada. Sugestões futuras ficam em [docs/IDEAS_BACKLOG.md](docs/IDEAS_BACKLOG.md).
 
