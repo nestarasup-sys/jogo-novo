@@ -25,4 +25,4 @@ godot --headless --path . --import
 godot --headless --path . --script res://tests/smoke.gd
 godot --path .
 ```
-**Nenhum teste desta refatoração foi executado em Godot pelo assistente.** O histórico de teste do PR #1/#2 não valida mudanças novas.
+**Automáticos concluídos:** [GitHub Actions Windows / Godot 4.7.2](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346) passou importação e smoke incluindo movimento, diagonais e colisões. **Testes visuais/manuais no Windows ainda pendentes.**
