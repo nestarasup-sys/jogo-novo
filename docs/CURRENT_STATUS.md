@@ -9,7 +9,7 @@
 ## Em andamento
 - O PR #3 (texturas e câmera sobre o construtor monolítico) **foi fechado sem merge**. Seus materiais continuam no histórico do Git; suas escolhas estéticas não são obrigatórias.
 - Branch `refactor/modular-world-foundation` refatora os três ambientes para cenas independentes, cômodos componíveis, zoom unificado e componentes reusáveis.
-- **Código enviado, mas importação e teste Godot Windows dessa nova arquitetura estão pendentes.** Não declarar que a refatoração está validada ou mesclada antes dos testes.
+- **Verificação automática aprovada:** [Godot Windows 4.7.2 / Actions](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346). A importação e os testes smoke da nova arquitetura passaram, incluindo movimento real, diagonais, colisões, links de salas e sprite da protagonista. **Ainda falta inspeção visual e controles manuais no Windows do criador.**
 
 ## Escopo de agora
 Somente melhorar fundação para criar qualquer área/objeto sem retrabalho. Manter quarto, corredor, jardim, colisões, portas, interações e protagonista. Nenhum novo conteúdo narrativo, NPC, tempo, save ou plataforma.
