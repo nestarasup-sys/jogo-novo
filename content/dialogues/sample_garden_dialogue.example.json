@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "sample_garden_dialogue",
+  "prototype_only": true,
+  "start_node": "start",
+  "nodes": {
+    "start": {
+      "speaker": "sample_attendant",
+      "text": "Poderia me ajudar com uma tarefa?",
+      "choices": [
+        {
+          "id": "help",
+          "text": "Posso ajudar.",
+          "effects": [
+            {
+              "type": "adjust_stat",
+              "character": "sample_attendant",
+              "stat": "trust",
+              "delta": 5
+            },
+            {
+              "type": "set_flag",
+              "flag": "sample_meeting_done",
+              "value": true
+            }
+          ],
+          "next": "end"
+        },
+        {
+          "id": "decline",
+          "text": "Agora não posso.",
+          "effects": [
+            {
+              "type": "set_flag",
+              "flag": "sample_meeting_done",
+              "value": true
+            }
+          ],
+          "next": "end"
+        }
+      ]
+    },
+    "end": {
+      "speaker": "sample_attendant",
+      "text": "Entendido.",
+      "end": true
+    }
+  }
+}
