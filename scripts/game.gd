@@ -4,6 +4,48 @@ extends Node2D
 
 const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
 
+const FURNITURE_MENUS: Dictionary = {
+	"vanity": {"title": "Penteadeira", "options": [
+		{"id": "examine", "label": "Examinar"},
+		{"id": "appearance", "label": "Arrumar aparência"}
+	]},
+	"wardrobe": {"title": "Guarda-roupa", "options": [
+		{"id": "change_clothes", "label": "Trocar roupa"},
+		{"id": "organize", "label": "Organizar"}
+	]},
+	"writing_desk": {"title": "Escrivaninha", "options": [
+		{"id": "read_letters", "label": "Ler cartas"},
+		{"id": "write", "label": "Escrever"}
+	]},
+	"bookshelf": {"title": "Estante", "options": [
+		{"id": "read_book", "label": "Ler livro"},
+		{"id": "examine", "label": "Examinar"}
+	]},
+	"armchair": {"title": "Poltrona", "options": [
+		{"id": "sit", "label": "Sentar"},
+		{"id": "rest", "label": "Descansar"}
+	]},
+	"chest": {"title": "Baú", "options": [
+		{"id": "open", "label": "Abrir"},
+		{"id": "store_item", "label": "Guardar item"}
+	]}
+}
+
+const FURNITURE_MESSAGES: Dictionary = {
+	"vanity/examine": "Uma penteadeira provisória para testar a interação.",
+	"vanity/appearance": "Arrumar aparência ainda é uma opção placeholder.",
+	"wardrobe/change_clothes": "Trocar roupa ainda é uma opção placeholder.",
+	"wardrobe/organize": "Organizar o guarda-roupa ainda é uma opção placeholder.",
+	"writing_desk/read_letters": "Ler cartas ainda é uma opção placeholder.",
+	"writing_desk/write": "Escrever ainda é uma opção placeholder.",
+	"bookshelf/read_book": "Ler um livro ainda é uma opção placeholder.",
+	"bookshelf/examine": "Uma estante provisória para testar a interação.",
+	"armchair/sit": "Sentar na poltrona ainda é uma opção placeholder.",
+	"armchair/rest": "Descansar na poltrona ainda é uma opção placeholder.",
+	"chest/open": "Abrir o baú ainda é uma opção placeholder.",
+	"chest/store_item": "Guardar item ainda é uma opção placeholder."
+}
+
 @export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
 
 @onready var room_container: Node2D = $RoomContainer
@@ -21,6 +63,7 @@ func _ready() -> void:
     _setup_input()
     hud.connect("bed_sit_selected", _on_bed_sit_selected)
     hud.connect("bed_sleep_hours_selected", _on_bed_sleep_hours_selected)
+	hud.connect("interaction_choice_selected", _on_interaction_choice_selected)
     catalog = ROOM_CATALOG.new()
     if not catalog.load_catalog():
         push_error("Catálogo inválido.")
@@ -117,6 +160,11 @@ func _process(_delta: float) -> void:
         if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("close_message"):
             hud.close_bed_menu()
         return
+	if hud.is_choice_menu_open():
+		player.movement_enabled = false
+		if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("close_message"):
+			hud.close_choice_menu()
+		return
     player.movement_enabled = true
     var nearby: Dictionary = current_room.nearest_interaction(player.global_position)
     hud.set_prompt("E — " + str(nearby.get("label", "")) if not nearby.is_empty() else "")
@@ -129,10 +177,25 @@ func _activate_interaction(action: Dictionary) -> void:
             _enter_room(str(action.get("target", "")), str(action.get("spawn_id", "")))
         "bed":
             hud.open_bed_menu()
+		"menu":
+			_open_furniture_menu(str(action.get("menu_id", "")))
         "inspect":
             hud.show_message(str(action.get("label", "")), str(action.get("message", "")))
         _:
             push_warning("Tipo de interação desconhecido: " + str(action.get("kind", "")))
+
+func _open_furniture_menu(menu_id: String) -> void:
+	var menu: Dictionary = FURNITURE_MENUS.get(menu_id, {})
+	if menu.is_empty():
+		push_warning("Menu de móvel desconhecido: " + menu_id)
+		return
+	hud.open_choice_menu(menu_id, str(menu.get("title", "Interagir")), menu.get("options", []))
+
+func _on_interaction_choice_selected(menu_id: String, option_id: String) -> void:
+	var message_id: String = menu_id + "/" + option_id
+	var message: String = str(FURNITURE_MESSAGES.get(message_id, "Esta ação ainda é um placeholder."))
+	var menu: Dictionary = FURNITURE_MENUS.get(menu_id, {})
+	hud.show_message(str(menu.get("title", "Interação")), message)
 
 func advance_hours(hours: int) -> int:
     if hours > 0:

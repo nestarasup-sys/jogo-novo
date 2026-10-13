@@ -1,10 +1,23 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene format=3 uid="uid://cdh50e31os0ib"]
 
-[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
-[ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
-[ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
-[ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
-[ext_resource type="Texture2D" path="res://assets/furniture/bed.png" id="5_bed"]
+[ext_resource type="Script" uid="uid://bonsvosdd1qec" path="res://scripts/world/room.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://vx4qedaxccse" path="res://scripts/world/room_surface.gd" id="2_visual"]
+[ext_resource type="Script" uid="uid://buqq5asnsgb38" path="res://scripts/world/furniture.gd" id="3_furniture"]
+[ext_resource type="Script" uid="uid://csm2h4lxqg0pa" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
+[ext_resource type="Script" uid="uid://bw2v016od7irw" path="res://scripts/world/furniture_visual.gd" id="6_furniture_visual"]
+[ext_resource type="Texture2D" uid="uid://c500kvv58sp7k" path="res://assets/furniture/bedroom_bed.png" id="7_bed_sheet"]
+[ext_resource type="Texture2D" uid="uid://c2k6ua68mcwlc" path="res://assets/furniture/vanity.png" id="8_vanity"]
+[ext_resource type="Texture2D" uid="uid://c6ixem0h0ms7g" path="res://assets/furniture/wardrobe.png" id="9_wardrobe"]
+[ext_resource type="Texture2D" uid="uid://n5sjavrlwx0a" path="res://assets/furniture/writing_desk.png" id="10_desk"]
+[ext_resource type="Texture2D" uid="uid://dg1gp2r23sbdq" path="res://assets/furniture/bookshelf.png" id="11_bookshelf"]
+[ext_resource type="Texture2D" uid="uid://sugbkaaorlx0" path="res://assets/furniture/armchair.png" id="12_armchair"]
+[ext_resource type="Texture2D" uid="uid://csglrtbwl8luv" path="res://assets/furniture/chest.png" id="13_chest"]
+[ext_resource type="Texture2D" uid="uid://bhbu70qe1540i" path="res://assets/furniture/rug.png" id="14_rug"]
+[ext_resource type="Texture2D" uid="uid://cydauvvu2p224" path="res://assets/furniture/door_visual.png" id="15_door"]
+[ext_resource type="Texture2D" uid="uid://ccy1krgno60bv" path="res://assets/furniture/side_table.png" id="16_side_table"]
+[ext_resource type="Texture2D" uid="uid://bwkvk1p5luthx" path="res://assets/furniture/mirror.png" id="17_mirror"]
+[ext_resource type="Texture2D" uid="uid://c3avs81r275i2" path="res://assets/furniture/plant.png" id="18_plant"]
+[ext_resource type="Texture2D" uid="uid://dskjq2ixt611d" path="res://assets/furniture/wall_art.png" id="19_wall_art"]
 
 [sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
 size = Vector2(1280, 34)
@@ -13,146 +26,448 @@ size = Vector2(1280, 34)
 size = Vector2(34, 720)
 
 [sub_resource type="RectangleShape2D" id="Shape_Bed"]
-size = Vector2(225, 165)
+size = Vector2(150, 85)
 
 [sub_resource type="RectangleShape2D" id="Shape_WritingDesk"]
-size = Vector2(225, 122)
+size = Vector2(145, 72)
 
 [sub_resource type="RectangleShape2D" id="Shape_Wardrobe"]
-size = Vector2(162, 128)
+size = Vector2(115, 70)
 
 [sub_resource type="RectangleShape2D" id="Shape_Armchair"]
-size = Vector2(125, 150)
+size = Vector2(110, 85)
 
-[node name="Bedroom" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="Shape_Vanity"]
+size = Vector2(125, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Bookshelf"]
+size = Vector2(76, 80)
+
+[sub_resource type="RectangleShape2D" id="Shape_Chest"]
+size = Vector2(90, 60)
+
+[sub_resource type="RectangleShape2D" id="Shape_Rug"]
+size = Vector2(220, 116)
+
+[sub_resource type="RectangleShape2D" id="Shape_DoorVisual"]
+size = Vector2(112, 42)
+
+[sub_resource type="RectangleShape2D" id="Shape_SideTable"]
+size = Vector2(79, 84)
+
+[sub_resource type="RectangleShape2D" id="Shape_Mirror"]
+size = Vector2(56, 82)
+
+[sub_resource type="RectangleShape2D" id="Shape_Plant"]
+size = Vector2(46, 70)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallDecoration"]
+size = Vector2(160, 55)
+
+[node name="Bedroom" type="Node2D" unique_id=205018748]
 script = ExtResource("1_room")
 room_id = "bedroom"
 room_title = "Quarto da princesa"
 
-[node name="Boundaries" type="Node2D" parent="."]
+[node name="Boundaries" type="Node2D" parent="." unique_id=654463502]
 
-[node name="North" type="StaticBody2D" parent="Boundaries"]
+[node name="North" type="StaticBody2D" parent="Boundaries" unique_id=1767395379]
 position = Vector2(640, 17)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/North"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/North" unique_id=439306086]
 shape = SubResource("Shape_Horizontal")
 
-[node name="South" type="StaticBody2D" parent="Boundaries"]
+[node name="South" type="StaticBody2D" parent="Boundaries" unique_id=1482087202]
 position = Vector2(640, 703)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/South"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/South" unique_id=1744953066]
 shape = SubResource("Shape_Horizontal")
 
-[node name="West" type="StaticBody2D" parent="Boundaries"]
+[node name="West" type="StaticBody2D" parent="Boundaries" unique_id=1563093092]
 position = Vector2(17, 360)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/West"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/West" unique_id=1250103481]
 shape = SubResource("Shape_Vertical")
 
-[node name="East" type="StaticBody2D" parent="Boundaries"]
+[node name="East" type="StaticBody2D" parent="Boundaries" unique_id=1960489902]
 position = Vector2(1263, 360)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East" unique_id=2028803445]
 shape = SubResource("Shape_Vertical")
 
-[node name="Visual" type="Node2D" parent="."]
+[node name="Visual" type="Node2D" parent="." unique_id=1399268194]
+texture_repeat = 2
 script = ExtResource("2_visual")
-wall_height = 260.0
 floor_color = Color(0.909804, 0.847059, 0.835294, 1)
 wall_color = Color(0.827451, 0.776471, 0.862745, 1)
 
-[node name="WorldSpace" type="Node2D" parent="."]
+[node name="WorldSpace" type="Node2D" parent="." unique_id=1194007667]
 y_sort_enabled = true
 
-[node name="Furniture" type="Node2D" parent="WorldSpace"]
+[node name="Furniture" type="Node2D" parent="WorldSpace" unique_id=1017081487]
 y_sort_enabled = true
 
-[node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(350, 355)
+[node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1465531424]
+texture_filter = 2
+position = Vector2(300, 360)
+collision_mask = 0
 script = ExtResource("3_furniture")
 display_name = "CAMA"
-footprint_size = Vector2(225, 165)
-placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
-art_texture = ExtResource("5_bed")
-art_size = Vector2(228, 173)
-texture_filter = 2
+footprint_size = Vector2(150, 85)
+placeholder_color = Color(0.658824, 0.47451, 0.635294, 1)
+art_texture = ExtResource("7_bed_sheet")
+art_size = Vector2(170, 205)
+art_offset = Vector2(0, 40)
 
-[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bed"]
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Bed" unique_id=718491930]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("7_bed_sheet")
+art_size = Vector2(170, 205)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bed" unique_id=81834970]
+position = Vector2(0, 40)
 shape = SubResource("Shape_Bed")
 
-
-[node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(930, 350)
+[node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1495541445]
+texture_filter = 2
+position = Vector2(870, 360)
+collision_mask = 0
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
-footprint_size = Vector2(225, 122)
+footprint_size = Vector2(145, 72)
 placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
+art_texture = ExtResource("10_desk")
+art_size = Vector2(145, 170)
+art_offset = Vector2(0, 25)
 
-[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/WritingDesk"]
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WritingDesk" unique_id=637124350]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("10_desk")
+art_size = Vector2(145, 170)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/WritingDesk" unique_id=1008888351]
+position = Vector2(0, 40)
 shape = SubResource("Shape_WritingDesk")
 
-
-[node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(930, 550)
+[node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1402994573]
+texture_filter = 2
+position = Vector2(1060, 550)
+collision_mask = 0
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
-footprint_size = Vector2(162, 128)
-placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
+footprint_size = Vector2(115, 70)
+placeholder_color = Color(0.607843, 0.47451, 0.423529, 1)
+art_texture = ExtResource("9_wardrobe")
+art_size = Vector2(130, 195)
+art_offset = Vector2(0, 29)
 
-[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Wardrobe"]
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Wardrobe" unique_id=2125030972]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("9_wardrobe")
+art_size = Vector2(130, 195)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Wardrobe" unique_id=1642351948]
+position = Vector2(0, 40)
 shape = SubResource("Shape_Wardrobe")
 
-
-[node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(350, 570)
+[node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=969738130]
+texture_filter = 2
+position = Vector2(265, 545)
+collision_mask = 0
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
-footprint_size = Vector2(125, 150)
+footprint_size = Vector2(110, 85)
 placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
+art_texture = ExtResource("12_armchair")
+art_size = Vector2(140, 140)
+art_offset = Vector2(0, 32.5)
 
-[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Armchair"]
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Armchair" unique_id=1199810546]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("12_armchair")
+art_size = Vector2(140, 140)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Armchair" unique_id=229878519]
+position = Vector2(0, 40)
 shape = SubResource("Shape_Armchair")
 
+[node name="Vanity" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=934120567]
+texture_filter = 2
+position = Vector2(530, 400)
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "PENTEADEIRA"
+footprint_size = Vector2(125, 72)
+placeholder_color = Color(0.73, 0.57, 0.67, 1)
+art_texture = ExtResource("8_vanity")
+art_size = Vector2(140, 170)
+art_offset = Vector2(10, 3)
 
-[node name="Interactions" type="Node2D" parent="."]
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Vanity" unique_id=801002103]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("8_vanity")
+art_size = Vector2(140, 170)
+art_offset = Vector2(10, 3)
 
-[node name="BedUse" type="Marker2D" parent="Interactions"]
-position = Vector2(390, 448)
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Vanity" unique_id=1638158828]
+position = Vector2(0, 40)
+shape = SubResource("Shape_Vanity")
+
+[node name="Bookshelf" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=352104344]
+texture_filter = 2
+position = Vector2(1025, 340)
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "ESTANTE"
+footprint_size = Vector2(76, 80)
+placeholder_color = Color(0.55, 0.43, 0.36, 1)
+art_texture = ExtResource("11_bookshelf")
+art_size = Vector2(84, 170)
+art_offset = Vector2(0, 37)
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Bookshelf" unique_id=1151217216]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("11_bookshelf")
+art_size = Vector2(84, 170)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bookshelf" unique_id=19362015]
+position = Vector2(0, 55)
+shape = SubResource("Shape_Bookshelf")
+
+[node name="Chest" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1617739693]
+texture_filter = 2
+position = Vector2(895, 550)
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "BAÚ"
+footprint_size = Vector2(90, 60)
+placeholder_color = Color(0.62, 0.43, 0.31, 1)
+art_texture = ExtResource("13_chest")
+art_size = Vector2(110, 95)
+art_offset = Vector2(0, 6)
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Chest" unique_id=615070301]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("13_chest")
+art_size = Vector2(110, 95)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Chest" unique_id=100824503]
+position = Vector2(0, 27)
+shape = SubResource("Shape_Chest")
+
+[node name="Rug" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=440097776]
+position = Vector2(470, 535)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "TAPETE"
+footprint_size = Vector2(220, 116)
+placeholder_color = Color(0.75, 0.62, 0.69, 1)
+art_texture = ExtResource("14_rug")
+art_size = Vector2(235, 165)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Rug" unique_id=192566428]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("14_rug")
+art_size = Vector2(235, 165)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Rug" unique_id=300153030]
+position = Vector2(0, 0)
+shape = SubResource("Shape_Rug")
+disabled = true
+
+[node name="DoorVisual" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1497395596]
+position = Vector2(640, 646)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "PORTA"
+footprint_size = Vector2(112, 42)
+placeholder_color = Color(0.43, 0.31, 0.35, 1)
+art_texture = ExtResource("15_door")
+art_size = Vector2(100, 170)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/DoorVisual" unique_id=1833130985]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("15_door")
+art_size = Vector2(100, 170)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/DoorVisual" unique_id=1550784756]
+position = Vector2(0, 0)
+shape = SubResource("Shape_DoorVisual")
+disabled = true
+
+[node name="SideTable" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1322575858]
+position = Vector2(435, 380)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "MESA LATERAL"
+footprint_size = Vector2(58, 56)
+placeholder_color = Color(0.65, 0.48, 0.36, 1)
+art_texture = ExtResource("16_side_table")
+art_size = Vector2(100, 135)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/SideTable" unique_id=440100607]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("16_side_table")
+art_size = Vector2(100, 135)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/SideTable" unique_id=1710752844]
+position = Vector2(0, 0)
+shape = SubResource("Shape_SideTable")
+disabled = true
+
+[node name="Mirror" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=1942684270]
+position = Vector2(750, 250)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "ESPELHO"
+footprint_size = Vector2(56, 82)
+placeholder_color = Color(0.62, 0.73, 0.78, 1)
+art_texture = ExtResource("17_mirror")
+art_size = Vector2(90, 150)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Mirror" unique_id=1616092116]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("17_mirror")
+art_size = Vector2(90, 150)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Mirror" unique_id=1512306771]
+position = Vector2(0, 0)
+shape = SubResource("Shape_Mirror")
+disabled = true
+
+[node name="Plant" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=651773533]
+position = Vector2(750, 535)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "VASO"
+footprint_size = Vector2(46, 70)
+placeholder_color = Color(0.47, 0.62, 0.46, 1)
+art_texture = ExtResource("18_plant")
+art_size = Vector2(100, 120)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Plant" unique_id=116180060]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("18_plant")
+art_size = Vector2(100, 120)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Plant" unique_id=1767631231]
+position = Vector2(0, 0)
+shape = SubResource("Shape_Plant")
+disabled = true
+
+[node name="WallDecoration" type="StaticBody2D" parent="WorldSpace/Furniture" unique_id=192313252]
+position = Vector2(650, 230)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_furniture")
+display_name = "QUADRO"
+footprint_size = Vector2(160, 55)
+placeholder_color = Color(0.76, 0.63, 0.72, 1)
+art_texture = ExtResource("19_wall_art")
+art_size = Vector2(92, 112)
+is_solid = false
+
+[node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WallDecoration" unique_id=1016863382]
+position = Vector2(0, 0)
+script = ExtResource("6_furniture_visual")
+art_texture = ExtResource("19_wall_art")
+art_size = Vector2(92, 112)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/WallDecoration" unique_id=30997793]
+position = Vector2(0, 0)
+shape = SubResource("Shape_WallDecoration")
+disabled = true
+
+[node name="Interactions" type="Node2D" parent="." unique_id=1712848098]
+
+[node name="BedUse" type="Marker2D" parent="Interactions" unique_id=937198783]
+position = Vector2(300, 450)
 script = ExtResource("4_interaction")
 interaction_type = "bed"
 action_label = "Usar cama"
-interaction_radius = 94.0
 
-[node name="WritingDeskInspect" type="Marker2D" parent="Interactions"]
-position = Vector2(742, 292)
+[node name="WritingDeskUse" type="Marker2D" parent="Interactions" unique_id=509994237]
+position = Vector2(870, 450)
 script = ExtResource("4_interaction")
-interaction_type = "inspect"
-action_label = "Examinar escrivaninha"
-message = "Uma escrivaninha provisória para testar interações."
+interaction_type = "menu"
+action_label = "Usar escrivaninha"
+menu_id = "writing_desk"
 
-[node name="DoorToCorridor" type="Marker2D" parent="Interactions"]
-position = Vector2(640, 624)
+[node name="VanityUse" type="Marker2D" parent="Interactions" unique_id=2082729559]
+position = Vector2(530, 490)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar penteadeira"
+menu_id = "vanity"
+
+[node name="WardrobeUse" type="Marker2D" parent="Interactions" unique_id=2029954595]
+position = Vector2(1060, 640)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar guarda-roupa"
+menu_id = "wardrobe"
+
+[node name="BookshelfUse" type="Marker2D" parent="Interactions" unique_id=1565974484]
+position = Vector2(1025, 430)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar estante"
+menu_id = "bookshelf"
+
+[node name="ArmchairUse" type="Marker2D" parent="Interactions" unique_id=1358751353]
+position = Vector2(265, 635)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar poltrona"
+menu_id = "armchair"
+
+[node name="ChestUse" type="Marker2D" parent="Interactions" unique_id=1076086968]
+position = Vector2(895, 640)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar baú"
+menu_id = "chest"
+
+[node name="DoorToCorridor" type="Marker2D" parent="Interactions" unique_id=690107439]
+position = Vector2(640, 666)
 script = ExtResource("4_interaction")
 interaction_type = "door"
 action_label = "Sair para o corredor"
 destination_room = "corridor"
 destination_spawn = "from_bedroom"
 
-[node name="Spawns" type="Node2D" parent="."]
+[node name="Spawns" type="Node2D" parent="." unique_id=1322946230]
 
-[node name="start" type="Marker2D" parent="Spawns"]
-position = Vector2(640, 420)
-
-[node name="from_corridor" type="Marker2D" parent="Spawns"]
+[node name="start" type="Marker2D" parent="Spawns" unique_id=1389138183]
+position = Vector2(690, 420)
+[node name="from_corridor" type="Marker2D" parent="Spawns" unique_id=1787038025]
 position = Vector2(640, 558)
 
-[node name="BedSitPosition" type="Marker2D" parent="Spawns"]
-position = Vector2(350, 462)
+[node name="BedSitPosition" type="Marker2D" parent="Spawns" unique_id=1715803442]
+position = Vector2(310, 460)

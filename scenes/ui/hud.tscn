@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/prototype_hud.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/bed_action_menu.tscn" id="2_bed_menu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/interaction_choice_menu.tscn" id="3_choice_menu"]
 
 [sub_resource type="StyleBoxFlat" id="Style_TopPlate"]
 bg_color = Color(0.969, 0.948, 0.964, 0.90)
@@ -175,4 +176,7 @@ theme_override_font_sizes/font_size = 15
 text = "Fechar"
 
 [node name="BedActionMenu" parent="." instance=ExtResource("2_bed_menu")]
+visible = false
+
+[node name="InteractionChoiceMenu" parent="." instance=ExtResource("3_choice_menu")]
 visible = false
