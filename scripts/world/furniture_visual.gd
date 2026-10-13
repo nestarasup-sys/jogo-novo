@@ -2,6 +2,33 @@
 extends Node2D
 ## Camada de arte destacada: pode ser arrastada sem alterar a colisão.
 
+@export var art_texture: Texture2D:
+	get:
+		return _get_furniture_value("art_texture") as Texture2D
+	set(value):
+		_set_furniture_value("art_texture", value)
+
+@export var art_size: Vector2:
+	get:
+		return _get_furniture_value("art_size")
+	set(value):
+		_set_furniture_value("art_size", value)
+
+@export var art_offset: Vector2:
+	get:
+		return _get_furniture_value("art_offset")
+	set(value):
+		_set_furniture_value("art_offset", value)
+
+func _get_furniture_value(property_name: String) -> Variant:
+	var furniture: Node = get_parent()
+	return furniture.get(property_name) if furniture != null else null
+
+func _set_furniture_value(property_name: String, value: Variant) -> void:
+	var furniture: Node = get_parent()
+	if furniture != null:
+		furniture.set(property_name, value)
+
 func _draw() -> void:
 	var furniture: Node = get_parent()
 	if furniture == null:

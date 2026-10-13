@@ -61,6 +61,11 @@ func _test_editor_authoring() -> void:
         _expect(visual != null and visual.get_script() != null
             and visual.get_script().resource_path == "res://scripts/world/furniture_visual.gd",
             "camada visual separada para edição pelo mouse: " + item_name)
+        if visual != null:
+            _expect(visual.get("art_texture") == item.get("art_texture")
+                and visual.get("art_size") == item.get("art_size")
+                and visual.get("art_offset") == item.get("art_offset"),
+                "arte exposta no Inspector do filho Visual: " + item_name)
         _expect(item.get_node_or_null("Footprint") != null,
             "footprint persistido na cena: " + item_name)
     for item_name in DECOR_FURNITURE:
@@ -89,6 +94,11 @@ func _test_editor_authoring() -> void:
         and bed_footprint.global_position == original_footprint_position,
         "arrastar Visual muda apenas a arte, sem deslocar cama ou colisão")
     bed_art.position = Vector2.ZERO
+    var original_art_offset: Vector2 = bed.art_offset
+    bed_art.set("art_offset", original_art_offset + Vector2(3.0, -2.0))
+    _expect(bed.art_offset == original_art_offset + Vector2(3.0, -2.0),
+        "editar art_offset no Inspector de Visual altera a arte do móvel")
+    bed_art.set("art_offset", original_art_offset)
     preview.free()
 
 func _test_catalog_and_rooms() -> void:
