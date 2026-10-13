@@ -1,4 +1,4 @@
-> **Polimento M3 em revisão:** melhorias de HUD, layout temporário do quarto, saída e sombra; o tamanho da princesa e o zoom 1.30× estão preservados. Veja [M3_VISUAL_POLISH.md](docs/M3_VISUAL_POLISH.md). A alteração local da colisão norte feita pelo criador deve ser preservada ao sincronizar.\n\n# Jogo Novo — Fundação modular Godot 4.7.2
+> **Polimento M3 integrado à main (PR #6):** melhorias de HUD, layout temporário do quarto, saída e sombra; o tamanho da princesa e o zoom 1.30× estão preservados. Veja [M3_VISUAL_POLISH.md](docs/M3_VISUAL_POLISH.md). A alteração local da colisão norte feita pelo criador deve ser preservada ao sincronizar. Testes automáticos da Godot 4.7.2 Windows passaram; a inspeção visual permanece pendente.\n\n# Jogo Novo — Fundação modular Godot 4.7.2
 
 **Situação:** [PR #5 integrado à main](https://github.com/nestarasup-sys/jogo-novo/pull/5). Quarto, princesa, câmera, HUD, móveis, interações e colisões são componentes editáveis. Importação e smoke foram aprovados no [Windows/Godot 4.7.2](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38335444897). Falta apenas inspeção visual/manual no editor do criador.
 
