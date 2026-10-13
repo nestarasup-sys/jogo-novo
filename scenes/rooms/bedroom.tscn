@@ -139,7 +139,7 @@ shape = SubResource("Shape_Wardrobe")
 
 
 [node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(350, 570)
+position = Vector2(390, 565)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
@@ -149,7 +149,7 @@ placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
 shape = SubResource("Shape_Armchair")
 
 [node name="Vanity" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(215, 510)
+position = Vector2(220, 530)
 script = ExtResource("3_furniture")
 display_name = "PENTEADEIRA"
 footprint_size = Vector2(118, 78)
@@ -169,7 +169,7 @@ placeholder_color = Color(0.55, 0.43, 0.36, 1)
 shape = SubResource("Shape_Bookshelf")
 
 [node name="Chest" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(1000, 550)
+position = Vector2(1020, 550)
 script = ExtResource("3_furniture")
 display_name = "BAÚ"
 footprint_size = Vector2(102, 72)
@@ -179,7 +179,7 @@ placeholder_color = Color(0.62, 0.43, 0.31, 1)
 shape = SubResource("Shape_Chest")
 
 [node name="Rug" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(640, 470)
+position = Vector2(640, 480)
 script = ExtResource("3_furniture")
 display_name = "TAPETE"
 footprint_size = Vector2(220, 116)
@@ -201,7 +201,7 @@ is_solid = false
 shape = SubResource("Shape_DoorVisual")
 
 [node name="SideTable" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(200, 435)
+position = Vector2(500, 385)
 script = ExtResource("3_furniture")
 display_name = "MESA LATERAL"
 footprint_size = Vector2(58, 56)
@@ -212,7 +212,7 @@ is_solid = false
 shape = SubResource("Shape_SideTable")
 
 [node name="Mirror" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(190, 269)
+position = Vector2(220, 425)
 script = ExtResource("3_furniture")
 display_name = "ESPELHO"
 footprint_size = Vector2(56, 82)
@@ -223,7 +223,7 @@ is_solid = false
 shape = SubResource("Shape_Mirror")
 
 [node name="Plant" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(1080, 480)
+position = Vector2(1085, 455)
 script = ExtResource("3_furniture")
 display_name = "VASO"
 footprint_size = Vector2(46, 70)
@@ -248,14 +248,14 @@ shape = SubResource("Shape_WallDecoration")
 [node name="Interactions" type="Node2D" parent="."]
 
 [node name="BedUse" type="Marker2D" parent="Interactions"]
-position = Vector2(390, 448)
+position = Vector2(350, 465)
 script = ExtResource("4_interaction")
 interaction_type = "bed"
 action_label = "Usar cama"
 interaction_radius = 94.0
 
 [node name="WritingDeskUse" type="Marker2D" parent="Interactions"]
-position = Vector2(780, 430)
+position = Vector2(790, 420)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar escrivaninha"
@@ -269,14 +269,14 @@ action_label = "Usar penteadeira"
 menu_id = "vanity"
 
 [node name="WardrobeUse" type="Marker2D" parent="Interactions"]
-position = Vector2(770, 620)
+position = Vector2(775, 600)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar guarda-roupa"
 menu_id = "wardrobe"
 
 [node name="BookshelfUse" type="Marker2D" parent="Interactions"]
-position = Vector2(980, 440)
+position = Vector2(965, 380)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar estante"
@@ -290,7 +290,7 @@ action_label = "Usar poltrona"
 menu_id = "armchair"
 
 [node name="ChestUse" type="Marker2D" parent="Interactions"]
-position = Vector2(930, 610)
+position = Vector2(940, 595)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar baú"

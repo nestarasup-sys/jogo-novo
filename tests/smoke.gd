@@ -175,16 +175,25 @@ func _test_gameplay() -> void:
     var vanity_node = game.current_room.get_node("WorldSpace/Furniture/Vanity")
     var bookshelf_node = game.current_room.get_node("WorldSpace/Furniture/Bookshelf")
     var chest_node = game.current_room.get_node("WorldSpace/Furniture/Chest")
-    _expect(bed_node.position.x == 350.0 and armchair_node.position.x == 350.0
-        and vanity_node.position.x == 215.0,
+    var mirror_node = game.current_room.get_node("WorldSpace/Furniture/Mirror")
+    var side_table_node = game.current_room.get_node("WorldSpace/Furniture/SideTable")
+    _expect(bed_node.position.x == 350.0 and armchair_node.position.x == 390.0
+        and vanity_node.position.x == 220.0,
         "zona de descanso, penteadeira e cama no lado esquerdo")
     _expect(desk_node.position.x == 850.0 and wardrobe_node.position.x == 850.0
-        and bookshelf_node.position.x == 1045.0 and chest_node.position.x == 1000.0,
+        and bookshelf_node.position.x == 1045.0 and chest_node.position.x == 1020.0,
         "zona de trabalho, armazenamento e livros no lado direito")
     _expect(bed_node.position.y == 355.0 and desk_node.position.y == 350.0,
         "cama e escrivaninha afastadas da colisão norte")
-    _expect(armchair_node.position.y == 570.0 and wardrobe_node.position.y == 550.0,
+    _expect(armchair_node.position.y == 565.0 and wardrobe_node.position.y == 550.0,
         "poltrona e armário organizados na faixa sul")
+    _expect(side_table_node.position.x > bed_node.position.x
+        and side_table_node.position.distance_to(bed_node.position) < 170.0,
+        "mesa lateral posicionada ao lado da cama")
+    _expect(is_equal_approx(mirror_node.position.x, vanity_node.position.x)
+        and mirror_node.position.y < vanity_node.position.y
+        and vanity_node.position.y - mirror_node.position.y >= 80.0,
+        "espelho alinhado acima da penteadeira")
     _expect(bed_node.position.x + bed_node.footprint_size.x * 0.5 < 470.0
         and armchair_node.position.x + armchair_node.footprint_size.x * 0.5 < 470.0
         and vanity_node.position.x + vanity_node.footprint_size.x * 0.5 < 470.0
@@ -247,17 +256,22 @@ func _test_gameplay() -> void:
     _expect(not game.hud.is_message_open(), "mensagem fecha")
 
     var object_interactions := {
-        "VanityUse": ["vanity", "examine"],
-        "WardrobeUse": ["wardrobe", "change_clothes"],
-        "WritingDeskUse": ["writing_desk", "read_letters"],
-        "BookshelfUse": ["bookshelf", "read_book"],
-        "ArmchairUse": ["armchair", "sit"],
-        "ChestUse": ["chest", "open"]
+        "VanityUse": ["vanity", "examine", "Vanity"],
+        "WardrobeUse": ["wardrobe", "change_clothes", "Wardrobe"],
+        "WritingDeskUse": ["writing_desk", "read_letters", "WritingDesk"],
+        "BookshelfUse": ["bookshelf", "read_book", "Bookshelf"],
+        "ArmchairUse": ["armchair", "sit", "Armchair"],
+        "ChestUse": ["chest", "open", "Chest"]
     }
     var choice_menu: Control = game.hud.get_node("InteractionChoiceMenu")
     var choice_buttons: VBoxContainer = choice_menu.get_node("Card/Content/Options")
     for marker_name in object_interactions:
         var interaction: Marker2D = game.current_room.get_node("Interactions/" + marker_name)
+        var owner: Node2D = game.current_room.get_node(
+            "WorldSpace/Furniture/" + object_interactions[marker_name][2])
+        _expect(owner.global_position.distance_to(interaction.global_position)
+            <= interaction.interaction_radius,
+            "marcador de uso ao alcance de " + owner.name)
         game.player.global_position = interaction.global_position
         var furniture_action: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
         _expect(furniture_action.get("kind") == "menu"
