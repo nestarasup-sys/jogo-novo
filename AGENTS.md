@@ -1,4 +1,4 @@
-# Instruções para agentes (versão editor-first)
+> **M3 em andamento:** preservar alteração local do criador em `scenes/rooms/bedroom.tscn` → `Boundaries/North`. Ao sincronizar, nunca sobrescrever esse deslocamento por causa do novo layout dos móveis. Preservar também alterações locais de `project.godot` e `.gd.uid`; consultar [docs/M3_VISUAL_POLISH.md](docs/M3_VISUAL_POLISH.md).\n\n# Instruções para agentes (versão editor-first)
 
 ## Fonte de verdade
 Ler `README.md`, `docs/ARCHITECTURE.md`, `docs/EDITOR_WORKFLOW.md`, `docs/HOW_TO_EXTEND.md` e `docs/CURRENT_STATUS.md`.
