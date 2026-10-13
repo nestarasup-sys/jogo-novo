@@ -5,6 +5,24 @@
 [ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
 [ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
 
+[sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
+size = Vector2(1280, 34)
+
+[sub_resource type="RectangleShape2D" id="Shape_Vertical"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="Shape_Bed"]
+size = Vector2(225, 165)
+
+[sub_resource type="RectangleShape2D" id="Shape_WritingDesk"]
+size = Vector2(225, 122)
+
+[sub_resource type="RectangleShape2D" id="Shape_Wardrobe"]
+size = Vector2(162, 128)
+
+[sub_resource type="RectangleShape2D" id="Shape_Armchair"]
+size = Vector2(125, 150)
+
 [node name="Bedroom" type="Node2D"]
 script = ExtResource("1_room")
 room_id = "bedroom"
@@ -43,24 +61,6 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East"]
 shape = SubResource("Shape_Vertical")
-
-[sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
-size = Vector2(1280, 34)
-
-[sub_resource type="RectangleShape2D" id="Shape_Vertical"]
-size = Vector2(34, 720)
-
-[sub_resource type="RectangleShape2D" id="Shape_Bed"]
-size = Vector2(225, 165)
-
-[sub_resource type="RectangleShape2D" id="Shape_WritingDesk"]
-size = Vector2(225, 122)
-
-[sub_resource type="RectangleShape2D" id="Shape_Wardrobe"]
-size = Vector2(162, 128)
-
-[sub_resource type="RectangleShape2D" id="Shape_Armchair"]
-size = Vector2(125, 150)
 
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
