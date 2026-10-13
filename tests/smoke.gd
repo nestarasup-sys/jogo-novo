@@ -10,6 +10,15 @@ const USEFUL_FURNITURE: Array[String] = [
 const DECOR_FURNITURE: Array[String] = [
     "Rug", "DoorVisual", "SideTable", "Mirror", "Plant", "WallDecoration"
 ]
+const FURNITURE_TEXTURES: Dictionary = {
+    "Bed": "bedroom_bed.png",
+    "Vanity": "vanity.png",
+    "Wardrobe": "wardrobe.png",
+    "WritingDesk": "writing_desk.png",
+    "Bookshelf": "bookshelf.png",
+    "Armchair": "armchair.png",
+    "Chest": "chest.png"
+}
 
 var failures: Array[String] = []
 
@@ -44,8 +53,9 @@ func _test_editor_authoring() -> void:
     _expect(preview.get_node_or_null("HUD/HudRoot/Location") != null, "HUD editável como cena")
     _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox") != null, "painel de diálogo editável")
     var bed = preview.get_node_or_null("RoomContainer/Bedroom/WorldSpace/Furniture/Bed")
-    _expect(bed != null and bed.art_texture != null and bed.art_texture.resource_path == "res://assets/furniture/bed.png",
-        "cama usa arte PNG real")
+    _expect(bed != null and bed.art_texture != null
+        and bed.art_texture.resource_path == "res://assets/furniture/bedroom_bed.png",
+        "cama usa arte do sheet do criador")
     var furniture_root: Node = preview.get_node("RoomContainer/Bedroom/WorldSpace/Furniture")
     for item_name in USEFUL_FURNITURE + DECOR_FURNITURE:
         var item: Node = furniture_root.get_node_or_null(item_name)
@@ -57,6 +67,15 @@ func _test_editor_authoring() -> void:
         _expect(item.get("art_size") is Vector2 and item.get("art_offset") is Vector2
             and item.get("footprint_size") is Vector2,
             "arte e footprint ajustáveis no Inspector: " + item_name)
+        if USEFUL_FURNITURE.has(item_name):
+            var item_texture: Texture2D = item.get("art_texture") as Texture2D
+            _expect(item_texture != null and item_texture.resource_path
+                == "res://assets/furniture/" + str(FURNITURE_TEXTURES[item_name]),
+                "sprite do sheet atribuído: " + item_name)
+            if item_texture != null:
+                var texture_image: Image = item_texture.get_image()
+                _expect(texture_image != null and texture_image.get_pixel(0, 0).a == 0.0,
+                    "PNG do móvel tem fundo transparente: " + item_name)
         var visual: Node2D = item.get_node_or_null("Visual") as Node2D
         _expect(visual != null and visual.get_script() != null
             and visual.get_script().resource_path == "res://scripts/world/furniture_visual.gd",
@@ -72,6 +91,9 @@ func _test_editor_authoring() -> void:
         var decor: Node = furniture_root.get_node_or_null(item_name)
         if decor != null:
             _expect(not decor.get("is_solid"), "decoração sem colisão: " + item_name)
+            if item_name in ["Rug", "DoorVisual", "SideTable", "WallDecoration", "Mirror", "Plant"]:
+                _expect(not (decor.get_node("Visual") as CanvasItem).visible,
+                    "placeholder de decoração sem arte fica oculto: " + item_name)
     var bed_use = preview.get_node_or_null("RoomContainer/Bedroom/Interactions/BedUse")
     _expect(bed_use != null and bed_use.interaction_type == "bed" and bed_use.action_label == "Usar cama",
         "cama tem interação de uso própria")
