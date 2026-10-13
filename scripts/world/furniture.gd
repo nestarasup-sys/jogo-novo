@@ -6,28 +6,28 @@ extends StaticBody2D
 @export var display_name: String = "MÓVEL":
     set(value):
         display_name = value
-        queue_redraw()
+		_redraw_art()
 @export var footprint_size: Vector2 = Vector2(100.0, 70.0):
     set(value):
         footprint_size = value
         _sync_footprint()
-        queue_redraw()
+		_redraw_art()
 @export var placeholder_color: Color = Color("#8e7582"):
     set(value):
         placeholder_color = value
-        queue_redraw()
+		_redraw_art()
 @export var art_texture: Texture2D:
     set(value):
         art_texture = value
-        queue_redraw()
+		_redraw_art()
 @export var art_size: Vector2 = Vector2.ZERO:
     set(value):
         art_size = value
-        queue_redraw()
+		_redraw_art()
 @export var art_offset: Vector2 = Vector2.ZERO:
     set(value):
         art_offset = value
-        queue_redraw()
+		_redraw_art()
 @export var is_solid: bool = true:
     set(value):
         is_solid = value
@@ -35,7 +35,13 @@ extends StaticBody2D
 
 func _ready() -> void:
     _sync_footprint()
+	_redraw_art()
+
+func _redraw_art() -> void:
     queue_redraw()
+	var visual: CanvasItem = get_node_or_null("Visual") as CanvasItem
+	if visual != null:
+		visual.queue_redraw()
 
 func _sync_footprint() -> void:
     collision_layer = 1 if is_solid else 0
@@ -51,6 +57,9 @@ func _sync_footprint() -> void:
         (footprint.shape as RectangleShape2D).size = footprint_size
 
 func _draw() -> void:
+	# A cena usa o filho Visual para que a arte possa ser arrastada separadamente.
+	if get_node_or_null("Visual") != null:
+		return
     if art_texture != null:
         var size: Vector2 = art_size if art_size != Vector2.ZERO else art_texture.get_size()
         var rect := Rect2(Vector2(-size.x * 0.5, -size.y + footprint_size.y * 0.5) + art_offset, size)

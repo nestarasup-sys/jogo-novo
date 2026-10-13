@@ -57,6 +57,10 @@ func _test_editor_authoring() -> void:
         _expect(item.get("art_size") is Vector2 and item.get("art_offset") is Vector2
             and item.get("footprint_size") is Vector2,
             "arte e footprint ajustáveis no Inspector: " + item_name)
+        var visual: Node2D = item.get_node_or_null("Visual") as Node2D
+        _expect(visual != null and visual.get_script() != null
+            and visual.get_script().resource_path == "res://scripts/world/furniture_visual.gd",
+            "camada visual separada para edição pelo mouse: " + item_name)
         _expect(item.get_node_or_null("Footprint") != null,
             "footprint persistido na cena: " + item_name)
     for item_name in DECOR_FURNITURE:
@@ -76,6 +80,15 @@ func _test_editor_authoring() -> void:
         "menu reutilizável de móveis presente")
     _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox/CloseButton") != null,
         "mensagens têm botão de fechar")
+    var bed_art: Node2D = bed.get_node("Visual") as Node2D
+    var bed_footprint: CollisionShape2D = bed.get_node("Footprint") as CollisionShape2D
+    var original_bed_position: Vector2 = bed.global_position
+    var original_footprint_position: Vector2 = bed_footprint.global_position
+    bed_art.position = Vector2(18.0, -12.0)
+    _expect(bed.global_position == original_bed_position
+        and bed_footprint.global_position == original_footprint_position,
+        "arrastar Visual muda apenas a arte, sem deslocar cama ou colisão")
+    bed_art.position = Vector2.ZERO
     preview.free()
 
 func _test_catalog_and_rooms() -> void:
