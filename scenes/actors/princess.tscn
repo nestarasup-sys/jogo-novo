@@ -1,0 +1,91 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/world/world_camera.gd" id="8_camera"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/idle.png" id="2_idle"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/blink.png" id="3_blink"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/look_back.png" id="4_look"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/walk_01.png" id="5_walk1"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/walk_02.png" id="6_walk2"]
+[ext_resource type="Texture2D" path="res://assets/characters/princess/walk_03.png" id="7_walk3"]
+
+[sub_resource type="SpriteFrames" id="Frames_princess"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_walk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_walk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_walk2")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_blink")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": false,
+"name": &"blink",
+"speed": 7
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_look")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle")
+}],
+"loop": false,
+"name": &"look_back",
+"speed": 3
+}]
+
+[sub_resource type="CircleShape2D" id="Shape_feet"]
+radius = 16.0
+
+[node name="Princess" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="PrincessAnimatedSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -75)
+scale = Vector2(0.2970297, 0.2970297)
+texture_filter = 1
+sprite_frames = SubResource("Frames_princess")
+animation = &"idle"
+
+[node name="FootCollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape_feet")
+
+[node name="ExpressionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WorldCamera" type="Camera2D" parent="."]
+zoom = Vector2(1.3, 1.3)
+script = ExtResource("8_camera")

@@ -1,18 +1,18 @@
 extends Node2D
-## Coordenação de jogo: não contém decoração, colisão nem lógica de objeto.
+## Editor-first: princesa, câmera, HUD e quarto inicial são cenas salvas.
+## Runtime reutiliza essas instâncias e troca só os ambientes quando necessário.
 
 const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
-const PLAYER_SCRIPT = preload("res://scripts/player.gd")
-const CAMERA_SCRIPT = preload("res://scripts/world/world_camera.gd")
-const HUD_SCRIPT = preload("res://scripts/prototype_hud.gd")
 
 @export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
 
+@onready var room_container: Node2D = $RoomContainer
+@onready var player: CharacterBody2D = $Princess
+@onready var camera: Camera2D = $Princess/WorldCamera
+@onready var hud: CanvasLayer = $HUD
+
 var catalog
-var player
-var camera
-var hud
-var current_room
+var current_room: Node2D
 var current_map_id: String = ""
 var _room_changing: bool = false
 
@@ -20,18 +20,15 @@ func _ready() -> void:
     _setup_input()
     catalog = ROOM_CATALOG.new()
     if not catalog.load_catalog():
-        push_error("Não foi possível iniciar: catálogo inválido.")
+        push_error("Catálogo inválido.")
         return
-    player = PLAYER_SCRIPT.new()
-    player.name = "Princess"
-    add_child(player)
-    camera = CAMERA_SCRIPT.new()
-    camera.name = "WorldCamera"
     camera.world_zoom = world_zoom
-    player.add_child(camera)
-    hud = HUD_SCRIPT.new()
-    add_child(hud)
-    _enter_room(catalog.start_room, catalog.start_spawn)
+    var preview_room: Node2D = room_container.get_child(0) as Node2D if room_container.get_child_count() > 0 else null
+    if preview_room != null and str(preview_room.get("room_id")) == catalog.start_room:
+        current_room = preview_room
+        _adopt_room(preview_room, catalog.start_room, catalog.start_spawn)
+    else:
+        _enter_room(catalog.start_room, catalog.start_spawn)
 
 func _setup_input() -> void:
     _add_keys("move_left", [KEY_A, KEY_LEFT])
@@ -58,7 +55,7 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
     if scene == null:
         _room_changing = false
         return false
-    var room = scene.instantiate()
+    var room: Node2D = scene.instantiate() as Node2D
     if room == null or str(room.get("room_id")) != room_id:
         push_error("room_id inconsistente: " + room_id)
         if room != null:
@@ -67,22 +64,18 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
         return false
     var spawn: Vector2 = room.get_spawn(spawn_id)
     var bounds: Vector2 = room.get("room_size")
-    if spawn.x < 50.0 or spawn.y < 50.0 or spawn.x > bounds.x - 50.0 or spawn.y > bounds.y - 50.0:
+    if not _valid_spawn(spawn, bounds):
         push_error("Spawn inválido: " + room_id + "/" + spawn_id)
         room.free()
         _room_changing = false
         return false
-    # Instalar o ambiente antes de reparentar o ator compartilhado.
-    # Móveis e personagem pertencem ao mesmo YSort (WorldSpace).
-    var previous_room = current_room
+    var previous_room: Node2D = current_room
+    room_container.add_child(room)
     current_room = room
     current_map_id = room_id
-    add_child(current_room)
-    move_child(current_room, 0)
-    player.reparent(current_room.get_node("WorldSpace"))
+    player.reparent(room.get_node("WorldSpace"))
     player.global_position = spawn
     if is_instance_valid(previous_room):
-        remove_child(previous_room)
         previous_room.queue_free()
     player.velocity = Vector2.ZERO
     camera.set_room_size(bounds)
@@ -90,6 +83,23 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
     hud.set_prompt("")
     _room_changing = false
     return true
+
+func _adopt_room(room: Node2D, room_id: String, spawn_id: String) -> void:
+    var spawn: Vector2 = room.get_spawn(spawn_id)
+    var bounds: Vector2 = room.get("room_size")
+    if not _valid_spawn(spawn, bounds):
+        push_error("Spawn inicial inválido: " + room_id + "/" + spawn_id)
+        return
+    current_map_id = room_id
+    player.reparent(room.get_node("WorldSpace"))
+    player.global_position = spawn
+    player.velocity = Vector2.ZERO
+    camera.set_room_size(bounds)
+    hud.set_location(str(room.get("room_title")))
+    hud.set_prompt("")
+
+func _valid_spawn(spawn: Vector2, bounds: Vector2) -> bool:
+    return spawn.x >= 50.0 and spawn.y >= 50.0 and spawn.x <= bounds.x - 50.0 and spawn.y <= bounds.y - 50.0
 
 func _process(_delta: float) -> void:
     if not is_instance_valid(player) or not is_instance_valid(current_room):
