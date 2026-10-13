@@ -76,5 +76,12 @@ func _is_walk_animation(animation_name: StringName) -> bool:
 	return animation_name == "walk" or str(animation_name).begins_with("walk_")
 
 func _draw() -> void:
-	# A origem do corpo fica nos pés; a sombra segue esse ponto.
-	draw_circle(Vector2(0.0, 11.0), 15.0, Color(0.22, 0.14, 0.21, 0.22))
+	# Sombra rasa e próxima ao contato com o chão; nunca amplia o personagem.
+	var outer := PackedVector2Array()
+	var inner := PackedVector2Array()
+	for i in range(32):
+		var angle := float(i) * TAU / 32.0
+		outer.append(Vector2(cos(angle) * 20.0, 2.0 + sin(angle) * 6.0))
+		inner.append(Vector2(cos(angle) * 12.0, 1.0 + sin(angle) * 3.5))
+	draw_colored_polygon(outer, Color(0.19, 0.13, 0.20, 0.12))
+	draw_colored_polygon(inner, Color(0.17, 0.12, 0.18, 0.10))

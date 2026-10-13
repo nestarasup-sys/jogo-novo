@@ -39,10 +39,15 @@ func _draw() -> void:
             draw_line(Vector2(-10, 10), Vector2(10, -10), Color.RED, 2.0)
         return
     if interaction_type == "door":
-        var outline := Rect2(-55.0, -13.0, 110.0, 26.0)
-        draw_rect(outline, Color("#8c6055"))
-        draw_rect(outline, Color("#f0d0a1"), false, 3.0)
-        draw_circle(Vector2.ZERO, 5.0, Color("#ffdea5"))
+        # Placa legível no próprio cenário; destino permanece definido por dados.
+        var outline := Rect2(-55.0, -16.0, 110.0, 32.0)
+        draw_rect(Rect2(-58.0, -19.0, 116.0, 38.0), Color("#4b3648"))
+        draw_rect(outline, Color("#81616b"))
+        draw_rect(Rect2(-50.0, -12.0, 100.0, 24.0), Color("#aa8790"), false, 1.0)
+        draw_circle(Vector2(-42.0, 0.0), 3.0, Color("#efcc91"))
+        draw_circle(Vector2(42.0, 0.0), 3.0, Color("#efcc91"))
+        draw_string(ThemeDB.fallback_font, Vector2(-34.0, 5.0),
+            HORIZONTAL_ALIGNMENT_CENTER, 68, 12, Color("#fff0da"), TextServer.JUSTIFICATION_NONE)
     elif Engine.is_editor_hint():
         draw_circle(Vector2.ZERO, 9.0, Color("#f5d598"))
     if Engine.is_editor_hint():

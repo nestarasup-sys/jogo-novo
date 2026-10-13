@@ -116,7 +116,7 @@ func _test_gameplay() -> void:
         _expect(cam.limit_right == 1280 and cam.limit_bottom == 720, "limites de câmera")
     _expect(game.current_room.get_node("WorldSpace/Furniture").get_child_count() == 4, "móveis do quarto isolados")
     await _test_player_movement(game)
-    game.player.global_position = Vector2(445, 281)
+    game.player.global_position = Vector2(553, 314)
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
     _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
     game._activate_interaction(bed)
@@ -160,14 +160,14 @@ func _test_player_movement(game) -> void:
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A mesa tem footprint no intervalo x 815..1040, y 188..310.
-    game.player.global_position = Vector2(790, 250)
+    # A mesa ocupa x 782.5..1007.5, y 207..329, com personagem à esquerda.
+    game.player.global_position = Vector2(740, 268)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
         await physics_frame
     Input.action_release("move_right")
-    _expect(game.player.global_position.x < 801.0, "a princesa não atravessa a escrivaninha")
+    _expect(game.player.global_position.x < 770.0, "a princesa não atravessa a escrivaninha")
     await _release_inputs()
     game.player.global_position = Vector2(60, 400)
     game.player.velocity = Vector2.ZERO
