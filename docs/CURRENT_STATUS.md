@@ -1,4 +1,4 @@
-# Estado mais recente — editor-first em revisão
+> **Atualização M3 — 12/10/2026:** [PR #6](https://github.com/nestarasup-sys/jogo-novo/pull/6) integrado à `main`: HUD compacto, melhor enquadramento do quarto, placas de portas legíveis e sombra corrigida. Mantidas altura da protagonista e câmera 1.30×. [CI Windows/Godot 4.7.2 aprovada](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38337782521); falta conferência visual/manual na Godot local. **Preservar alteração local do criador em `scenes/rooms/bedroom.tscn` → `Boundaries/North` ao sincronizar.**\n\n# Estado mais recente — editor-first em revisão
 
 O [PR #5](https://github.com/nestarasup-sys/jogo-novo/pull/5) foi **mesclado à main**, corrigindo os problemas estruturais de visualização do editor Godot (cena principal cinza, pisos/móveis invisíveis, colisões criadas por runtime, princesa e HUD não editáveis).
 
