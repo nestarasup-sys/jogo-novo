@@ -47,7 +47,7 @@ func _draw() -> void:
         draw_circle(Vector2(-42.0, 0.0), 3.0, Color("#efcc91"))
         draw_circle(Vector2(42.0, 0.0), 3.0, Color("#efcc91"))
         draw_string(ThemeDB.fallback_font, Vector2(-34.0, 5.0),
-            HORIZONTAL_ALIGNMENT_CENTER, 68, 12, Color("#fff0da"), TextServer.JUSTIFICATION_NONE)
+            "PORTA", HORIZONTAL_ALIGNMENT_CENTER, 68, 12, Color("#fff0da"), TextServer.JUSTIFICATION_NONE)
     elif Engine.is_editor_hint():
         draw_circle(Vector2.ZERO, 9.0, Color("#f5d598"))
     if Engine.is_editor_hint():
