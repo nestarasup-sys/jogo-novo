@@ -7,12 +7,12 @@ const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
 @export_range(0.75, 2.0, 0.05) var world_zoom: float = 1.30
 
 @onready var room_container: Node2D = $RoomContainer
-@onready var player: CharacterBody2D = $Princess
-@onready var camera: Camera2D = $Princess/WorldCamera
-@onready var hud: CanvasLayer = $HUD
+@onready var player = $Princess
+@onready var camera = $Princess/WorldCamera
+@onready var hud = $HUD
 
 var catalog
-var current_room: Node2D
+var current_room
 var current_map_id: String = ""
 var _room_changing: bool = false
 
@@ -55,7 +55,7 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
     if scene == null:
         _room_changing = false
         return false
-    var room: Node2D = scene.instantiate() as Node2D
+    var room = scene.instantiate()
     if room == null or str(room.get("room_id")) != room_id:
         push_error("room_id inconsistente: " + room_id)
         if room != null:
@@ -69,7 +69,7 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
         room.free()
         _room_changing = false
         return false
-    var previous_room: Node2D = current_room
+    var previous_room = current_room
     room_container.add_child(room)
     current_room = room
     current_map_id = room_id
@@ -84,7 +84,7 @@ func _enter_room(room_id: String, spawn_id: String) -> bool:
     _room_changing = false
     return true
 
-func _adopt_room(room: Node2D, room_id: String, spawn_id: String) -> void:
+func _adopt_room(room, room_id: String, spawn_id: String) -> void:
     var spawn: Vector2 = room.get_spawn(spawn_id)
     var bounds: Vector2 = room.get("room_size")
     if not _valid_spawn(spawn, bounds):
