@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 const WALK_SPEED: float = 240.0
 const COLLISION_RADIUS: float = 16.0
-const TARGET_FRAME_HEIGHT: float = 150.0
+const TARGET_FRAME_HEIGHT: float = 180.0
 const WALK_FPS: float = 7.0
 const EXPRESSION_FPS: float = 7.0
 const LOOK_BACK_FPS: float = 3.0
@@ -26,6 +26,9 @@ func _ready() -> void:
 	_sprite.animation_finished.connect(_on_animation_finished)
 	_expression_timer.timeout.connect(_on_expression_timeout)
 	_sprite.play("idle")
+	var idle_frame: Texture2D = _sprite.sprite_frames.get_frame_texture("idle", 0)
+	if idle_frame != null and idle_frame.get_height() > 0:
+		_sprite.scale = Vector2.ONE * TARGET_FRAME_HEIGHT / float(idle_frame.get_height())
 	_schedule_expression()
 	queue_redraw()
 
@@ -44,6 +47,9 @@ func _on_animation_finished() -> void:
 	if _sprite.animation != "blink" and _sprite.animation != "look_back":
 		return
 	_sprite.play("idle")
+	var idle_frame: Texture2D = _sprite.sprite_frames.get_frame_texture("idle", 0)
+	if idle_frame != null and idle_frame.get_height() > 0:
+		_sprite.scale = Vector2.ONE * TARGET_FRAME_HEIGHT / float(idle_frame.get_height())
 	_schedule_expression()
 
 func _physics_process(_delta: float) -> void:

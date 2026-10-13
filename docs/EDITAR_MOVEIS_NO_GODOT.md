@@ -12,6 +12,9 @@ Decorações também têm `Footprint`, mas vêm com `is_solid = false`, então n
 
 ## Sheet de móveis do quarto
 
-O sheet original está em `assets/furniture/bedroom_furniture_sheet.png`; cada móvel foi recortado para um PNG independente com fundo transparente em `assets/furniture/`. A cena já atribui essas imagens à cama, penteadeira, guarda-roupa, escrivaninha, estante, poltrona e baú. Os placeholders visuais de tapete, porta decorativa, mesa lateral, espelho, vaso e quadro ficam ocultos enquanto não houver arte correspondente; os nós continuam na árvore e podem ser reativados no Inspector.
+O sheet original está em `assets/furniture/bedroom_furniture_sheet.png`; cada móvel foi recortado para um PNG independente com fundo transparente em `assets/furniture/`. A cena já atribui essas imagens à cama, penteadeira, guarda-roupa, escrivaninha, estante, poltrona e baú. Os seis itens de decoração usam PNGs transparentes próprios: tapete, porta visual, mesa lateral, espelho, planta e quadro. O sheet original está em `assets/furniture/bedroom_decor_sheet.png`; os recortes independentes ficam em `assets/furniture/`. Eles mantêm nós `Visual` e `Footprint` separados e editáveis.
 
 Para trocar ou reposicionar uma arte, selecione `WorldSpace/Furniture/<Móvel>/Visual`. O Inspector mantém `art_texture`, `art_size` e `art_offset` disponíveis nesse nó.
+
+
+A protagonista usa altura visível alvo de 180 px (20% acima dos 150 px anteriores); a colisão nos pés permanece independente da escala visual.

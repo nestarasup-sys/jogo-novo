@@ -75,7 +75,7 @@ script = ExtResource("1_script")
 
 [node name="PrincessAnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -75)
-scale = Vector2(0.2970297, 0.2970297)
+scale = Vector2(0.35643564, 0.35643564)
 texture_filter = 1
 sprite_frames = SubResource("Frames_princess")
 animation = &"idle"

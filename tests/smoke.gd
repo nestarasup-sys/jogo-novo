@@ -19,6 +19,14 @@ const FURNITURE_TEXTURES: Dictionary = {
     "Armchair": "armchair.png",
     "Chest": "chest.png"
 }
+const DECOR_TEXTURES: Dictionary = {
+    "Rug": "rug.png",
+    "DoorVisual": "door_visual.png",
+    "SideTable": "side_table.png",
+    "Mirror": "mirror.png",
+    "Plant": "plant.png",
+    "WallDecoration": "wall_art.png"
+}
 
 var failures: Array[String] = []
 
@@ -67,15 +75,15 @@ func _test_editor_authoring() -> void:
         _expect(item.get("art_size") is Vector2 and item.get("art_offset") is Vector2
             and item.get("footprint_size") is Vector2,
             "arte e footprint ajustáveis no Inspector: " + item_name)
-        if USEFUL_FURNITURE.has(item_name):
-            var item_texture: Texture2D = item.get("art_texture") as Texture2D
-            _expect(item_texture != null and item_texture.resource_path
-                == "res://assets/furniture/" + str(FURNITURE_TEXTURES[item_name]),
-                "sprite do sheet atribuído: " + item_name)
-            if item_texture != null:
-                var texture_image: Image = item_texture.get_image()
-                _expect(texture_image != null and texture_image.get_pixel(0, 0).a == 0.0,
-                    "PNG do móvel tem fundo transparente: " + item_name)
+        var item_texture: Texture2D = item.get("art_texture") as Texture2D
+        var expected_texture: String = str(FURNITURE_TEXTURES[item_name]) if USEFUL_FURNITURE.has(item_name) else str(DECOR_TEXTURES[item_name])
+        _expect(item_texture != null and item_texture.resource_path
+            == "res://assets/furniture/" + expected_texture,
+            "arte correta atribuída: " + item_name)
+        if item_texture != null:
+            var texture_image: Image = item_texture.get_image()
+            _expect(texture_image != null and texture_image.get_pixel(0, 0).a == 0.0,
+                "PNG tem transparência: " + item_name)
         var visual: Node2D = item.get_node_or_null("Visual") as Node2D
         _expect(visual != null and visual.get_script() != null
             and visual.get_script().resource_path == "res://scripts/world/furniture_visual.gd",
@@ -91,9 +99,8 @@ func _test_editor_authoring() -> void:
         var decor: Node = furniture_root.get_node_or_null(item_name)
         if decor != null:
             _expect(not decor.get("is_solid"), "decoração sem colisão: " + item_name)
-            if item_name in ["Rug", "DoorVisual", "SideTable", "WallDecoration", "Mirror", "Plant"]:
-                _expect(not (decor.get_node("Visual") as CanvasItem).visible,
-                    "placeholder de decoração sem arte fica oculto: " + item_name)
+            _expect((decor.get_node("Visual") as CanvasItem).visible,
+                "arte da decoração aparece: " + item_name)
     var bed_use = preview.get_node_or_null("RoomContainer/Bedroom/Interactions/BedUse")
     _expect(bed_use != null and bed_use.interaction_type == "bed" and bed_use.action_label == "Usar cama",
         "cama tem interação de uso própria")
@@ -191,8 +198,8 @@ func _test_gameplay() -> void:
         _expect(sprite.sprite_frames.get_frame_count("walk") == 4, "ciclo walk_01-02-03-02")
         _expect(sprite.sprite_frames.has_animation("blink"), "animação de piscar preservada")
         _expect(sprite.sprite_frames.has_animation("look_back"), "animação olhar lateral preservada")
-        _expect(absf(sprite.scale.y - (150.0 / 505.0)) < 0.002,
-            "tamanho da protagonista não mudou")
+        _expect(absf(sprite.scale.y - (180.0 / 505.0)) < 0.002,
+            "protagonista aumentada em 20% sem alterar hitbox")
     var circle: CollisionShape2D = game.player.get_node_or_null("FootCollisionShape") as CollisionShape2D
     _expect(circle != null and circle.shape is CircleShape2D, "colisão da princesa preservada")
     var cam: Camera2D = game.player.get_node_or_null("WorldCamera") as Camera2D
@@ -222,31 +229,22 @@ func _test_gameplay() -> void:
     var chest_node = game.current_room.get_node("WorldSpace/Furniture/Chest")
     var mirror_node = game.current_room.get_node("WorldSpace/Furniture/Mirror")
     var side_table_node = game.current_room.get_node("WorldSpace/Furniture/SideTable")
-    _expect(bed_node.position.x == 350.0 and armchair_node.position.x == 390.0
-        and vanity_node.position.x == 220.0,
-        "zona de descanso, penteadeira e cama no lado esquerdo")
-    _expect(desk_node.position.x == 850.0 and wardrobe_node.position.x == 850.0
-        and bookshelf_node.position.x == 1045.0 and chest_node.position.x == 1020.0,
-        "zona de trabalho, armazenamento e livros no lado direito")
-    _expect(bed_node.position.y == 355.0 and desk_node.position.y == 350.0,
-        "cama e escrivaninha afastadas da colisão norte")
-    _expect(armchair_node.position.y == 565.0 and wardrobe_node.position.y == 550.0,
-        "poltrona e armário organizados na faixa sul")
-    _expect(side_table_node.position.x > bed_node.position.x
-        and side_table_node.position.distance_to(bed_node.position) < 170.0,
+    _expect(bed_node.position.x == 300.0 and bed_node.position.y == 355.0
+        and armchair_node.position.x == 310.0 and armchair_node.position.y == 575.0,
+        "zona de descanso agrupada no lado esquerdo")
+    _expect(vanity_node.position.x == 820.0 and desk_node.position.x == 820.0
+        and wardrobe_node.position.x == 1045.0 and bookshelf_node.position.x == 1070.0
+        and chest_node.position.x == 1050.0,
+        "zona de penteadeira, trabalho e armazenamento agrupada à direita")
+    _expect(side_table_node.position.distance_to(bed_node.position) < 180.0,
         "mesa lateral posicionada ao lado da cama")
-    _expect(is_equal_approx(mirror_node.position.x, vanity_node.position.x)
-        and mirror_node.position.y < vanity_node.position.y
-        and vanity_node.position.y - mirror_node.position.y >= 80.0,
-        "espelho alinhado acima da penteadeira")
-    _expect(bed_node.position.x + bed_node.footprint_size.x * 0.5 < 470.0
-        and armchair_node.position.x + armchair_node.footprint_size.x * 0.5 < 470.0
-        and vanity_node.position.x + vanity_node.footprint_size.x * 0.5 < 470.0
-        and desk_node.position.x - desk_node.footprint_size.x * 0.5 > 730.0
-        and wardrobe_node.position.x - wardrobe_node.footprint_size.x * 0.5 > 730.0
-        and bookshelf_node.position.x - bookshelf_node.footprint_size.x * 0.5 > 730.0
-        and chest_node.position.x - chest_node.footprint_size.x * 0.5 > 730.0,
-        "corredor central amplo da entrada até a saída")
+    _expect(mirror_node.position.x > vanity_node.position.x
+        and mirror_node.position.distance_to(vanity_node.position) < 240.0,
+        "espelho integrado à zona de arrumação sem sobrepor a penteadeira")
+    _expect(bed_node.position.x < 450.0 and armchair_node.position.x < 450.0
+        and desk_node.position.x > 760.0 and wardrobe_node.position.x > 1000.0
+        and bookshelf_node.position.x > 900.0 and chest_node.position.x > 950.0,
+        "móveis agrupados nas laterais com circulação central aberta")
     for item_name in DECOR_FURNITURE:
         var decor: Node = game.current_room.get_node("WorldSpace/Furniture/" + item_name)
         var decor_footprint: CollisionShape2D = decor.get_node("Footprint")
@@ -256,6 +254,8 @@ func _test_gameplay() -> void:
         "cama longe do HUD superior")
     _expect(desk_node.position.y - desk_node.footprint_size.y * 0.5 > 215.0,
         "escrivaninha longe do HUD superior")
+    _expect(game.current_room.get_node("WorldSpace/Furniture/Rug").position.distance_to(Vector2(455, 555)) < 1.0,
+        "tapete define uma área central de descanso sem bloquear passagem")
     _expect(game.hud.get_node_or_null("HudRoot/TopPlate") != null,
         "HUD tem painel compacto")
     game.hud.set_prompt("Teste")
@@ -284,7 +284,7 @@ func _test_gameplay() -> void:
 
     game._activate_interaction(bed)
     (actions_panel.get_node("SitButton") as Button).pressed.emit()
-    _expect(game.player.global_position.distance_to(Vector2(350, 462)) < 0.5, "Sentar posiciona a princesa junto à cama")
+    _expect(game.player.global_position.distance_to(Vector2(420, 425)) < 0.5, "Sentar posiciona a princesa junto à cama")
     _expect(game.hud.is_message_open(), "Sentar confirma ação em mensagem")
     _expect(not game.player.movement_enabled, "mensagem de sentar bloqueia movimento")
     (game.hud.get_node("HudRoot/MessageOverlay/MessageBox/CloseButton") as Button).pressed.emit()
@@ -379,14 +379,14 @@ func _test_player_movement(game) -> void:
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A escrivaninha ocupa x 737.5..962.5, y 289..411, com personagem à esquerda.
-    game.player.global_position = Vector2(695, 350)
+    # A escrivaninha ocupa x 745..895, y 499..621, com personagem à esquerda.
+    game.player.global_position = Vector2(650, 560)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
         await physics_frame
     Input.action_release("move_right")
-    _expect(game.player.global_position.x < 725.0, "a princesa não atravessa a escrivaninha")
+    _expect(game.player.global_position.x < 730.0, "a princesa não atravessa a escrivaninha")
     await _release_inputs()
     game.player.global_position = Vector2(60, 400)
     game.player.velocity = Vector2.ZERO

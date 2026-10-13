@@ -11,6 +11,12 @@
 [ext_resource type="Texture2D" path="res://assets/furniture/bookshelf.png" id="11_bookshelf"]
 [ext_resource type="Texture2D" path="res://assets/furniture/armchair.png" id="12_armchair"]
 [ext_resource type="Texture2D" path="res://assets/furniture/chest.png" id="13_chest"]
+[ext_resource type="Texture2D" path="res://assets/furniture/14_rug" id="rug.png"]
+[ext_resource type="Texture2D" path="res://assets/furniture/15_door" id="door_visual.png"]
+[ext_resource type="Texture2D" path="res://assets/furniture/16_side_table" id="side_table.png"]
+[ext_resource type="Texture2D" path="res://assets/furniture/17_mirror" id="mirror.png"]
+[ext_resource type="Texture2D" path="res://assets/furniture/18_plant" id="plant.png"]
+[ext_resource type="Texture2D" path="res://assets/furniture/19_wall_art" id="wall_art.png"]
 [ext_resource type="Script" uid="uid://bw2v016od7irw" path="res://scripts/world/furniture_visual.gd" id="6_furniture_visual"]
 
 [sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
@@ -110,7 +116,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(350, 355)
+position = Vector2(300, 355)
 script = ExtResource("3_furniture")
 display_name = "CAMA"
 footprint_size = Vector2(225, 165)
@@ -128,13 +134,13 @@ shape = SubResource("Shape_Bed")
 
 [node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(850, 350)
+position = Vector2(820, 560)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
 placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
 art_texture = ExtResource("10_desk")
-art_size = Vector2(163, 200)
+art_size = Vector2(150, 180)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WritingDesk"]
 script = ExtResource("6_furniture_visual")
@@ -145,13 +151,13 @@ shape = SubResource("Shape_WritingDesk")
 
 [node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(850, 550)
+position = Vector2(1045, 520)
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
 placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
 art_texture = ExtResource("9_wardrobe")
-art_size = Vector2(155, 235)
+art_size = Vector2(135, 200)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Wardrobe"]
 script = ExtResource("6_furniture_visual")
@@ -162,7 +168,7 @@ shape = SubResource("Shape_Wardrobe")
 
 [node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(390, 565)
+position = Vector2(310, 575)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
@@ -178,13 +184,13 @@ shape = SubResource("Shape_Armchair")
 
 [node name="Vanity" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(220, 530)
+position = Vector2(820, 350)
 script = ExtResource("3_furniture")
 display_name = "PENTEADEIRA"
 footprint_size = Vector2(118, 78)
 placeholder_color = Color(0.73, 0.57, 0.67, 1)
 art_texture = ExtResource("8_vanity")
-art_size = Vector2(157, 196)
+art_size = Vector2(147, 180)
 art_offset = Vector2(10, 0)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Vanity"]
@@ -195,13 +201,13 @@ shape = SubResource("Shape_Vanity")
 
 [node name="Bookshelf" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(1045, 350)
+position = Vector2(1070, 300)
 script = ExtResource("3_furniture")
 display_name = "ESTANTE"
 footprint_size = Vector2(110, 154)
 placeholder_color = Color(0.55, 0.43, 0.36, 1)
 art_texture = ExtResource("11_bookshelf")
-art_size = Vector2(95, 205)
+art_size = Vector2(80, 175)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Bookshelf"]
 script = ExtResource("6_furniture_visual")
@@ -211,13 +217,13 @@ shape = SubResource("Shape_Bookshelf")
 
 [node name="Chest" type="StaticBody2D" parent="WorldSpace/Furniture"]
 texture_filter = 2
-position = Vector2(1020, 550)
+position = Vector2(1050, 650)
 script = ExtResource("3_furniture")
 display_name = "BAÚ"
 footprint_size = Vector2(102, 72)
 placeholder_color = Color(0.62, 0.43, 0.31, 1)
 art_texture = ExtResource("13_chest")
-art_size = Vector2(130, 109)
+art_size = Vector2(120, 100)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Chest"]
 script = ExtResource("6_furniture_visual")
@@ -226,12 +232,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_Chest")
 
 [node name="Rug" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(640, 480)
+position = Vector2(455, 555)
 script = ExtResource("3_furniture")
 display_name = "TAPETE"
 footprint_size = Vector2(220, 116)
 placeholder_color = Color(0.75, 0.62, 0.69, 1)
 is_solid = false
+art_texture = ExtResource("14_rug")
+art_size = Vector2(250, 177)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Rug"]
 visible = false
@@ -241,12 +249,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_Rug")
 
 [node name="DoorVisual" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(640, 666)
+position = Vector2(640, 667)
 script = ExtResource("3_furniture")
 display_name = "PORTA"
 footprint_size = Vector2(112, 42)
 placeholder_color = Color(0.43, 0.31, 0.35, 1)
 is_solid = false
+art_texture = ExtResource("15_door")
+art_size = Vector2(112, 188)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/DoorVisual"]
 visible = false
@@ -256,12 +266,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_DoorVisual")
 
 [node name="SideTable" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(500, 385)
+position = Vector2(445, 420)
 script = ExtResource("3_furniture")
 display_name = "MESA LATERAL"
 footprint_size = Vector2(58, 56)
 placeholder_color = Color(0.65, 0.48, 0.36, 1)
 is_solid = false
+art_texture = ExtResource("16_side_table")
+art_size = Vector2(108, 150)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/SideTable"]
 visible = false
@@ -271,12 +283,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_SideTable")
 
 [node name="Mirror" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(220, 425)
+position = Vector2(980, 270)
 script = ExtResource("3_furniture")
 display_name = "ESPELHO"
 footprint_size = Vector2(56, 82)
 placeholder_color = Color(0.62, 0.73, 0.78, 1)
 is_solid = false
+art_texture = ExtResource("17_mirror")
+art_size = Vector2(100, 158)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Mirror"]
 visible = false
@@ -286,12 +300,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_Mirror")
 
 [node name="Plant" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(1085, 455)
+position = Vector2(555, 280)
 script = ExtResource("3_furniture")
 display_name = "VASO"
 footprint_size = Vector2(46, 70)
 placeholder_color = Color(0.47, 0.62, 0.46, 1)
 is_solid = false
+art_texture = ExtResource("18_plant")
+art_size = Vector2(106, 124)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Plant"]
 visible = false
@@ -301,12 +317,14 @@ script = ExtResource("6_furniture_visual")
 shape = SubResource("Shape_Plant")
 
 [node name="WallDecoration" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(640, 220)
+position = Vector2(665, 250)
 script = ExtResource("3_furniture")
 display_name = "QUADRO"
 footprint_size = Vector2(160, 55)
 placeholder_color = Color(0.76, 0.63, 0.72, 1)
 is_solid = false
+art_texture = ExtResource("19_wall_art")
+art_size = Vector2(112, 136)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WallDecoration"]
 visible = false
@@ -319,49 +337,49 @@ shape = SubResource("Shape_WallDecoration")
 [node name="Interactions" type="Node2D" parent="."]
 
 [node name="BedUse" type="Marker2D" parent="Interactions"]
-position = Vector2(350, 465)
+position = Vector2(455, 435)
 script = ExtResource("4_interaction")
 interaction_type = "bed"
 action_label = "Usar cama"
 interaction_radius = 94.0
 
 [node name="WritingDeskUse" type="Marker2D" parent="Interactions"]
-position = Vector2(790, 420)
+position = Vector2(820, 475)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar escrivaninha"
 menu_id = "writing_desk"
 
 [node name="VanityUse" type="Marker2D" parent="Interactions"]
-position = Vector2(285, 558)
+position = Vector2(760, 410)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar penteadeira"
 menu_id = "vanity"
 
 [node name="WardrobeUse" type="Marker2D" parent="Interactions"]
-position = Vector2(775, 600)
+position = Vector2(1045, 610)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar guarda-roupa"
 menu_id = "wardrobe"
 
 [node name="BookshelfUse" type="Marker2D" parent="Interactions"]
-position = Vector2(965, 380)
+position = Vector2(1070, 390)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar estante"
 menu_id = "bookshelf"
 
 [node name="ArmchairUse" type="Marker2D" parent="Interactions"]
-position = Vector2(430, 600)
+position = Vector2(310, 665)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar poltrona"
 menu_id = "armchair"
 
 [node name="ChestUse" type="Marker2D" parent="Interactions"]
-position = Vector2(940, 595)
+position = Vector2(970, 655)
 script = ExtResource("4_interaction")
 interaction_type = "menu"
 action_label = "Usar baú"
@@ -384,4 +402,4 @@ position = Vector2(640, 420)
 position = Vector2(640, 558)
 
 [node name="BedSitPosition" type="Marker2D" parent="Spawns"]
-position = Vector2(350, 462)
+position = Vector2(420, 425)
