@@ -3,6 +3,7 @@ extends CanvasLayer
 
 signal bed_sit_selected
 signal bed_sleep_hours_selected(hours: int)
+signal interaction_choice_selected(menu_id: String, option_id: String)
 
 @onready var title_label: Label = $HudRoot/Location
 @onready var prompt_label: Label = $HudRoot/Prompt
@@ -12,9 +13,11 @@ signal bed_sleep_hours_selected(hours: int)
 @onready var message_label: Label = $HudRoot/MessageOverlay/MessageBox/MessageText
 @onready var close_button: Button = $HudRoot/MessageOverlay/MessageBox/CloseButton
 @onready var bed_menu: Control = $BedActionMenu
+@onready var choice_menu: Control = $InteractionChoiceMenu
 
 var _open: bool = false
 var prompt_text: String = ""
+var _active_choice_menu_id: String = ""
 
 func _ready() -> void:
     layer = 1
@@ -23,6 +26,8 @@ func _ready() -> void:
     close_button.pressed.connect(close_message)
     bed_menu.connect("sit_selected", _on_bed_sit_selected)
     bed_menu.connect("sleep_hours_selected", _on_bed_sleep_hours_selected)
+	choice_menu.connect("option_selected", _on_choice_menu_option_selected)
+	choice_menu.connect("cancelled", _on_choice_menu_cancelled)
 
 func set_location(label: String) -> void:
     title_label.text = label
@@ -58,8 +63,28 @@ func is_bed_menu_open() -> bool:
 func close_bed_menu() -> void:
     bed_menu.call("close_menu")
 
+func open_choice_menu(menu_id: String, title: String, options: Array) -> void:
+	_active_choice_menu_id = menu_id
+	set_prompt("")
+	choice_menu.call("open_menu", title, options)
+
+func is_choice_menu_open() -> bool:
+	return choice_menu.visible
+
+func close_choice_menu() -> void:
+	_active_choice_menu_id = ""
+	choice_menu.call("close_menu")
+
 func _on_bed_sit_selected() -> void:
     bed_sit_selected.emit()
 
 func _on_bed_sleep_hours_selected(hours: int) -> void:
     bed_sleep_hours_selected.emit(hours)
+
+func _on_choice_menu_option_selected(option_id: String) -> void:
+	var menu_id: String = _active_choice_menu_id
+	_active_choice_menu_id = ""
+	interaction_choice_selected.emit(menu_id, option_id)
+
+func _on_choice_menu_cancelled() -> void:
+	_active_choice_menu_id = ""

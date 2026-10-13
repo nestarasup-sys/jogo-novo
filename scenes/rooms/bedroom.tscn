@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
 [ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
@@ -23,6 +23,33 @@ size = Vector2(162, 128)
 
 [sub_resource type="RectangleShape2D" id="Shape_Armchair"]
 size = Vector2(125, 150)
+
+[sub_resource type="RectangleShape2D" id="Shape_Vanity"]
+size = Vector2(118, 78)
+
+[sub_resource type="RectangleShape2D" id="Shape_Bookshelf"]
+size = Vector2(110, 154)
+
+[sub_resource type="RectangleShape2D" id="Shape_Chest"]
+size = Vector2(102, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Rug"]
+size = Vector2(220, 116)
+
+[sub_resource type="RectangleShape2D" id="Shape_DoorVisual"]
+size = Vector2(112, 42)
+
+[sub_resource type="RectangleShape2D" id="Shape_SideTable"]
+size = Vector2(58, 56)
+
+[sub_resource type="RectangleShape2D" id="Shape_Mirror"]
+size = Vector2(56, 82)
+
+[sub_resource type="RectangleShape2D" id="Shape_Plant"]
+size = Vector2(46, 70)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallDecoration"]
+size = Vector2(160, 55)
 
 [node name="Bedroom" type="Node2D"]
 script = ExtResource("1_room")
@@ -90,7 +117,7 @@ shape = SubResource("Shape_Bed")
 
 
 [node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(930, 350)
+position = Vector2(850, 350)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
@@ -101,7 +128,7 @@ shape = SubResource("Shape_WritingDesk")
 
 
 [node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(930, 550)
+position = Vector2(850, 550)
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
@@ -121,6 +148,102 @@ placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
 [node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Armchair"]
 shape = SubResource("Shape_Armchair")
 
+[node name="Vanity" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(215, 510)
+script = ExtResource("3_furniture")
+display_name = "PENTEADEIRA"
+footprint_size = Vector2(118, 78)
+placeholder_color = Color(0.73, 0.57, 0.67, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Vanity"]
+shape = SubResource("Shape_Vanity")
+
+[node name="Bookshelf" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1045, 350)
+script = ExtResource("3_furniture")
+display_name = "ESTANTE"
+footprint_size = Vector2(110, 154)
+placeholder_color = Color(0.55, 0.43, 0.36, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bookshelf"]
+shape = SubResource("Shape_Bookshelf")
+
+[node name="Chest" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1000, 550)
+script = ExtResource("3_furniture")
+display_name = "BAÚ"
+footprint_size = Vector2(102, 72)
+placeholder_color = Color(0.62, 0.43, 0.31, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Chest"]
+shape = SubResource("Shape_Chest")
+
+[node name="Rug" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(640, 470)
+script = ExtResource("3_furniture")
+display_name = "TAPETE"
+footprint_size = Vector2(220, 116)
+placeholder_color = Color(0.75, 0.62, 0.69, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Rug"]
+shape = SubResource("Shape_Rug")
+
+[node name="DoorVisual" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(640, 666)
+script = ExtResource("3_furniture")
+display_name = "PORTA"
+footprint_size = Vector2(112, 42)
+placeholder_color = Color(0.43, 0.31, 0.35, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/DoorVisual"]
+shape = SubResource("Shape_DoorVisual")
+
+[node name="SideTable" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(200, 435)
+script = ExtResource("3_furniture")
+display_name = "MESA LATERAL"
+footprint_size = Vector2(58, 56)
+placeholder_color = Color(0.65, 0.48, 0.36, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/SideTable"]
+shape = SubResource("Shape_SideTable")
+
+[node name="Mirror" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(190, 269)
+script = ExtResource("3_furniture")
+display_name = "ESPELHO"
+footprint_size = Vector2(56, 82)
+placeholder_color = Color(0.62, 0.73, 0.78, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Mirror"]
+shape = SubResource("Shape_Mirror")
+
+[node name="Plant" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(1080, 480)
+script = ExtResource("3_furniture")
+display_name = "VASO"
+footprint_size = Vector2(46, 70)
+placeholder_color = Color(0.47, 0.62, 0.46, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Plant"]
+shape = SubResource("Shape_Plant")
+
+[node name="WallDecoration" type="StaticBody2D" parent="WorldSpace/Furniture"]
+position = Vector2(640, 220)
+script = ExtResource("3_furniture")
+display_name = "QUADRO"
+footprint_size = Vector2(160, 55)
+placeholder_color = Color(0.76, 0.63, 0.72, 1)
+is_solid = false
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/WallDecoration"]
+shape = SubResource("Shape_WallDecoration")
+
 
 [node name="Interactions" type="Node2D" parent="."]
 
@@ -131,12 +254,47 @@ interaction_type = "bed"
 action_label = "Usar cama"
 interaction_radius = 94.0
 
-[node name="WritingDeskInspect" type="Marker2D" parent="Interactions"]
-position = Vector2(742, 292)
+[node name="WritingDeskUse" type="Marker2D" parent="Interactions"]
+position = Vector2(780, 430)
 script = ExtResource("4_interaction")
-interaction_type = "inspect"
-action_label = "Examinar escrivaninha"
-message = "Uma escrivaninha provisória para testar interações."
+interaction_type = "menu"
+action_label = "Usar escrivaninha"
+menu_id = "writing_desk"
+
+[node name="VanityUse" type="Marker2D" parent="Interactions"]
+position = Vector2(285, 558)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar penteadeira"
+menu_id = "vanity"
+
+[node name="WardrobeUse" type="Marker2D" parent="Interactions"]
+position = Vector2(770, 620)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar guarda-roupa"
+menu_id = "wardrobe"
+
+[node name="BookshelfUse" type="Marker2D" parent="Interactions"]
+position = Vector2(980, 440)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar estante"
+menu_id = "bookshelf"
+
+[node name="ArmchairUse" type="Marker2D" parent="Interactions"]
+position = Vector2(430, 600)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar poltrona"
+menu_id = "armchair"
+
+[node name="ChestUse" type="Marker2D" parent="Interactions"]
+position = Vector2(930, 610)
+script = ExtResource("4_interaction")
+interaction_type = "menu"
+action_label = "Usar baú"
+menu_id = "chest"
 
 [node name="DoorToCorridor" type="Marker2D" parent="Interactions"]
 position = Vector2(640, 624)

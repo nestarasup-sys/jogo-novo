@@ -2,7 +2,7 @@
 extends Marker2D
 ## A própria cena mostra posição, tipo e raio da interação.
 
-@export_enum("inspect", "door", "bed") var interaction_type: String = "inspect":
+@export_enum("inspect", "door", "bed", "menu") var interaction_type: String = "inspect":
     set(value):
         interaction_type = value
         queue_redraw()
@@ -10,6 +10,7 @@ extends Marker2D
 @export_multiline var message: String = ""
 @export var destination_room: String = ""
 @export var destination_spawn: String = ""
+@export var menu_id: String = ""
 @export_range(24.0, 240.0, 1.0) var interaction_radius: float = 94.0:
     set(value):
         interaction_radius = value
@@ -26,6 +27,7 @@ func get_interaction() -> Dictionary:
         "message": message,
         "target": destination_room,
         "spawn_id": destination_spawn,
+		"menu_id": menu_id,
         "source_position": global_position
     }
 
