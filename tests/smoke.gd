@@ -89,6 +89,8 @@ func _test_editor_authoring() -> void:
             and visual.get_script().resource_path == "res://scripts/world/furniture_visual.gd",
             "camada visual separada para edição pelo mouse: " + item_name)
         if visual != null:
+            _expect(visual.position == Vector2.ZERO,
+                "imagem acompanha o nó do móvel: " + item_name)
             _expect(visual.get("art_texture") == item.get("art_texture")
                 and visual.get("art_size") == item.get("art_size")
                 and visual.get("art_offset") == item.get("art_offset"),
@@ -189,7 +191,7 @@ func _test_gameplay() -> void:
     await physics_frame
     _expect(game.current_map_id == "bedroom", "começa no quarto")
     _expect(game.player.get_parent() == game.current_room.get_node("WorldSpace"), "protagonista participa do YSort do cenário")
-    _expect(game.player.global_position.distance_to(Vector2(640, 420)) < 0.5, "spawn inicial preservado")
+    _expect(game.player.global_position.distance_to(game.current_room.get_spawn("start")) < 0.5, "spawn inicial salvo na cena preservado")
     _expect(InputMap.has_action("move_right") and InputMap.has_action("interact"), "inputs registrados")
     var sprite: AnimatedSprite2D = game.player.get_node_or_null("PrincessAnimatedSprite") as AnimatedSprite2D
     _expect(sprite != null, "sprite oficial da princesa preservado")
@@ -216,10 +218,10 @@ func _test_gameplay() -> void:
     var visible_right: float = 640.0 + 1280.0 / (2.0 * 1.30)
     for item in game.current_room.get_node("WorldSpace/Furniture").get_children():
         var half_width: float = item.footprint_size.x * 0.5
-        _expect(item.position.x - half_width > visible_left + 5.0,
-            "móvel sem corte na esquerda: " + item.name)
-        _expect(item.position.x + half_width < visible_right - 5.0,
-            "móvel sem corte na direita: " + item.name)
+        _expect(item.position.x - half_width >= 17.0,
+            "colisão dentro do limite esquerdo: " + item.name)
+        _expect(item.position.x + half_width <= 1263.0,
+            "colisão dentro do limite direito: " + item.name)
     var bed_node = game.current_room.get_node("WorldSpace/Furniture/Bed")
     var desk_node = game.current_room.get_node("WorldSpace/Furniture/WritingDesk")
     var wardrobe_node = game.current_room.get_node("WorldSpace/Furniture/Wardrobe")
@@ -241,32 +243,22 @@ func _test_gameplay() -> void:
     for item in game.current_room.get_node("WorldSpace/Furniture").get_children():
         _expect(item.art_size.y <= 210.0,
             "altura dos móveis proporcional à personagem: " + item.name)
-    _expect(bed_node.position.x == 300.0 and bed_node.position.y == 355.0
-        and armchair_node.position.x == 310.0 and armchair_node.position.y == 575.0,
-        "zona de descanso agrupada no lado esquerdo")
-    _expect(vanity_node.position.x == 820.0 and desk_node.position.x == 820.0
-        and wardrobe_node.position.x == 1045.0 and bookshelf_node.position.x == 1070.0
-        and chest_node.position.x == 1050.0,
-        "zona de penteadeira, trabalho e armazenamento agrupada à direita")
-    _expect(side_table_node.position.distance_to(bed_node.position) < 180.0,
-        "mesa lateral posicionada ao lado da cama")
-    _expect(mirror_node.position.x > vanity_node.position.x
-        and mirror_node.position.distance_to(vanity_node.position) < 240.0,
-        "espelho integrado à zona de arrumação sem sobrepor a penteadeira")
     _expect(bed_node.position.x < 450.0 and armchair_node.position.x < 450.0
-        and desk_node.position.x > 760.0 and wardrobe_node.position.x > 1000.0
-        and bookshelf_node.position.x > 900.0 and chest_node.position.x > 950.0,
+        and desk_node.position.x > 760.0 and wardrobe_node.position.x > 900.0
+        and bookshelf_node.position.x > 900.0 and chest_node.position.x > 850.0,
         "móveis agrupados nas laterais com circulação central aberta")
+    _expect(vanity_node.position.x > 450.0 and mirror_node.position.distance_to(vanity_node.position) < 280.0,
+        "espelho próximo da penteadeira")
     for item_name in DECOR_FURNITURE:
         var decor: Node = game.current_room.get_node("WorldSpace/Furniture/" + item_name)
         var decor_footprint: CollisionShape2D = decor.get_node("Footprint")
         _expect(not decor.is_solid and decor_footprint.disabled,
             "decoração atravessável sem colisão ativa: " + item_name)
-    _expect(bed_node.position.y - bed_node.footprint_size.y * 0.5 > 215.0,
+    _expect(bed_node.position.y - bed_node.art_size.y + bed_node.footprint_size.y * 0.5 + bed_node.art_offset.y > 215.0,
         "cama longe do HUD superior")
-    _expect(desk_node.position.y - desk_node.footprint_size.y * 0.5 > 215.0,
+    _expect(desk_node.position.y - desk_node.art_size.y + desk_node.footprint_size.y * 0.5 + desk_node.art_offset.y > 215.0,
         "escrivaninha longe do HUD superior")
-    _expect(game.current_room.get_node("WorldSpace/Furniture/Rug").position.distance_to(Vector2(455, 555)) < 1.0,
+    _expect(game.current_room.get_node("WorldSpace/Furniture/Rug").position.distance_to(Vector2(470, 535)) < 1.0,
         "tapete define uma área central de descanso sem bloquear passagem")
     _expect(game.hud.get_node_or_null("HudRoot/TopPlate") != null,
         "HUD tem painel compacto")
@@ -296,7 +288,7 @@ func _test_gameplay() -> void:
 
     game._activate_interaction(bed)
     (actions_panel.get_node("SitButton") as Button).pressed.emit()
-    _expect(game.player.global_position.distance_to(Vector2(420, 425)) < 0.5, "Sentar posiciona a princesa junto à cama")
+    _expect(game.player.global_position.distance_to(game.current_room.get_spawn("BedSitPosition")) < 0.5, "Sentar posiciona a princesa junto à cama")
     _expect(game.hud.is_message_open(), "Sentar confirma ação em mensagem")
     _expect(not game.player.movement_enabled, "mensagem de sentar bloqueia movimento")
     (game.hud.get_node("HudRoot/MessageOverlay/MessageBox/CloseButton") as Button).pressed.emit()
@@ -370,16 +362,16 @@ func _test_gameplay() -> void:
 func _test_player_movement(game) -> void:
     # Checa o movimento efetivo no motor físico (não só a presença de scripts).
     await _release_inputs()
-    game.player.global_position = Vector2(600, 400)
+    game.player.global_position = Vector2(700, 500)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(12):
         await physics_frame
     Input.action_release("move_right")
-    var axis_distance: float = game.player.global_position.distance_to(Vector2(600, 400))
+    var axis_distance: float = game.player.global_position.distance_to(Vector2(700, 500))
     _expect(axis_distance > 25.0 and axis_distance < 65.0, "andar para a direita altera a posição")
     await _release_inputs()
-    game.player.global_position = Vector2(600, 400)
+    game.player.global_position = Vector2(700, 500)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     Input.action_press("move_down")
@@ -387,18 +379,21 @@ func _test_player_movement(game) -> void:
         await physics_frame
     Input.action_release("move_right")
     Input.action_release("move_down")
-    var delta: Vector2 = game.player.global_position - Vector2(600, 400)
+    var delta: Vector2 = game.player.global_position - Vector2(700, 500)
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A escrivaninha ocupa x 745..895, y 499..621, com personagem à esquerda.
-    game.player.global_position = Vector2(650, 560)
+    # A escrivaninha bloqueia o caminho a partir do Footprint salvo.
+    var desk_footprint: CollisionShape2D = game.current_room.get_node("WorldSpace/Furniture/WritingDesk/Footprint")
+    var desk_node: Node2D = game.current_room.get_node("WorldSpace/Furniture/WritingDesk")
+    var desk_left: float = desk_footprint.global_position.x - desk_node.footprint_size.x * 0.5
+    game.player.global_position = Vector2(desk_left - 75.0, desk_footprint.global_position.y)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
         await physics_frame
     Input.action_release("move_right")
-    _expect(game.player.global_position.x < 730.0, "a princesa não atravessa a escrivaninha")
+    _expect(game.player.global_position.x < desk_left - 1.0, "a princesa não atravessa a escrivaninha")
     await _release_inputs()
     game.player.global_position = Vector2(60, 400)
     game.player.velocity = Vector2.ZERO

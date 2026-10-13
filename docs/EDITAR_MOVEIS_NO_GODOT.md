@@ -28,14 +28,18 @@ Para mover a imagem e sua área física juntas, selecione o móvel pai. Para edi
 
 A protagonista tem 180 px de altura visível. Os tamanhos abaixo mantêm móveis de chão próximos dessa escala e deixam o quadro de parede menor que a personagem.
 
-| Item | Art Size (px) |
-| --- | ---: |
-| Cama | 170 × 205 |
-| Escrivaninha / penteadeira | 145 × 170 / 140 × 170 |
-| Guarda-roupa / estante | 130 × 195 / 84 × 170 |
-| Poltrona / baú | 140 × 140 / 110 × 95 |
-| Tapete / porta visual | 235 × 165 / 100 × 170 |
-| Mesa lateral / espelho / planta | 100 × 135 / 90 × 150 / 100 × 120 |
-| Quadro | 92 × 112 |
+| Item | Arte (px) | Footprint (px) |
+| --- | ---: | ---: |
+| Cama | 170 × 205 | 150 × 85 |
+| Escrivaninha | 145 × 170 | 145 × 72 |
+| Guarda-roupa | 130 × 195 | 115 × 70 |
+| Poltrona | 140 × 140 | 110 × 85 |
+| Penteadeira | 140 × 170 | 125 × 72 |
+| Estante | 84 × 170 | 76 × 80 |
+| Baú | 110 × 95 | 90 × 60 |
+| Tapete / porta visual | 235 × 165 / 100 × 170 | sem colisão |
+| Mesa lateral / espelho / planta / quadro | 100 × 135 / 90 × 150 / 100 × 120 / 92 × 112 | sem colisão |
+
+As colisões sólidas ficam na base dos móveis. Para organizar o quarto, arraste o móvel pai: o `Visual` está no ponto local zero e a colisão acompanha o pai. Use o filho `Footprint` apenas para ajustar a forma da base. A cama e a mesa lateral formam a área de descanso à esquerda; penteadeira e espelho ficam no meio; escrivaninha, estante, armário e baú ficam à direita. O centro permanece livre para circular.
 
 A protagonista usa altura visível alvo de 180 px; a colisão nos pés permanece independente da escala visual.
