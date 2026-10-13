@@ -1,6 +1,6 @@
-# M3 — Polimento do protótipo de quarto (sem trocar os sprites oficiais)
+# M3 — Polimento do protótipo de quarto (integrado pelo PR #6)
 
-## Objetivo
+**Estado:** mesclado à main após [CI Windows/Godot 4.7.2 aprovada](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38337782521). Inspeção visual no PC permanece pendente.\n\n## Objetivo
 Melhorar legibilidade e enquadramento no primeiro print real do jogo. **O tamanho da princesa foi aprovado pelo criador e fica intocado**; manter zoom 1.30×. Sem reiniciar a arquitetura ou instalar texturas descartáveis do PR #3.
 
 ## Alterações
