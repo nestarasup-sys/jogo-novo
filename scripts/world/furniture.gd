@@ -68,6 +68,6 @@ func _draw() -> void:
         if not display_name.is_empty():
             draw_string(ThemeDB.fallback_font,
                 Vector2(face.position.x + 9.0, face.position.y + face.size.y * 0.5 + 5.0),
-                HORIZONTAL_ALIGNMENT_CENTER, int(face.size.x - 18.0), 15,
+                display_name, HORIZONTAL_ALIGNMENT_CENTER, int(face.size.x - 18.0), 15,
                 Color("#fff5e9"))
             draw_circle(Vector2(0.0, face.position.y + 17.0), 2.5, Color("#e1c19c"))
