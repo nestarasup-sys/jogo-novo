@@ -144,6 +144,21 @@ func _test_gameplay() -> void:
             "móvel sem corte na direita: " + item.name)
     var bed_node = game.current_room.get_node("WorldSpace/Furniture/Bed")
     var desk_node = game.current_room.get_node("WorldSpace/Furniture/WritingDesk")
+    var wardrobe_node = game.current_room.get_node("WorldSpace/Furniture/Wardrobe")
+    var armchair_node = game.current_room.get_node("WorldSpace/Furniture/Armchair")
+    _expect(bed_node.position.x == 350.0 and armchair_node.position.x == 350.0,
+        "zona de descanso organizada no lado esquerdo")
+    _expect(desk_node.position.x == 930.0 and wardrobe_node.position.x == 930.0,
+        "zona de trabalho e armazenamento no lado direito")
+    _expect(bed_node.position.y == 355.0 and desk_node.position.y == 350.0,
+        "cama e escrivaninha afastadas da colisão norte")
+    _expect(armchair_node.position.y == 570.0 and wardrobe_node.position.y == 550.0,
+        "poltrona e armário organizados na faixa sul")
+    _expect(bed_node.position.x + bed_node.footprint_size.x * 0.5 < 465.0
+        and armchair_node.position.x + armchair_node.footprint_size.x * 0.5 < 465.0
+        and desk_node.position.x - desk_node.footprint_size.x * 0.5 > 815.0
+        and wardrobe_node.position.x - wardrobe_node.footprint_size.x * 0.5 > 815.0,
+        "faixa central livre da entrada até a saída")
     _expect(bed_node.position.y - bed_node.footprint_size.y * 0.5 > 215.0,
         "cama longe do HUD superior")
     _expect(desk_node.position.y - desk_node.footprint_size.y * 0.5 > 215.0,
@@ -158,7 +173,7 @@ func _test_gameplay() -> void:
         "painel de interação some sem dica")
 
     await _test_player_movement(game)
-    game.player.global_position = Vector2(450, 401)
+    game.player.global_position = game.current_room.get_node("Interactions/BedUse").global_position
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
     _expect(bed.get("kind") == "bed" and bed.get("label") == "Usar cama", "cama oferece ação própria por proximidade")
     game._activate_interaction(bed)
@@ -176,7 +191,7 @@ func _test_gameplay() -> void:
 
     game._activate_interaction(bed)
     (actions_panel.get_node("SitButton") as Button).pressed.emit()
-    _expect(game.player.global_position.distance_to(Vector2(395, 410)) < 0.5, "Sentar posiciona a princesa junto à cama")
+    _expect(game.player.global_position.distance_to(Vector2(350, 462)) < 0.5, "Sentar posiciona a princesa junto à cama")
     _expect(game.hud.is_message_open(), "Sentar confirma ação em mensagem")
     _expect(not game.player.movement_enabled, "mensagem de sentar bloqueia movimento")
     (game.hud.get_node("HudRoot/MessageOverlay/MessageBox/CloseButton") as Button).pressed.emit()
@@ -228,14 +243,14 @@ func _test_player_movement(game) -> void:
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A mesa ocupa x 782.5..1007.5, y 225..347, com personagem à esquerda.
-    game.player.global_position = Vector2(740, 286)
+    # A escrivaninha ocupa x 817.5..1042.5, y 289..411, com personagem à esquerda.
+    game.player.global_position = Vector2(760, 350)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
         await physics_frame
     Input.action_release("move_right")
-    _expect(game.player.global_position.x < 770.0, "a princesa não atravessa a escrivaninha")
+    _expect(game.player.global_position.x < 805.0, "a princesa não atravessa a escrivaninha")
     await _release_inputs()
     game.player.global_position = Vector2(60, 400)
     game.player.velocity = Vector2.ZERO
