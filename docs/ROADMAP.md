@@ -6,10 +6,10 @@
 - [x] Criar cena de protagonista, com animações e câmera editáveis.
 - [x] Colocar quarto, protagonista e HUD na cena principal.
 - [x] Documentar procedimento para qualquer área nova.
-- [ ] Validar importação da Godot 4.7.2 Windows, sem erros.
-- [ ] Validar smoke com novas garantias de nós no editor.
+- [x] Validar importação da Godot 4.7.2 Windows, sem erros ([Actions](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38335444897)).
+- [x] Validar smoke com nós do editor e protagonista ([Actions](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38335444897)).
 - [ ] Verificar visualmente em uma janela/editor real o posicionamento, as camadas, as portas e a princesa.
-- [ ] Mesclar PR #5 após os testes.
+- [x] PR #5 mesclado à main após os testes automáticos; inspeção manual ainda pendente.
 
 ## Depois, por aprovação do criador
 1. Adicionar texturas substituíveis de piso e parede pelo Inspector.
