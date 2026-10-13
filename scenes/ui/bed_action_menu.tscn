@@ -1,0 +1,135 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/bed_action_menu.gd" id="1_menu"]
+
+[sub_resource type="StyleBoxFlat" id="Style_BedCard"]
+bg_color = Color(0.949, 0.902, 0.835, 1)
+border_color = Color(0.31, 0.23, 0.31, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.12, 0.08, 0.14, 0.24)
+shadow_size = 8
+
+[node name="BedActionMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_menu")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.09, 0.15, 0.18)
+mouse_filter = 0
+
+[node name="Card" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -220.0
+offset_right = 210.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_BedCard")
+
+[node name="ActionPanel" type="VBoxContainer" parent="Card"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 92.0
+offset_right = 396.0
+offset_bottom = 348.0
+theme_override_constants/separation = 9
+
+[node name="Title" type="Label" parent="Card/ActionPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.28, 0.21, 0.31, 1)
+theme_override_font_sizes/font_size = 26
+text = "Usar cama"
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_minimum_size = Vector2(0, 48)
+
+[node name="SitButton" type="Button" parent="Card/ActionPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Sentar"
+custom_minimum_size = Vector2(0, 52)
+
+[node name="SleepButton" type="Button" parent="Card/ActionPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Dormir"
+custom_minimum_size = Vector2(0, 52)
+
+[node name="CancelButton" type="Button" parent="Card/ActionPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Cancelar"
+custom_minimum_size = Vector2(0, 46)
+
+[node name="HoursPanel" type="VBoxContainer" parent="Card"]
+visible = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 396.0
+offset_bottom = 416.0
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Card/HoursPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.28, 0.21, 0.31, 1)
+theme_override_font_sizes/font_size = 24
+text = "Quantas horas?"
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_minimum_size = Vector2(0, 44)
+
+[node name="Hour1" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "1 hora"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Hour2" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "2 horas"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Hour4" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "4 horas"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Hour6" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "6 horas"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Hour8" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "8 horas"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="CancelButton" type="Button" parent="Card/HoursPanel"]
+layout_mode = 2
+text = "Cancelar"
+custom_minimum_size = Vector2(0, 40)

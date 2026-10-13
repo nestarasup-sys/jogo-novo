@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/prototype_hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/bed_action_menu.tscn" id="2_bed_menu"]
 
 [sub_resource type="StyleBoxFlat" id="Style_TopPlate"]
 bg_color = Color(0.969, 0.948, 0.964, 0.90)
@@ -157,9 +158,21 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 26.0
 offset_top = 146.0
-offset_right = 660.0
+offset_right = 470.0
 offset_bottom = 189.0
 theme_override_colors/font_color = Color(0.455, 0.408, 0.439, 1)
 theme_override_font_sizes/font_size = 17
 text = "E / ESPAÇO / ESC — fechar"
 mouse_filter = 2
+
+[node name="CloseButton" type="Button" parent="HudRoot/MessageOverlay/MessageBox"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 151.0
+offset_right = 660.0
+offset_bottom = 194.0
+theme_override_font_sizes/font_size = 15
+text = "Fechar"
+
+[node name="BedActionMenu" parent="." instance=ExtResource("2_bed_menu")]
+visible = false

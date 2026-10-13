@@ -37,6 +37,20 @@ func _test_editor_authoring() -> void:
     _expect(preview.get_node_or_null("Princess/FootCollisionShape") != null, "colisor dos pés editável")
     _expect(preview.get_node_or_null("HUD/HudRoot/Location") != null, "HUD editável como cena")
     _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox") != null, "painel de diálogo editável")
+    var bed = preview.get_node_or_null("RoomContainer/Bedroom/WorldSpace/Furniture/Bed")
+    _expect(bed != null and bed.art_texture != null and bed.art_texture.resource_path == "res://assets/furniture/bed.png",
+        "cama usa arte PNG real")
+    var bed_use = preview.get_node_or_null("RoomContainer/Bedroom/Interactions/BedUse")
+    _expect(bed_use != null and bed_use.interaction_type == "bed" and bed_use.action_label == "Usar cama",
+        "cama tem interação de uso própria")
+    _expect(preview.get_node_or_null("RoomContainer/Bedroom/Spawns/BedSitPosition") != null,
+        "ponto de sentar configurado na cena")
+    _expect(preview.get_node_or_null("HUD/BedActionMenu/Card/ActionPanel/SitButton") != null,
+        "menu de ações da cama presente")
+    _expect(preview.get_node_or_null("HUD/BedActionMenu/Card/HoursPanel/Hour8") != null,
+        "menu de duração do sono presente")
+    _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox/CloseButton") != null,
+        "mensagens têm botão de fechar")
     preview.free()
 
 func _test_catalog_and_rooms() -> void:
@@ -144,11 +158,37 @@ func _test_gameplay() -> void:
         "painel de interação some sem dica")
 
     await _test_player_movement(game)
-    game.player.global_position = Vector2(553, 339)
+    game.player.global_position = Vector2(450, 401)
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
-    _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
+    _expect(bed.get("kind") == "bed" and bed.get("label") == "Usar cama", "cama oferece ação própria por proximidade")
     game._activate_interaction(bed)
-    _expect(game.hud.is_message_open(), "inspeção abre mensagem")
+    _expect(game.hud.is_bed_menu_open(), "interação abre menu da cama")
+    var bed_menu: Control = game.hud.get_node("BedActionMenu")
+    var actions_panel: Control = bed_menu.get_node("Card/ActionPanel")
+    var hours_panel: Control = bed_menu.get_node("Card/HoursPanel")
+    var old_hour: int = game.current_hour
+    (actions_panel.get_node("SleepButton") as Button).pressed.emit()
+    _expect(hours_panel.visible and not actions_panel.visible, "Dormir abre escolha de horas")
+    (hours_panel.get_node("CancelButton") as Button).pressed.emit()
+    _expect(actions_panel.visible and game.current_hour == old_hour, "cancelar horas retorna ao menu sem avançar tempo")
+    (actions_panel.get_node("CancelButton") as Button).pressed.emit()
+    _expect(not game.hud.is_bed_menu_open(), "Cancelar fecha menu da cama")
+
+    game._activate_interaction(bed)
+    (actions_panel.get_node("SitButton") as Button).pressed.emit()
+    _expect(game.player.global_position.distance_to(Vector2(395, 410)) < 0.5, "Sentar posiciona a princesa junto à cama")
+    _expect(game.hud.is_message_open(), "Sentar confirma ação em mensagem")
+    _expect(not game.player.movement_enabled, "mensagem de sentar bloqueia movimento")
+    (game.hud.get_node("HudRoot/MessageOverlay/MessageBox/CloseButton") as Button).pressed.emit()
+    _expect(not game.hud.is_message_open(), "botão Fechar encerra mensagem")
+
+    game._activate_interaction(bed)
+    (actions_panel.get_node("SleepButton") as Button).pressed.emit()
+    (hours_panel.get_node("Hour4") as Button).pressed.emit()
+    _expect(game.current_hour == (old_hour + 4) % 24, "Dormir avança o relógio do protótipo")
+    _expect(game.hud.is_message_open() and game.hud.message_label.text.contains("4 horas"),
+        "Dormir mostra duração escolhida")
+    _expect(game.hud.message_label.text.contains("12:00"), "resultado informa a hora após dormir")
     game.hud.close_message()
     _expect(not game.hud.is_message_open(), "mensagem fecha")
     var result: bool = game._enter_room("corridor", "from_bedroom")
