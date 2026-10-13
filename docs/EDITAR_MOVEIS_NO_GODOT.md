@@ -17,4 +17,4 @@ O sheet original está em `assets/furniture/bedroom_furniture_sheet.png`; cada m
 Para trocar ou reposicionar uma arte, selecione `WorldSpace/Furniture/<Móvel>/Visual`. O Inspector mantém `art_texture`, `art_size` e `art_offset` disponíveis nesse nó.
 
 
-A protagonista usa altura visível alvo de 180 px (20% acima dos 150 px anteriores); a colisão nos pés permanece independente da escala visual.
+A protagonista usa altura visível alvo de 180 px; os móveis e decorações foram redimensionados usando essa altura como referência (o quadro de parede tem 92 px de altura). A colisão nos pés permanece independente da escala visual.

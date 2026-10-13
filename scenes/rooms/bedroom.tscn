@@ -122,7 +122,7 @@ display_name = "CAMA"
 footprint_size = Vector2(225, 165)
 placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
 art_texture = ExtResource("7_bed_sheet")
-art_size = Vector2(184, 221)
+art_size = Vector2(160, 190)
 texture_filter = 2
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Bed"]
@@ -140,7 +140,7 @@ display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
 placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
 art_texture = ExtResource("10_desk")
-art_size = Vector2(150, 180)
+art_size = Vector2(128, 155)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WritingDesk"]
 script = ExtResource("6_furniture_visual")
@@ -157,7 +157,7 @@ display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
 placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
 art_texture = ExtResource("9_wardrobe")
-art_size = Vector2(135, 200)
+art_size = Vector2(120, 180)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Wardrobe"]
 script = ExtResource("6_furniture_visual")
@@ -174,7 +174,7 @@ display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
 placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
 art_texture = ExtResource("12_armchair")
-art_size = Vector2(150, 147)
+art_size = Vector2(125, 125)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Armchair"]
 script = ExtResource("6_furniture_visual")
@@ -190,7 +190,7 @@ display_name = "PENTEADEIRA"
 footprint_size = Vector2(118, 78)
 placeholder_color = Color(0.73, 0.57, 0.67, 1)
 art_texture = ExtResource("8_vanity")
-art_size = Vector2(147, 180)
+art_size = Vector2(125, 155)
 art_offset = Vector2(10, 0)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Vanity"]
@@ -207,7 +207,7 @@ display_name = "ESTANTE"
 footprint_size = Vector2(110, 154)
 placeholder_color = Color(0.55, 0.43, 0.36, 1)
 art_texture = ExtResource("11_bookshelf")
-art_size = Vector2(80, 175)
+art_size = Vector2(72, 150)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Bookshelf"]
 script = ExtResource("6_furniture_visual")
@@ -223,7 +223,7 @@ display_name = "BAÚ"
 footprint_size = Vector2(102, 72)
 placeholder_color = Color(0.62, 0.43, 0.31, 1)
 art_texture = ExtResource("13_chest")
-art_size = Vector2(120, 100)
+art_size = Vector2(100, 84)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Chest"]
 script = ExtResource("6_furniture_visual")
@@ -239,7 +239,7 @@ footprint_size = Vector2(220, 116)
 placeholder_color = Color(0.75, 0.62, 0.69, 1)
 is_solid = false
 art_texture = ExtResource("14_rug")
-art_size = Vector2(250, 177)
+art_size = Vector2(215, 150)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Rug"]
 visible = false
@@ -256,7 +256,7 @@ footprint_size = Vector2(112, 42)
 placeholder_color = Color(0.43, 0.31, 0.35, 1)
 is_solid = false
 art_texture = ExtResource("15_door")
-art_size = Vector2(112, 188)
+art_size = Vector2(90, 155)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/DoorVisual"]
 visible = false
@@ -273,7 +273,7 @@ footprint_size = Vector2(58, 56)
 placeholder_color = Color(0.65, 0.48, 0.36, 1)
 is_solid = false
 art_texture = ExtResource("16_side_table")
-art_size = Vector2(108, 150)
+art_size = Vector2(88, 120)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/SideTable"]
 visible = false
@@ -290,7 +290,7 @@ footprint_size = Vector2(56, 82)
 placeholder_color = Color(0.62, 0.73, 0.78, 1)
 is_solid = false
 art_texture = ExtResource("17_mirror")
-art_size = Vector2(100, 158)
+art_size = Vector2(78, 130)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Mirror"]
 visible = false
@@ -307,7 +307,7 @@ footprint_size = Vector2(46, 70)
 placeholder_color = Color(0.47, 0.62, 0.46, 1)
 is_solid = false
 art_texture = ExtResource("18_plant")
-art_size = Vector2(106, 124)
+art_size = Vector2(86, 102)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/Plant"]
 visible = false
@@ -324,7 +324,7 @@ footprint_size = Vector2(160, 55)
 placeholder_color = Color(0.76, 0.63, 0.72, 1)
 is_solid = false
 art_texture = ExtResource("19_wall_art")
-art_size = Vector2(112, 136)
+art_size = Vector2(75, 92)
 
 [node name="Visual" type="Node2D" parent="WorldSpace/Furniture/WallDecoration"]
 visible = false
