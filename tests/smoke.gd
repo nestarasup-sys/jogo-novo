@@ -107,6 +107,8 @@ func _test_gameplay() -> void:
         _expect(sprite.sprite_frames.get_frame_count("walk") == 4, "ciclo walk_01-02-03-02")
         _expect(sprite.sprite_frames.has_animation("blink"), "animação de piscar preservada")
         _expect(sprite.sprite_frames.has_animation("look_back"), "animação olhar lateral preservada")
+        _expect(absf(sprite.scale.y - (150.0 / 505.0)) < 0.002,
+            "tamanho da protagonista não mudou")
     var circle: CollisionShape2D = game.player.get_node_or_null("FootCollisionShape") as CollisionShape2D
     _expect(circle != null and circle.shape is CircleShape2D, "colisão da princesa preservada")
     var cam: Camera2D = game.player.get_node_or_null("WorldCamera") as Camera2D
@@ -115,8 +117,34 @@ func _test_gameplay() -> void:
         _expect(is_equal_approx(cam.zoom.x, 1.30) and is_equal_approx(cam.zoom.y, 1.30), "zoom uniforme 130%")
         _expect(cam.limit_right == 1280 and cam.limit_bottom == 720, "limites de câmera")
     _expect(game.current_room.get_node("WorldSpace/Furniture").get_child_count() == 4, "móveis do quarto isolados")
+    # Quarto inicial legível com câmera 1.30: móveis não cortados lateralmente.
+    # A colisão norte é intencionalmente excluída desta verificação porque
+    # o criador a ajustou localmente e ela precisa ser preservada.
+    var visible_left: float = 640.0 - 1280.0 / (2.0 * 1.30)
+    var visible_right: float = 640.0 + 1280.0 / (2.0 * 1.30)
+    for item in game.current_room.get_node("WorldSpace/Furniture").get_children():
+        var half_width: float = item.footprint_size.x * 0.5
+        _expect(item.position.x - half_width > visible_left + 25.0,
+            "móvel sem corte na esquerda: " + item.name)
+        _expect(item.position.x + half_width < visible_right - 25.0,
+            "móvel sem corte na direita: " + item.name)
+    var bed_node = game.current_room.get_node("WorldSpace/Furniture/Bed")
+    var desk_node = game.current_room.get_node("WorldSpace/Furniture/WritingDesk")
+    _expect(bed_node.position.y - bed_node.footprint_size.y * 0.5 > 215.0,
+        "cama longe do HUD superior")
+    _expect(desk_node.position.y - desk_node.footprint_size.y * 0.5 > 215.0,
+        "escrivaninha longe do HUD superior")
+    _expect(game.hud.get_node_or_null("HudRoot/TopPlate") != null,
+        "HUD tem painel compacto")
+    game.hud.set_prompt("Teste")
+    _expect(game.hud.get_node("HudRoot/PromptPlate").visible,
+        "painel de interação aparece com dica")
+    game.hud.set_prompt("")
+    _expect(not game.hud.get_node("HudRoot/PromptPlate").visible,
+        "painel de interação some sem dica")
+
     await _test_player_movement(game)
-    game.player.global_position = Vector2(553, 314)
+    game.player.global_position = Vector2(553, 339)
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
     _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
     game._activate_interaction(bed)
@@ -160,8 +188,8 @@ func _test_player_movement(game) -> void:
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A mesa ocupa x 782.5..1007.5, y 207..329, com personagem à esquerda.
-    game.player.global_position = Vector2(740, 268)
+    # A mesa ocupa x 782.5..1007.5, y 225..347, com personagem à esquerda.
+    game.player.global_position = Vector2(740, 286)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
