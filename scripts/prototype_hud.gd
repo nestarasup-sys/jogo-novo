@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @onready var title_label: Label = $HudRoot/Location
 @onready var prompt_label: Label = $HudRoot/Prompt
+@onready var prompt_plate: Panel = $HudRoot/PromptPlate
 @onready var overlay: Control = $HudRoot/MessageOverlay
 @onready var message_title: Label = $HudRoot/MessageOverlay/MessageBox/MessageTitle
 @onready var message_label: Label = $HudRoot/MessageOverlay/MessageBox/MessageText
@@ -13,6 +14,7 @@ var prompt_text: String = ""
 func _ready() -> void:
     layer = 1
     overlay.visible = false
+    prompt_plate.visible = false
 
 func set_location(label: String) -> void:
     title_label.text = label
@@ -22,6 +24,7 @@ func set_prompt(label: String) -> void:
         return
     prompt_text = label
     prompt_label.text = label
+    prompt_plate.visible = not label.is_empty()
 
 func is_message_open() -> bool:
     return _open
