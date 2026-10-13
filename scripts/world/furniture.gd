@@ -56,8 +56,18 @@ func _draw() -> void:
         var rect := Rect2(Vector2(-size.x * 0.5, -size.y + footprint_size.y * 0.5) + art_offset, size)
         draw_texture_rect(art_texture, rect, false)
     else:
+        # Placeholder elegante, mas ainda temporário: mantém proporção e footprint.
+        # O visual não participa da colisão e é substituído por art_texture.
         var rect := Rect2(-footprint_size * 0.5, footprint_size)
-        draw_rect(rect, placeholder_color)
-        draw_rect(rect, Color("#554755"), false, 3.0)
+        draw_rect(rect, Color("#4a3949"))
+        var face := Rect2(rect.position + Vector2(3.0, 3.0), rect.size - Vector2(6.0, 6.0))
+        draw_rect(face, placeholder_color)
+        draw_rect(Rect2(face.position + Vector2(7.0, 8.0), Vector2(face.size.x - 14.0, 2.0)), Color(1.0, 0.96, 0.93, 0.34))
+        draw_rect(Rect2(face.position + Vector2(8.0, face.size.y - 11.0), Vector2(face.size.x - 16.0, 2.0)), Color(0.25, 0.19, 0.29, 0.28))
+        draw_rect(Rect2(face.position + Vector2(7.0, 7.0), face.size - Vector2(14.0, 14.0)), Color(0.95, 0.87, 0.80, 0.30), false, 1.0)
         if not display_name.is_empty():
-            draw_string(ThemeDB.fallback_font, Vector2(-footprint_size.x * 0.5 + 6.0, 0.0), display_name, HORIZONTAL_ALIGNMENT_LEFT, int(footprint_size.x - 10.0), 14, Color.WHITE)
+            draw_string(ThemeDB.fallback_font,
+                Vector2(face.position.x + 9.0, face.position.y + face.size.y * 0.5 + 5.0),
+                display_name, HORIZONTAL_ALIGNMENT_CENTER, int(face.size.x - 18.0), 15,
+                Color("#fff5e9"))
+            draw_circle(Vector2(0.0, face.position.y + 17.0), 2.5, Color("#e1c19c"))
