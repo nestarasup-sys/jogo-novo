@@ -1,5 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
+[ext_resource type="Script" path="res://scripts/prototype_hud.gd" id="1_hud"]
+
 [sub_resource type="StyleBoxFlat" id="Style_TopPlate"]
 bg_color = Color(0.969, 0.948, 0.964, 0.90)
 corner_radius_top_left = 11
@@ -15,8 +17,6 @@ corner_radius_top_left = 11
 corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
-
-[ext_resource type="Script" path="res://scripts/prototype_hud.gd" id="1_hud"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 1
