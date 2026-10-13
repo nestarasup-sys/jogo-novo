@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
 [ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
@@ -9,6 +9,58 @@
 script = ExtResource("1_room")
 room_id = "corridor"
 room_title = "Corredor do palácio"
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="North" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 17)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/North"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="South" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 703)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/South"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="West" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(17, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/West"]
+shape = SubResource("Shape_Vertical")
+
+[node name="East" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(1263, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East"]
+shape = SubResource("Shape_Vertical")
+
+[sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
+size = Vector2(1280, 34)
+
+[sub_resource type="RectangleShape2D" id="Shape_Vertical"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="Shape_LeftPainting"]
+size = Vector2(195, 64)
+
+[sub_resource type="RectangleShape2D" id="Shape_RightPainting"]
+size = Vector2(195, 64)
+
+[sub_resource type="RectangleShape2D" id="Shape_LeftBench"]
+size = Vector2(178, 86)
+
+[sub_resource type="RectangleShape2D" id="Shape_RightBench"]
+size = Vector2(178, 86)
 
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
@@ -29,12 +81,20 @@ display_name = "QUADRO"
 footprint_size = Vector2(195, 64)
 placeholder_color = Color(0.611765, 0.482353, 0.403922, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/LeftPainting"]
+shape = SubResource("Shape_LeftPainting")
+
+
 [node name="RightPainting" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1087, 118)
 script = ExtResource("3_furniture")
 display_name = "QUADRO"
 footprint_size = Vector2(195, 64)
 placeholder_color = Color(0.611765, 0.482353, 0.403922, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/RightPainting"]
+shape = SubResource("Shape_RightPainting")
+
 
 [node name="LeftBench" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(197, 388)
@@ -43,12 +103,20 @@ display_name = "BANCO"
 footprint_size = Vector2(178, 86)
 placeholder_color = Color(0.533333, 0.462745, 0.352941, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/LeftBench"]
+shape = SubResource("Shape_LeftBench")
+
+
 [node name="RightBench" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1083, 388)
 script = ExtResource("3_furniture")
 display_name = "BANCO"
 footprint_size = Vector2(178, 86)
 placeholder_color = Color(0.533333, 0.462745, 0.352941, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/RightBench"]
+shape = SubResource("Shape_RightBench")
+
 
 [node name="Interactions" type="Node2D" parent="."]
 
