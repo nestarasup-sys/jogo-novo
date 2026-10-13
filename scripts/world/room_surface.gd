@@ -1,13 +1,35 @@
+@tool
 extends Node2D
-## Fundo/parede independentes de móveis, lógica e colisão. Troque textura pelo Inspector.
+## Visual de piso/parede no editor e em execução. Nunca cria nós.
 
-@export var surface_size: Vector2 = Vector2(1280.0, 720.0)
-@export_range(0.0, 720.0, 1.0) var wall_height: float = 260.0
-@export var floor_color: Color = Color("#e6d9cc")
-@export var wall_color: Color = Color("#c5b8d4")
-@export var floor_texture: Texture2D
-@export var wall_texture: Texture2D
-@export var show_trim: bool = true
+@export var surface_size: Vector2 = Vector2(1280.0, 720.0):
+    set(value):
+        surface_size = value
+        queue_redraw()
+@export_range(0.0, 720.0, 1.0) var wall_height: float = 260.0:
+    set(value):
+        wall_height = value
+        queue_redraw()
+@export var floor_color: Color = Color("#e6d9cc"):
+    set(value):
+        floor_color = value
+        queue_redraw()
+@export var wall_color: Color = Color("#c5b8d4"):
+    set(value):
+        wall_color = value
+        queue_redraw()
+@export var floor_texture: Texture2D:
+    set(value):
+        floor_texture = value
+        queue_redraw()
+@export var wall_texture: Texture2D:
+    set(value):
+        wall_texture = value
+        queue_redraw()
+@export var show_trim: bool = true:
+    set(value):
+        show_trim = value
+        queue_redraw()
 
 func _ready() -> void:
     texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED

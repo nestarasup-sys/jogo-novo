@@ -14,73 +14,20 @@ const SPRITE_DIRECTORY: String = "res://assets/characters/princess/"
 
 var movement_enabled: bool = true
 var facing: Vector2 = Vector2.DOWN
-var _sprite: AnimatedSprite2D
-var _expression_timer: Timer
+@onready var _sprite: AnimatedSprite2D = $PrincessAnimatedSprite
+@onready var _expression_timer: Timer = $ExpressionTimer
 var _next_expression_delay: float = 0.0
 var _random: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	collision_layer = 1
 	collision_mask = 1
-	_add_foot_collider()
-	_setup_sprite()
-	_setup_expression_timer()
-	queue_redraw()
-
-func _add_foot_collider() -> void:
-	var shape := CircleShape2D.new()
-	shape.radius = COLLISION_RADIUS
-	var collider := CollisionShape2D.new()
-	collider.name = "FootCollisionShape"
-	collider.shape = shape
-	add_child(collider)
-
-func _setup_sprite() -> void:
-	var frames := SpriteFrames.new()
-	if frames.has_animation("default"):
-		frames.remove_animation("default")
-
-	_add_animation(frames, "idle", ["idle.png"], 1.0, true)
-	_add_animation(frames, "blink", ["idle.png", "blink.png", "idle.png"], EXPRESSION_FPS, false)
-	_add_animation(frames, "look_back", ["idle.png", "look_back.png", "idle.png"], LOOK_BACK_FPS, false)
-	_add_animation(frames, "walk", ["walk_01.png", "walk_02.png", "walk_03.png", "walk_02.png"], WALK_FPS, true)
-
-	var idle_texture := frames.get_frame_texture("idle", 0)
-	if idle_texture == null:
-		push_error("Não foi possível carregar o sprite idle da protagonista.")
-		return
-
-	_sprite = AnimatedSprite2D.new()
-	_sprite.name = "PrincessAnimatedSprite"
-	_sprite.sprite_frames = frames
-	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	var visual_scale: float = TARGET_FRAME_HEIGHT / idle_texture.get_height()
-	_sprite.scale = Vector2.ONE * visual_scale
-	_sprite.position = Vector2(0.0, -idle_texture.get_height() * visual_scale * 0.5)
-	_sprite.animation_finished.connect(_on_animation_finished)
-	add_child(_sprite)
-	_sprite.play("idle")
-
-func _add_animation(frames: SpriteFrames, animation_name: StringName, filenames: Array[String], fps: float, looped: bool) -> void:
-	frames.add_animation(animation_name)
-	frames.set_animation_speed(animation_name, fps)
-	frames.set_animation_loop(animation_name, looped)
-	for filename in filenames:
-		var path: String = SPRITE_DIRECTORY + filename
-		var texture := load(path) as Texture2D
-		if texture == null:
-			push_error("Imagem da protagonista ausente: " + path)
-			continue
-		frames.add_frame(animation_name, texture)
-
-func _setup_expression_timer() -> void:
 	_random.randomize()
-	_expression_timer = Timer.new()
-	_expression_timer.name = "ExpressionTimer"
-	_expression_timer.one_shot = true
+	_sprite.animation_finished.connect(_on_animation_finished)
 	_expression_timer.timeout.connect(_on_expression_timeout)
-	add_child(_expression_timer)
+	_sprite.play("idle")
 	_schedule_expression()
+	queue_redraw()
 
 func _schedule_expression() -> void:
 	_next_expression_delay = _random.randf_range(EXPRESSION_DELAY_MIN, EXPRESSION_DELAY_MAX)

@@ -1,14 +1,81 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
 [ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
 [ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
 [ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
 
+[sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
+size = Vector2(1280, 34)
+
+[sub_resource type="RectangleShape2D" id="Shape_Vertical"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="Shape_Fountain"]
+size = Vector2(180, 134)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge1"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge2"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge3"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge4"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge5"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge6"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge7"]
+size = Vector2(70, 72)
+
+[sub_resource type="RectangleShape2D" id="Shape_Hedge8"]
+size = Vector2(70, 72)
+
 [node name="Garden" type="Node2D"]
 script = ExtResource("1_room")
 room_id = "garden"
 room_title = "Jardim"
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="North" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 17)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/North"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="South" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 703)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/South"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="West" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(17, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/West"]
+shape = SubResource("Shape_Vertical")
+
+[node name="East" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(1263, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East"]
+shape = SubResource("Shape_Vertical")
 
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
@@ -29,12 +96,20 @@ display_name = "FONTE"
 footprint_size = Vector2(180, 134)
 placeholder_color = Color(0.549020, 0.741176, 0.768627, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Fountain"]
+shape = SubResource("Shape_Fountain")
+
+
 [node name="Hedge1" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(135, 180)
 script = ExtResource("3_furniture")
 display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge1"]
+shape = SubResource("Shape_Hedge1")
+
 
 [node name="Hedge2" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(310, 180)
@@ -43,12 +118,20 @@ display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge2"]
+shape = SubResource("Shape_Hedge2")
+
+
 [node name="Hedge3" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(955, 180)
 script = ExtResource("3_furniture")
 display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge3"]
+shape = SubResource("Shape_Hedge3")
+
 
 [node name="Hedge4" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1130, 180)
@@ -57,12 +140,20 @@ display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge4"]
+shape = SubResource("Shape_Hedge4")
+
+
 [node name="Hedge5" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(135, 535)
 script = ExtResource("3_furniture")
 display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge5"]
+shape = SubResource("Shape_Hedge5")
+
 
 [node name="Hedge6" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(310, 535)
@@ -71,6 +162,10 @@ display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge6"]
+shape = SubResource("Shape_Hedge6")
+
+
 [node name="Hedge7" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(955, 535)
 script = ExtResource("3_furniture")
@@ -78,12 +173,20 @@ display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge7"]
+shape = SubResource("Shape_Hedge7")
+
+
 [node name="Hedge8" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1130, 535)
 script = ExtResource("3_furniture")
 display_name = ""
 footprint_size = Vector2(70, 72)
 placeholder_color = Color(0.317647, 0.549020, 0.392157, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Hedge8"]
+shape = SubResource("Shape_Hedge8")
+
 
 [node name="Interactions" type="Node2D" parent="."]
 

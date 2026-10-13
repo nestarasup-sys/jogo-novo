@@ -1,6 +1,18 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/bedroom.tscn" id="2_start"]
+[ext_resource type="PackedScene" path="res://scenes/actors/princess.tscn" id="3_princess"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
+
+[node name="RoomContainer" type="Node2D" parent="."]
+
+[node name="Bedroom" parent="RoomContainer" instance=ExtResource("2_start")]
+
+[node name="Princess" parent="." instance=ExtResource("3_princess")]
+position = Vector2(640, 420)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]

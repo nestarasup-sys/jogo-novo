@@ -1,14 +1,66 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
 [ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
 [ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
 [ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
 
+[sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
+size = Vector2(1280, 34)
+
+[sub_resource type="RectangleShape2D" id="Shape_Vertical"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="Shape_Bed"]
+size = Vector2(225, 165)
+
+[sub_resource type="RectangleShape2D" id="Shape_WritingDesk"]
+size = Vector2(225, 122)
+
+[sub_resource type="RectangleShape2D" id="Shape_Wardrobe"]
+size = Vector2(162, 128)
+
+[sub_resource type="RectangleShape2D" id="Shape_Armchair"]
+size = Vector2(125, 150)
+
 [node name="Bedroom" type="Node2D"]
 script = ExtResource("1_room")
 room_id = "bedroom"
 room_title = "Quarto da princesa"
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="North" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 17)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/North"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="South" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(640, 703)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/South"]
+shape = SubResource("Shape_Horizontal")
+
+[node name="West" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(17, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/West"]
+shape = SubResource("Shape_Vertical")
+
+[node name="East" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(1263, 360)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/East"]
+shape = SubResource("Shape_Vertical")
 
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
@@ -29,12 +81,20 @@ display_name = "CAMA"
 footprint_size = Vector2(225, 165)
 placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bed"]
+shape = SubResource("Shape_Bed")
+
+
 [node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(927, 249)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
 placeholder_color = Color(0.643137, 0.494118, 0.372549, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/WritingDesk"]
+shape = SubResource("Shape_WritingDesk")
+
 
 [node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(186, 544)
@@ -43,12 +103,20 @@ display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
 placeholder_color = Color(0.607843, 0.474510, 0.423529, 1)
 
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Wardrobe"]
+shape = SubResource("Shape_Wardrobe")
+
+
 [node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
 position = Vector2(1092, 535)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
 placeholder_color = Color(0.694118, 0.545098, 0.443137, 1)
+
+[node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Armchair"]
+shape = SubResource("Shape_Armchair")
+
 
 [node name="Interactions" type="Node2D" parent="."]
 

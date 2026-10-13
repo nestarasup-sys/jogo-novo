@@ -1,6 +1,6 @@
 # Jogo Novo — Fundação modular Godot 4.7.2
 
-**Situação:** arquitetura modular integrada à `main` pelo [PR #4](https://github.com/nestarasup-sys/jogo-novo/pull/4). Importação e testes automáticos Godot 4.7.2 em Windows passaram; ainda falta teste visual/manual no PC do criador. A arte/animação da princesa foi preservada.
+**Situação:** correção visual do editor em andamento no [PR #5](https://github.com/nestarasup-sys/jogo-novo/pull/5). Quarto, princesa, câmera, móveis, interações e colisões agora são editáveis em cenas; o código precisa passar pela validação Godot Windows antes do merge.
 
 ## Conceito (sem lore oficial)
 RPG social 2D de fantasia imperial, protagonista princesa imperial. Primeiro desenvolvemos para **Windows**. Android fica para uma etapa final. A história e os personagens serão definidos pelo diretor criativo posteriormente.
@@ -8,7 +8,7 @@ RPG social 2D de fantasia imperial, protagonista princesa imperial. Primeiro des
 ## Experiência mínima atual
 Três lugares conectados: quarto → mini corredor → jardim → retorno, com movimentação, colisões e interações. O foco agora é um **núcleo extensível** para futuras áreas, cenários, móveis e mecânicas, não um quarto decorado ou um sistema de romances prematuro.
 
-## Onde mexer na estrutura
+[Guia de edição visual na Godot](docs/EDITOR_WORKFLOW.md) — mostra como posicionar móveis, paredes, portas e princesa diretamente no editor.\n\n## Onde mexer na estrutura
 | Preciso mudar... | Local |
 |---|---|
 | Inserir uma nova área | `scenes/rooms/<id>.tscn` + `data/room_catalog.json` |

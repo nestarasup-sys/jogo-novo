@@ -12,6 +12,7 @@ func _initialize() -> void:
 
 func _run() -> void:
     root.size = Vector2i(1280, 720)
+    _test_editor_authoring()
     _test_catalog_and_rooms()
     await _test_gameplay()
     if failures.is_empty():
@@ -21,6 +22,22 @@ func _run() -> void:
         for failure in failures:
             push_error("FAIL: " + failure)
         quit(1)
+
+func _test_editor_authoring() -> void:
+    # Antes de _ready, a cena já deve conter tudo que precisa aparecer no editor.
+    var preview = MAIN_SCENE.instantiate()
+    _expect(preview.get_node_or_null("RoomContainer/Bedroom") != null, "main mostra quarto instanciado")
+    _expect(preview.get_node_or_null("Princess") != null, "main mostra protagonista instanciada")
+    _expect(preview.get_node_or_null("Princess/WorldCamera") != null, "main contém câmera editável")
+    var sprite := preview.get_node_or_null("Princess/PrincessAnimatedSprite") as AnimatedSprite2D
+    _expect(sprite != null and sprite.sprite_frames != null, "spriteframes persistidos no editor")
+    if sprite != null and sprite.sprite_frames != null:
+        _expect(sprite.sprite_frames.has_animation("walk"), "animação WALK visível no editor")
+        _expect(sprite.sprite_frames.get_frame_count("walk") == 4, "walk possui quatro quadros persistidos")
+    _expect(preview.get_node_or_null("Princess/FootCollisionShape") != null, "colisor dos pés editável")
+    _expect(preview.get_node_or_null("HUD/HudRoot/Location") != null, "HUD editável como cena")
+    _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox") != null, "painel de diálogo editável")
+    preview.free()
 
 func _test_catalog_and_rooms() -> void:
     var catalog = CATALOG_SCRIPT.new()
@@ -42,9 +59,13 @@ func _test_catalog_and_rooms() -> void:
         root.add_child(room)
         _expect(room.room_id == room_id, "room_id confere: " + room_id)
         _expect(room.get_node_or_null("Visual") != null, "visual por ambiente: " + room_id)
+        _expect(room.get_node_or_null("Boundaries") != null, "colisões persistidas na cena: " + room_id)
+        if room.get_node_or_null("Boundaries") != null:
+            _expect(room.get_node("Boundaries").get_child_count() == 4, "quatro bordas selecionáveis: " + room_id)
         _expect(room.get_node_or_null("WorldSpace/Furniture") != null, "móveis independentes: " + room_id)
         _expect(room.get_node_or_null("Interactions") != null, "interações independentes: " + room_id)
         _expect(room.get_node_or_null("Spawns") != null, "spawns independentes: " + room_id)
+        _expect(room.get_node("Visual").get_script().is_tool(), "piso e parede desenhados no editor: " + room_id)
         var destinations: Array[String] = []
         for point in room.get_node("Interactions").get_children():
             if point.interaction_type != "door":
@@ -66,6 +87,7 @@ func _test_catalog_and_rooms() -> void:
         for furniture in room.get_node("WorldSpace/Furniture").get_children():
             if furniture.is_solid:
                 _expect(furniture.get_node_or_null("Footprint") != null, "móvel com footprint: " + room_id + "/" + furniture.name)
+                _expect(furniture.get_script().is_tool(), "móvel desenhado no editor: " + furniture.name)
         _expect(room.get_child_count() >= 5, "ambiente tem estrutura e limites: " + room_id)
         room.free()
 

@@ -1,36 +1,11 @@
 extends Node2D
-## Cada .tscn de área tem Visual, Furniture, Interactions e Spawns editáveis.
-## Reutilizável para qualquer novo mapa; sem nomes específicos de quarto/jardim.
+## Áreas compostas em cenas editáveis. Boundaries, Furniture, Visual e Spawns
+## são nós reais salvos no arquivo .tscn — nada de colisão criada em _ready().
 
 @export var room_id: String = ""
 @export var room_title: String = ""
 @export var room_size: Vector2 = Vector2(1280.0, 720.0)
-@export var border_width: float = 34.0
-
-func _ready() -> void:
-    _create_boundary()
-
-func _create_boundary() -> void:
-    var w: float = room_size.x
-    var h: float = room_size.y
-    var b: float = border_width
-    _make_solid(Rect2(Vector2(0.0, 0.0), Vector2(w, b)))
-    _make_solid(Rect2(Vector2(0.0, h - b), Vector2(w, b)))
-    _make_solid(Rect2(Vector2(0.0, 0.0), Vector2(b, h)))
-    _make_solid(Rect2(Vector2(w - b, 0.0), Vector2(b, h)))
-
-func _make_solid(rect: Rect2) -> void:
-    var body := StaticBody2D.new()
-    body.name = "Boundary"
-    body.collision_layer = 1
-    body.collision_mask = 0
-    var collision := CollisionShape2D.new()
-    var shape := RectangleShape2D.new()
-    shape.size = rect.size
-    collision.shape = shape
-    collision.position = rect.position + rect.size * 0.5
-    body.add_child(collision)
-    add_child(body)
+@export var border_width: float = 34.0 # legado informativo; colisões na cena
 
 func get_spawn(spawn_id: String) -> Vector2:
     var spawns: Node = get_node_or_null("Spawns")
