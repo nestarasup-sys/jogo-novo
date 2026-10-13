@@ -1,18 +1,13 @@
-# Situação atual — revisão da arquitetura
+# Estado mais recente — editor-first em revisão
 
-## Confirmado
-- PR #1 (movimento) e PR #2 (animações oficiais da princesa) estão mesclados na branch `main`.
-- A protagonista atual é aprovada para testes; seus sprites e lógica **não podem ser trocados involuntariamente**.
-- O criador testou o protótipo original no Windows e relatou que funciona.
-- Android foi adiado para a fase final.
+O [PR #5](https://github.com/nestarasup-sys/jogo-novo/pull/5) corrige falhas observadas pelo Codex ao abrir o projeto no editor Godot: cena principal cinza, superficies/móveis invisíveis, colisões criadas por runtime e princesa não editável.
 
-## Em andamento
-- O PR #3 (texturas e câmera sobre o construtor monolítico) **foi fechado sem merge**. Seus materiais continuam no histórico do Git; suas escolhas estéticas não são obrigatórias.
-- O [PR #4](https://github.com/nestarasup-sys/jogo-novo/pull/4) foi **integrado à `main`**, com três ambientes em cenas independentes, móveis/interações componíveis e zoom uniforme.
-- **Verificação automática aprovada antes do merge:** [Godot Windows 4.7.2 / Actions](https://github.com/nestarasup-sys/jogo-novo/actions/runs/38216409346). A importação e os testes smoke da nova arquitetura passaram, incluindo movimento real, diagonais, colisões, links de salas e sprite da protagonista. **Ainda falta inspeção visual e controles manuais no Windows do criador.**
+## Status
+- `main`: última versão integrada pelo PR #4 com protótipo funcional em runtime, mas visualização do editor incompleta.
+- `fix/editor-first-scenes`: implementação de pré-visualização `@tool`, colisões persistidas, `princess.tscn`, `hud.tscn` e instâncias na cena principal.
+- **Não assumir que PR #5 foi integrado antes de conferir o status.** Validação automática via GitHub Actions e inspeção visual Windows são necessárias.
+- PR #3 de JPGs do quarto foi fechado sem merge; arte temporária livre para substituição.
+- Android permanece adiado.
 
-## Escopo de agora
-Somente melhorar fundação para criar qualquer área/objeto sem retrabalho. Manter quarto, corredor, jardim, colisões, portas, interações e protagonista. Nenhum novo conteúdo narrativo, NPC, tempo, save ou plataforma.
-
-## Próxima verificação
-A integração já passou importação e smoke no runner Windows. **Próxima tarefa:** abrir a janela no computador do criador, testar a aparência e os controles, anotar regressões e corrigir em PR pequeno se necessário. Futuras implementações seguem `docs/HOW_TO_EXTEND.md`.
+## Regras
+Manter os seis sprites oficiais da princesa, controles e os três ambientes. Não tocar em lore, romances, tempo, NPCs ou novas regiões. Para modificar cenas no editor, consultar [EDITOR_WORKFLOW.md](EDITOR_WORKFLOW.md).
