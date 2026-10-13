@@ -37,6 +37,20 @@ func _test_editor_authoring() -> void:
     _expect(preview.get_node_or_null("Princess/FootCollisionShape") != null, "colisor dos pés editável")
     _expect(preview.get_node_or_null("HUD/HudRoot/Location") != null, "HUD editável como cena")
     _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox") != null, "painel de diálogo editável")
+    var bed = preview.get_node_or_null("RoomContainer/Bedroom/WorldSpace/Furniture/Bed")
+    _expect(bed != null and bed.art_texture != null and bed.art_texture.resource_path == "res://assets/furniture/bed.png",
+        "cama usa arte PNG real")
+    var bed_use = preview.get_node_or_null("RoomContainer/Bedroom/Interactions/BedUse")
+    _expect(bed_use != null and bed_use.interaction_type == "bed" and bed_use.action_label == "Usar cama",
+        "cama tem interação de uso própria")
+    _expect(preview.get_node_or_null("RoomContainer/Bedroom/Spawns/BedSitPosition") != null,
+        "ponto de sentar configurado na cena")
+    _expect(preview.get_node_or_null("HUD/BedActionMenu/Card/ActionPanel/SitButton") != null,
+        "menu de ações da cama presente")
+    _expect(preview.get_node_or_null("HUD/BedActionMenu/Card/HoursPanel/Hour8") != null,
+        "menu de duração do sono presente")
+    _expect(preview.get_node_or_null("HUD/HudRoot/MessageOverlay/MessageBox/CloseButton") != null,
+        "mensagens têm botão de fechar")
     preview.free()
 
 func _test_catalog_and_rooms() -> void:
@@ -130,6 +144,21 @@ func _test_gameplay() -> void:
             "móvel sem corte na direita: " + item.name)
     var bed_node = game.current_room.get_node("WorldSpace/Furniture/Bed")
     var desk_node = game.current_room.get_node("WorldSpace/Furniture/WritingDesk")
+    var wardrobe_node = game.current_room.get_node("WorldSpace/Furniture/Wardrobe")
+    var armchair_node = game.current_room.get_node("WorldSpace/Furniture/Armchair")
+    _expect(bed_node.position.x == 350.0 and armchair_node.position.x == 350.0,
+        "zona de descanso organizada no lado esquerdo")
+    _expect(desk_node.position.x == 930.0 and wardrobe_node.position.x == 930.0,
+        "zona de trabalho e armazenamento no lado direito")
+    _expect(bed_node.position.y == 355.0 and desk_node.position.y == 350.0,
+        "cama e escrivaninha afastadas da colisão norte")
+    _expect(armchair_node.position.y == 570.0 and wardrobe_node.position.y == 550.0,
+        "poltrona e armário organizados na faixa sul")
+    _expect(bed_node.position.x + bed_node.footprint_size.x * 0.5 < 465.0
+        and armchair_node.position.x + armchair_node.footprint_size.x * 0.5 < 465.0
+        and desk_node.position.x - desk_node.footprint_size.x * 0.5 > 815.0
+        and wardrobe_node.position.x - wardrobe_node.footprint_size.x * 0.5 > 815.0,
+        "faixa central livre da entrada até a saída")
     _expect(bed_node.position.y - bed_node.footprint_size.y * 0.5 > 215.0,
         "cama longe do HUD superior")
     _expect(desk_node.position.y - desk_node.footprint_size.y * 0.5 > 215.0,
@@ -144,11 +173,37 @@ func _test_gameplay() -> void:
         "painel de interação some sem dica")
 
     await _test_player_movement(game)
-    game.player.global_position = Vector2(553, 339)
+    game.player.global_position = game.current_room.get_node("Interactions/BedUse").global_position
     var bed: Dictionary = game.current_room.nearest_interaction(game.player.global_position)
-    _expect(bed.get("kind") == "inspect", "objeto permite inspeção")
+    _expect(bed.get("kind") == "bed" and bed.get("label") == "Usar cama", "cama oferece ação própria por proximidade")
     game._activate_interaction(bed)
-    _expect(game.hud.is_message_open(), "inspeção abre mensagem")
+    _expect(game.hud.is_bed_menu_open(), "interação abre menu da cama")
+    var bed_menu: Control = game.hud.get_node("BedActionMenu")
+    var actions_panel: Control = bed_menu.get_node("Card/ActionPanel")
+    var hours_panel: Control = bed_menu.get_node("Card/HoursPanel")
+    var old_hour: int = game.current_hour
+    (actions_panel.get_node("SleepButton") as Button).pressed.emit()
+    _expect(hours_panel.visible and not actions_panel.visible, "Dormir abre escolha de horas")
+    (hours_panel.get_node("CancelButton") as Button).pressed.emit()
+    _expect(actions_panel.visible and game.current_hour == old_hour, "cancelar horas retorna ao menu sem avançar tempo")
+    (actions_panel.get_node("CancelButton") as Button).pressed.emit()
+    _expect(not game.hud.is_bed_menu_open(), "Cancelar fecha menu da cama")
+
+    game._activate_interaction(bed)
+    (actions_panel.get_node("SitButton") as Button).pressed.emit()
+    _expect(game.player.global_position.distance_to(Vector2(350, 462)) < 0.5, "Sentar posiciona a princesa junto à cama")
+    _expect(game.hud.is_message_open(), "Sentar confirma ação em mensagem")
+    _expect(not game.player.movement_enabled, "mensagem de sentar bloqueia movimento")
+    (game.hud.get_node("HudRoot/MessageOverlay/MessageBox/CloseButton") as Button).pressed.emit()
+    _expect(not game.hud.is_message_open(), "botão Fechar encerra mensagem")
+
+    game._activate_interaction(bed)
+    (actions_panel.get_node("SleepButton") as Button).pressed.emit()
+    (hours_panel.get_node("Hour4") as Button).pressed.emit()
+    _expect(game.current_hour == (old_hour + 4) % 24, "Dormir avança o relógio do protótipo")
+    _expect(game.hud.is_message_open() and game.hud.message_label.text.contains("4 horas"),
+        "Dormir mostra duração escolhida")
+    _expect(game.hud.message_label.text.contains("12:00"), "resultado informa a hora após dormir")
     game.hud.close_message()
     _expect(not game.hud.is_message_open(), "mensagem fecha")
     var result: bool = game._enter_room("corridor", "from_bedroom")
@@ -188,14 +243,14 @@ func _test_player_movement(game) -> void:
     _expect(absf(delta.x - delta.y) < 3.0, "diagonal equilibrada")
     _expect(absf(delta.length() - axis_distance) < 6.0, "diagonal normalizada")
     await _release_inputs()
-    # A mesa ocupa x 782.5..1007.5, y 225..347, com personagem à esquerda.
-    game.player.global_position = Vector2(740, 286)
+    # A escrivaninha ocupa x 817.5..1042.5, y 289..411, com personagem à esquerda.
+    game.player.global_position = Vector2(760, 350)
     game.player.velocity = Vector2.ZERO
     Input.action_press("move_right")
     for _i in range(35):
         await physics_frame
     Input.action_release("move_right")
-    _expect(game.player.global_position.x < 770.0, "a princesa não atravessa a escrivaninha")
+    _expect(game.player.global_position.x < 805.0, "a princesa não atravessa a escrivaninha")
     await _release_inputs()
     game.player.global_position = Vector2(60, 400)
     game.player.velocity = Vector2.ZERO

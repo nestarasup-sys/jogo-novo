@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/room.gd" id="1_room"]
 [ext_resource type="Script" path="res://scripts/world/room_surface.gd" id="2_visual"]
 [ext_resource type="Script" path="res://scripts/world/furniture.gd" id="3_furniture"]
 [ext_resource type="Script" path="res://scripts/world/interaction_point.gd" id="4_interaction"]
+[ext_resource type="Texture2D" path="res://assets/furniture/bed.png" id="5_bed"]
 
 [sub_resource type="RectangleShape2D" id="Shape_Horizontal"]
 size = Vector2(1280, 34)
@@ -75,18 +76,21 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Bed" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(395, 306)
+position = Vector2(350, 355)
 script = ExtResource("3_furniture")
 display_name = "CAMA"
 footprint_size = Vector2(225, 165)
 placeholder_color = Color(0.658824, 0.474510, 0.635294, 1)
+art_texture = ExtResource("5_bed")
+art_size = Vector2(228, 173)
+texture_filter = 2
 
 [node name="Footprint" type="CollisionShape2D" parent="WorldSpace/Furniture/Bed"]
 shape = SubResource("Shape_Bed")
 
 
 [node name="WritingDesk" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(895, 286)
+position = Vector2(930, 350)
 script = ExtResource("3_furniture")
 display_name = "ESCRIVANINHA"
 footprint_size = Vector2(225, 122)
@@ -97,7 +101,7 @@ shape = SubResource("Shape_WritingDesk")
 
 
 [node name="Wardrobe" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(332, 515)
+position = Vector2(930, 550)
 script = ExtResource("3_furniture")
 display_name = "ARMÁRIO"
 footprint_size = Vector2(162, 128)
@@ -108,7 +112,7 @@ shape = SubResource("Shape_Wardrobe")
 
 
 [node name="Armchair" type="StaticBody2D" parent="WorldSpace/Furniture"]
-position = Vector2(968, 514)
+position = Vector2(350, 570)
 script = ExtResource("3_furniture")
 display_name = "POLTRONA"
 footprint_size = Vector2(125, 150)
@@ -120,12 +124,12 @@ shape = SubResource("Shape_Armchair")
 
 [node name="Interactions" type="Node2D" parent="."]
 
-[node name="BedInspect" type="Marker2D" parent="Interactions"]
-position = Vector2(553, 339)
+[node name="BedUse" type="Marker2D" parent="Interactions"]
+position = Vector2(390, 448)
 script = ExtResource("4_interaction")
-interaction_type = "inspect"
-action_label = "Examinar cama"
-message = "Uma cama confortável. O descanso será implementado depois."
+interaction_type = "bed"
+action_label = "Usar cama"
+interaction_radius = 94.0
 
 [node name="WritingDeskInspect" type="Marker2D" parent="Interactions"]
 position = Vector2(742, 292)
@@ -149,3 +153,6 @@ position = Vector2(640, 420)
 
 [node name="from_corridor" type="Marker2D" parent="Spawns"]
 position = Vector2(640, 558)
+
+[node name="BedSitPosition" type="Marker2D" parent="Spawns"]
+position = Vector2(350, 462)

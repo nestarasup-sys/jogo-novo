@@ -14,10 +14,13 @@ const ROOM_CATALOG = preload("res://scripts/world/room_catalog.gd")
 var catalog
 var current_room
 var current_map_id: String = ""
+var current_hour: int = 8
 var _room_changing: bool = false
 
 func _ready() -> void:
     _setup_input()
+    hud.connect("bed_sit_selected", _on_bed_sit_selected)
+    hud.connect("bed_sleep_hours_selected", _on_bed_sleep_hours_selected)
     catalog = ROOM_CATALOG.new()
     if not catalog.load_catalog():
         push_error("Catálogo inválido.")
@@ -109,6 +112,11 @@ func _process(_delta: float) -> void:
         if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("close_message"):
             hud.close_message()
         return
+    if hud.is_bed_menu_open():
+        player.movement_enabled = false
+        if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("close_message"):
+            hud.close_bed_menu()
+        return
     player.movement_enabled = true
     var nearby: Dictionary = current_room.nearest_interaction(player.global_position)
     hud.set_prompt("E — " + str(nearby.get("label", "")) if not nearby.is_empty() else "")
@@ -119,7 +127,32 @@ func _activate_interaction(action: Dictionary) -> void:
     match str(action.get("kind", "")):
         "door":
             _enter_room(str(action.get("target", "")), str(action.get("spawn_id", "")))
+        "bed":
+            hud.open_bed_menu()
         "inspect":
             hud.show_message(str(action.get("label", "")), str(action.get("message", "")))
         _:
             push_warning("Tipo de interação desconhecido: " + str(action.get("kind", "")))
+
+func advance_hours(hours: int) -> int:
+    if hours > 0:
+        current_hour = (current_hour + hours) % 24
+    return current_hour
+
+func _on_bed_sit_selected() -> void:
+    player.movement_enabled = false
+    var sit_marker: Marker2D = current_room.get_node_or_null("Spawns/BedSitPosition") as Marker2D
+    if sit_marker == null:
+        push_error("Ponto de sentar da cama não encontrado.")
+        return
+    player.global_position = sit_marker.global_position
+    player.velocity = Vector2.ZERO
+    hud.show_message("Sentar", "A princesa se sentou à beira da cama. Pressione E, Esc ou Fechar para se levantar.")
+
+func _on_bed_sleep_hours_selected(hours: int) -> void:
+    if hours <= 0 or hours > 24:
+        push_error("Quantidade de horas inválida: %d" % hours)
+        return
+    player.movement_enabled = false
+    var new_hour: int = advance_hours(hours)
+    hud.show_message("Descanso", "A princesa dormiu %d horas. Agora são %02d:00." % [hours, new_hour])

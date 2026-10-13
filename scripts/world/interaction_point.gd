@@ -2,7 +2,7 @@
 extends Marker2D
 ## A própria cena mostra posição, tipo e raio da interação.
 
-@export_enum("inspect", "door") var interaction_type: String = "inspect":
+@export_enum("inspect", "door", "bed") var interaction_type: String = "inspect":
     set(value):
         interaction_type = value
         queue_redraw()
