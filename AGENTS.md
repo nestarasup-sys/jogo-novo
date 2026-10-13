@@ -18,5 +18,5 @@ Ler `README.md`, `docs/ARCHITECTURE.md`, `docs/EDITOR_WORKFLOW.md`, `docs/HOW_TO
 - Validar com importação `--editor --import`, `tests/smoke.gd` e visual/manual no editor Windows; não interpretar HEADLESS como teste visual.
 - O PR #3 de JPGs está fechado sem merge e **não deve ser restaurado** por conta própria.
 
-## Entregas
-Informar commits/PR, arquivos, testes realizados, limitações e riscos. Marcar falha mesmo que o processo retorne 0 se Godot escrever `ERROR:` ou `SCRIPT ERROR:`.
+## Estado e entregas
+O PR #5 foi integrado à main após testes automáticos Windows/Godot 4.7.2 aprovados. Ainda falta inspeção visual no editor local. Informar commits/PR, arquivos, testes realizados, limitações e riscos. Marcar falha mesmo que o processo retorne 0 se Godot escrever `ERROR:` ou `SCRIPT ERROR:`.
