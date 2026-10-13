@@ -14,7 +14,28 @@ Decorações também têm `Footprint`, mas vêm com `is_solid = false`, então n
 
 O sheet original está em `assets/furniture/bedroom_furniture_sheet.png`; cada móvel foi recortado para um PNG independente com fundo transparente em `assets/furniture/`. A cena já atribui essas imagens à cama, penteadeira, guarda-roupa, escrivaninha, estante, poltrona e baú. Os seis itens de decoração usam PNGs transparentes próprios: tapete, porta visual, mesa lateral, espelho, planta e quadro. O sheet original está em `assets/furniture/bedroom_decor_sheet.png`; os recortes independentes ficam em `assets/furniture/`. Eles mantêm nós `Visual` e `Footprint` separados e editáveis.
 
-Para trocar ou reposicionar uma arte, selecione `WorldSpace/Furniture/<Móvel>/Visual`. O Inspector mantém `art_texture`, `art_size` e `art_offset` disponíveis nesse nó.
+## Jeito mais fácil de mexer só na imagem
 
+1. Abra `scenes/rooms/bedroom.tscn`.
+2. Na aba **Cena**, expanda `Bedroom > WorldSpace > Furniture` e expanda o móvel desejado (por exemplo, `Plant`).
+3. Clique no filho **Visual**. No viewport 2D, arraste a imagem para reposicioná-la sem mover a colisão.
+4. Com **Visual** selecionado, use o **Inspector** à direita: `Art Texture` troca o PNG, `Art Size` ajusta largura e altura em pixels e `Art Offset` faz um ajuste fino.
+5. Salve com **Ctrl+S**.
 
-A protagonista usa altura visível alvo de 180 px; os móveis e decorações foram redimensionados usando essa altura como referência (o quadro de parede tem 92 px de altura). A colisão nos pés permanece independente da escala visual.
+Para mover a imagem e sua área física juntas, selecione o móvel pai. Para editar apenas a colisão, selecione `Footprint`. Se a intenção for só ajustar a aparência, fique em **Visual**.
+
+## Tamanhos atuais
+
+A protagonista tem 180 px de altura visível. Os tamanhos abaixo mantêm móveis de chão próximos dessa escala e deixam o quadro de parede menor que a personagem.
+
+| Item | Art Size (px) |
+| --- | ---: |
+| Cama | 170 × 205 |
+| Escrivaninha / penteadeira | 145 × 170 / 140 × 170 |
+| Guarda-roupa / estante | 130 × 195 / 84 × 170 |
+| Poltrona / baú | 140 × 140 / 110 × 95 |
+| Tapete / porta visual | 235 × 165 / 100 × 170 |
+| Mesa lateral / espelho / planta | 100 × 135 / 90 × 150 / 100 × 120 |
+| Quadro | 92 × 112 |
+
+A protagonista usa altura visível alvo de 180 px; a colisão nos pés permanece independente da escala visual.

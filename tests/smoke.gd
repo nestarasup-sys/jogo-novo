@@ -230,10 +230,16 @@ func _test_gameplay() -> void:
     var mirror_node = game.current_room.get_node("WorldSpace/Furniture/Mirror")
     var side_table_node = game.current_room.get_node("WorldSpace/Furniture/SideTable")
     var wall_art_node = game.current_room.get_node("WorldSpace/Furniture/WallDecoration")
-    _expect(wall_art_node.art_size.y < 0.55 * 180.0,
+    _expect(wall_art_node.art_size.y < 0.70 * 180.0,
         "quadro de parede menor que a princesa em escala de referência")
+    _expect(game.current_room.get_node("WorldSpace/Furniture/SideTable").art_size.y >= 130.0,
+        "mesa lateral continua fácil de ver")
+    _expect(game.current_room.get_node("WorldSpace/Furniture/Mirror").art_size.y >= 145.0,
+        "espelho tem tamanho funcional em relação à personagem")
+    _expect(game.current_room.get_node("WorldSpace/Furniture/Plant").art_size.y >= 115.0,
+        "planta decorativa não fica pequena demais")
     for item in game.current_room.get_node("WorldSpace/Furniture").get_children():
-        _expect(item.art_size.y <= 190.0,
+        _expect(item.art_size.y <= 210.0,
             "altura dos móveis proporcional à personagem: " + item.name)
     _expect(bed_node.position.x == 300.0 and bed_node.position.y == 355.0
         and armchair_node.position.x == 310.0 and armchair_node.position.y == 575.0,
